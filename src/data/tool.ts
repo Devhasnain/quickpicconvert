@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Crop, FileImage, FileText, FileType, ImageMinus, Key, Layers, Maximize2, Minimize2, Palette, RotateCw, Wand2 } from "lucide-react";
+import { ArrowRightLeft, Code, Crop, FileImage, FileText, FileType, ImageMinus, Key, Layers, Maximize2, Minimize2, Palette, RotateCw, Wand2 } from "lucide-react";
 
 
 export interface Tool {
@@ -305,7 +305,73 @@ export const tools: Tool[] = [
                 }
             ]
         }
+    },
+    {
+        id: "image-to-base64",
+        icon: Code,
+        title: "Image to Base64 Converter",
+        description: "Convert images into Base64 encoded strings instantly in your browser.",
+        category: "Utility",
+        color: "from-emerald-500 to-teal-500",
+        keywords: [
+            "image to base64",
+            "base64 image encoder",
+            "convert image to base64",
+            "image to data url",
+            "base64 image online"
+        ],
+        instructions: {
+            title: "Convert Image to Base64 Online",
+            description:
+                "The Image to Base64 Converter encodes your images into Base64 strings or Data URLs. This is useful for embedding images directly into HTML, CSS, JSON, or API requests without external image files.",
+            steps: [
+                {
+                    title: "Upload Image",
+                    description:
+                        "Upload or drag and drop an image file (PNG, JPG, JPEG, WebP)."
+                },
+                {
+                    title: "Convert to Base64",
+                    description:
+                        "The image is instantly converted into a Base64 encoded string."
+                },
+                {
+                    title: "Preview Result",
+                    description:
+                        "View the image preview and inspect the generated Base64 or Data URL."
+                },
+                {
+                    title: "Copy or Download",
+                    description:
+                        "Copy the Base64 string or download it as a text file for later use."
+                }
+            ],
+            tips: [
+                "Base64 is useful for embedding small images directly in code.",
+                "Avoid Base64 for large images as it increases file size.",
+                "Great for API payloads and inline CSS backgrounds.",
+                "All conversions run locally in your browser for privacy."
+            ],
+            faqs: [
+                {
+                    question: "What is Base64 encoding?",
+                    answer:
+                        "Base64 is a method of encoding binary data, such as images, into text so it can be safely used in code, JSON, or HTML."
+                },
+                {
+                    question: "Does Base64 increase image size?",
+                    answer:
+                        "Yes. Base64 encoding increases file size by roughly 30%, so it’s best used for small images."
+                },
+                {
+                    question: "Are my images uploaded to a server?",
+                    answer:
+                        "No. The conversion happens entirely in your browser and your images never leave your device."
+                }
+            ]
+        }
     }
+
 
 ]
 
