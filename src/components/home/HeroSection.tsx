@@ -72,7 +72,10 @@ export function HeroSection() {
           >
             Free Online <span className="gradient-text">Image Converter</span>
             <br />
+            <small>
             JPG, PNG, WebP & More
+            </small>
+
           </h1>
 
           {/* SEO Optimized Subtitle */}

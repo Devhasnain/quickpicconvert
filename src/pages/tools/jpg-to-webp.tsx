@@ -1,14 +1,23 @@
-import ToolPageLayout from '@/components/tool/ToolPageLayout';
-import { Layout } from '@/components/layout/Layout';
-import React from 'react';
+import ToolPageLayout from "@/components/tool/ToolPageLayout";
+import ImageConverter from "@/components/tool/ImageConverter";
+import { PageSEO } from "@/components/PageSEO";
 
 
 const JpgToWebp = () => {
   return (
-      <ToolPageLayout>
-       asdf
-      </ToolPageLayout>
-  )
-}
+    <>
+      <PageSEO
+        title="JPG to WEBP Converter – Convert JPG Images to WEBP Online"
+        description="Convert JPG images to WEBP format online for better performance and smaller sizes. Fast, secure, and privacy-friendly JPG to WEBP tool."
+        canonical="https://quickpicconvert.com/tools/jpg-to-webp"
+        keywords="jpg to webp, convert jpg to webp, webp image converter, jpg webp, image compression"
+      />
 
-export default JpgToWebp
+      <ToolPageLayout>
+        <ImageConverter accept="image/jpeg" output="webp" title="Jpg to Webp" />
+      </ToolPageLayout>
+    </>
+  );
+};
+
+export default JpgToWebp;

@@ -75,29 +75,78 @@ export const tools: Tool[] = [
         }
     },
     {
-        "id": "webp-converter",
-        "icon": FileType,
-        "title": "WebP Converter",
-        "description": "Convert images to/from WebP format for web optimization.",
+        "id": "png-to-webp",
+        "icon": ArrowRightLeft,
+        "title": "PNG to WEBP",
+        "description": "Convert PNG images to WebP format for better compression and faster web performance.",
         "category": "Converter",
-        "color": "from-green-500 to-emerald-500",
-        "keywords": ["webp converter", "convert to webp", "image optimization", "web performance"],
+        "color": "from-lime-500 to-green-500",
+        "keywords": [
+            "png to webp",
+            "convert png to webp",
+            "webp image converter",
+            "optimize images for web"
+        ],
         "instructions": {
-            "title": "Use WebP Converter",
-            "description": "Optimize images by converting them to or from WebP format.",
+            "title": "Convert PNG to WebP",
+            "description": "Convert PNG images to WebP format to reduce file size while keeping high quality.",
             "steps": [
-                { "title": "Upload Image", "description": "Upload JPG, PNG, or WebP image." },
-                { "title": "Convert", "description": "Choose desired WebP conversion." },
-                { "title": "Download", "description": "Download the optimized image." }
+                { "title": "Upload PNG", "description": "Select or drag and drop your PNG image." },
+                { "title": "Convert", "description": "Convert the PNG image to WebP format." },
+                { "title": "Download WebP", "description": "Download the optimized WebP image." }
             ],
             "tips": [
-                "WebP reduces image size significantly",
-                "Improves page load speed",
-                "Supported by modern browsers"
+                "WebP images load faster on websites",
+                "Transparency is supported in WebP",
+                "Ideal for modern web applications"
             ],
             "faqs": [
-                { "question": "Is WebP supported by browsers?", "answer": "Yes, most modern browsers support WebP." },
-                { "question": "Does WebP reduce quality?", "answer": "No, it maintains high quality at smaller sizes." }
+                {
+                    "question": "Does WebP support transparency?",
+                    "answer": "Yes, WebP supports transparent backgrounds like PNG."
+                },
+                {
+                    "question": "Is WebP smaller than PNG?",
+                    "answer": "Yes, WebP usually provides much smaller file sizes."
+                }
+            ]
+        }
+    },
+    {
+        "id": "jpg-to-webp",
+        "icon": ArrowRightLeft,
+        "title": "JPG to WebP",
+        "description": "Convert JPG images to WebP format for smaller file size and improved performance.",
+        "category": "Converter",
+        "color": "from-sky-500 to-blue-500",
+        "keywords": [
+            "jpg to webp",
+            "convert jpg to webp",
+            "webp converter",
+            "image optimization"
+        ],
+        "instructions": {
+            "title": "Convert JPG to WebP",
+            "description": "Convert JPG images into WebP format for faster loading and better compression.",
+            "steps": [
+                { "title": "Upload JPG", "description": "Choose your JPG image file." },
+                { "title": "Convert", "description": "Process the image into WebP format." },
+                { "title": "Download WebP", "description": "Download the converted WebP image." }
+            ],
+            "tips": [
+                "WebP is ideal for photos and websites",
+                "Maintains good visual quality",
+                "Recommended for SEO and performance"
+            ],
+            "faqs": [
+                {
+                    "question": "Is WebP better than JPG?",
+                    "answer": "Yes, WebP usually offers better compression with similar quality."
+                },
+                {
+                    "question": "Do all browsers support WebP?",
+                    "answer": "Most modern browsers support WebP."
+                }
             ]
         }
     },
@@ -128,33 +177,33 @@ export const tools: Tool[] = [
             ]
         }
     },
-    {
-        "id": "background-remover",
-        "icon": ImageMinus,
-        "title": "Background Remover",
-        "description": "Remove backgrounds from images automatically.",
-        "category": "AI Tool",
-        "color": "from-violet-500 to-purple-500",
-        "keywords": ["background remover", "remove image background", "ai background remover", "transparent image"],
-        "instructions": {
-            "title": "Remove Image Background",
-            "description": "Automatically remove backgrounds using AI technology.",
-            "steps": [
-                { "title": "Upload Image", "description": "Upload an image with a visible subject." },
-                { "title": "AI Processing", "description": "AI removes the background automatically." },
-                { "title": "Download", "description": "Download the transparent image." }
-            ],
-            "tips": [
-                "Best for product images",
-                "Use high-contrast images",
-                "Download as PNG for transparency"
-            ],
-            "faqs": [
-                { "question": "Is this AI-powered?", "answer": "Yes, background removal uses AI." },
-                { "question": "Do I need editing skills?", "answer": "No, it works automatically." }
-            ]
-        }
-    }
+    // {
+    //     "id": "background-remover",
+    //     "icon": ImageMinus,
+    //     "title": "Background Remover",
+    //     "description": "Remove backgrounds from images automatically.",
+    //     "category": "AI Tool",
+    //     "color": "from-violet-500 to-purple-500",
+    //     "keywords": ["background remover", "remove image background", "ai background remover", "transparent image"],
+    //     "instructions": {
+    //         "title": "Remove Image Background",
+    //         "description": "Automatically remove backgrounds using AI technology.",
+    //         "steps": [
+    //             { "title": "Upload Image", "description": "Upload an image with a visible subject." },
+    //             { "title": "AI Processing", "description": "AI removes the background automatically." },
+    //             { "title": "Download", "description": "Download the transparent image." }
+    //         ],
+    //         "tips": [
+    //             "Best for product images",
+    //             "Use high-contrast images",
+    //             "Download as PNG for transparency"
+    //         ],
+    //         "faqs": [
+    //             { "question": "Is this AI-powered?", "answer": "Yes, background removal uses AI." },
+    //             { "question": "Do I need editing skills?", "answer": "No, it works automatically." }
+    //         ]
+    //     }
+    // }
 ]
 
 

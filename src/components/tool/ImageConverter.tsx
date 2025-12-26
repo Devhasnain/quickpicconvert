@@ -1,7 +1,6 @@
 import { convertImage, downloadAsZip, downloadSingleFile } from "@/lib/utils";
 import { Download, Plus, X, icons } from "lucide-react";
 import React, { ChangeEvent } from "react";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -10,12 +9,11 @@ import { Button } from "../ui/button";
 
 type Props = {
   title: string;
-  accept: "png" | "jpeg" | "webp" | "jpg";
+  accept: "png" | "jpeg" | "webp" | "jpg" | string;
   output: "png" | "jpeg" | "webp" | "jpg";
 };
 
 const ImageConverter = ({ title, accept, output }: Props) => {
-  const pathname = useRouter().pathname;
   const [files, setFiles] = React.useState<File[] | []>([]);
   const [results, setResults] = React.useState<any[] | []>([]);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -76,17 +74,18 @@ const ImageConverter = ({ title, accept, output }: Props) => {
         ref={inputRef}
         type="file"
         multiple
-        accept={`image/${accept}`}
+        accept={accept}
         onChange={handleAddFiles}
         className="hidden"
       />
       <div className="bg-card rounded-2xl border border-border p-6">
-        {!files || files.length === 0 ? (
+        {!files.length ? (
           <button
             onClick={openExplorer}
-            className="w-full h-[35vh] border border-dashed border-primary/80 flex flex-col items-center justify-center rounded-md gap-2"
+            className="w-full h-[35vh] flex flex-col items-center justify-center rounded-md gap-2"
           >
             <icons.Image className="w-12 h-12 text-primary/80" />
+            <Button size="lg">Choose images</Button>
             <span className="text-primary/80">Click to upload images</span>
           </button>
         ) : (
@@ -145,13 +144,12 @@ const ImageConverter = ({ title, accept, output }: Props) => {
                   key={index}
                   className="mt-4 p-4 border border-border rounded-md flex flex-row gap-3 items-center"
                 >
-                  {/* <icons.Image className="w-10 h-10 text-muted-foreground" /> */}
                   <Image
-                  alt=""
-                  width={100}
-                  height={100}
-                  className="w-10 h-10 rounded-md object-cover overflow-hidden border"
-                  src={URL?.createObjectURL(file)}
+                    alt=""
+                    width={100}
+                    height={100}
+                    className="w-10 h-10 rounded-md object-cover overflow-hidden border"
+                    src={URL?.createObjectURL(file)}
                   />
                   <div className="w-full">
                     <p className="font-medium line-clamp-1">{file.name}</p>

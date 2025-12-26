@@ -1,13 +1,11 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowLeft, LucideIcon, Zap } from "lucide-react";
+import { LucideIcon, Zap } from "lucide-react";
 import { ReactNode, useMemo } from "react";
 import { Tool, tools } from "@/data/tool";
 import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 import { ToolInstructions } from "./ToolInstructions";
-import { Button } from "../ui/button";
 import { PageSEO } from "../PageSEO";
 
 
