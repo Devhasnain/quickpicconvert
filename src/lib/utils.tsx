@@ -172,3 +172,69 @@ export const compressImages = async ({
     return [];
   }
 };
+
+export const loadImageToCanvas = (file: File) =>
+  new Promise<{
+    img: HTMLImageElement;
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+  }>((resolve) => {
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0);
+      resolve({ img, canvas, ctx });
+    };
+  });
+
+export const exportCanvas = (
+  canvas: HTMLCanvasElement,
+  type = "image/png",
+  quality = 0.9
+) => canvas.toDataURL(type, quality);
+
+export const cropImage = async (
+  file: File,
+  crop: { width: number; height: number; x: number; y: number }
+) => {
+  const { img, canvas, ctx } = await loadImageToCanvas(file);
+
+  canvas.width = crop.width;
+  canvas.height = crop.height;
+
+  ctx.drawImage(
+    img,
+    crop.x,
+    crop.y,
+    crop.width,
+    crop.height,
+    0,
+    0,
+    crop.width,
+    crop.height
+  );
+
+  return exportCanvas(canvas);
+};
+
+export const resizeImage = async (file:File, width:number, height:number) => {
+  const { img, canvas, ctx } = await loadImageToCanvas(file);
+
+  canvas.width = width;
+  canvas.height = height;
+  ctx.drawImage(img, 0, 0, width, height);
+
+  return exportCanvas(canvas);
+};
+
+export const applyFilters = async (file:File, filter:any) => {
+  const { canvas, ctx } = await loadImageToCanvas(file);
+  ctx.filter = filter;
+  ctx.drawImage(canvas, 0, 0);
+  return exportCanvas(canvas);
+};

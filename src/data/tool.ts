@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Crop, FileImage, FileType, ImageMinus, Key, Layers, Maximize2, Minimize2, Palette, RotateCw, Wand2 } from "lucide-react";
+import { ArrowRightLeft, Crop, FileImage, FileText, FileType, ImageMinus, Key, Layers, Maximize2, Minimize2, Palette, RotateCw, Wand2 } from "lucide-react";
 
 
 export interface Tool {
@@ -6,7 +6,6 @@ export interface Tool {
     title: string;
     description: string;
     icon: typeof Key;
-    //   href: string;
     category: string;
     keywords: string[];
     color: string;
@@ -177,33 +176,137 @@ export const tools: Tool[] = [
             ]
         }
     },
-    // {
-    //     "id": "background-remover",
-    //     "icon": ImageMinus,
-    //     "title": "Background Remover",
-    //     "description": "Remove backgrounds from images automatically.",
-    //     "category": "AI Tool",
-    //     "color": "from-violet-500 to-purple-500",
-    //     "keywords": ["background remover", "remove image background", "ai background remover", "transparent image"],
-    //     "instructions": {
-    //         "title": "Remove Image Background",
-    //         "description": "Automatically remove backgrounds using AI technology.",
-    //         "steps": [
-    //             { "title": "Upload Image", "description": "Upload an image with a visible subject." },
-    //             { "title": "AI Processing", "description": "AI removes the background automatically." },
-    //             { "title": "Download", "description": "Download the transparent image." }
-    //         ],
-    //         "tips": [
-    //             "Best for product images",
-    //             "Use high-contrast images",
-    //             "Download as PNG for transparency"
-    //         ],
-    //         "faqs": [
-    //             { "question": "Is this AI-powered?", "answer": "Yes, background removal uses AI." },
-    //             { "question": "Do I need editing skills?", "answer": "No, it works automatically." }
-    //         ]
-    //     }
-    // }
+    {
+        id: "image-cropper",
+        icon: Crop,
+        title: "Image Cropper",
+        description: "Crop images online to remove unwanted areas and adjust dimensions easily.",
+        category: "Image Editing",
+        color: "from-purple-500 to-violet-500",
+        keywords: [
+            "image cropper",
+            "crop image online",
+            "photo crop tool",
+            "resize and crop images",
+            "image editing tool"
+        ],
+        instructions: {
+            title: "Crop Images Online",
+            description:
+                "Our Image Cropper lets you easily crop images online to remove unwanted areas, adjust composition, and resize images for social media, websites, or personal use. All processing happens directly in your browser for complete privacy.",
+            steps: [
+                {
+                    title: "Upload Image",
+                    description:
+                        "Select or drag and drop the image you want to crop."
+                },
+                {
+                    title: "Select Crop Area",
+                    description:
+                        "Adjust the crop area by dragging the corners or choose a fixed aspect ratio such as 1:1, 16:9, or 4:5."
+                },
+                {
+                    title: "Apply Crop",
+                    description:
+                        "Click the crop button to apply the selected area to your image."
+                },
+                {
+                    title: "Download Image",
+                    description:
+                        "Download the cropped image instantly in your selected format."
+                }
+            ],
+            tips: [
+                "Use fixed aspect ratios for social media posts and thumbnails.",
+                "Crop unnecessary background to focus on the subject.",
+                "High-resolution images produce better crop results.",
+                "No images are uploaded — everything runs in your browser."
+            ],
+            faqs: [
+                {
+                    question: "Does cropping reduce image quality?",
+                    answer:
+                        "No, cropping does not reduce image quality. It only removes unwanted areas while keeping the original resolution of the selected area."
+                },
+                {
+                    question: "Can I crop images for social media sizes?",
+                    answer:
+                        "Yes, you can crop images using common aspect ratios suitable for Instagram, Facebook, YouTube, and other platforms."
+                },
+                {
+                    question: "Is this image cropper safe to use?",
+                    answer:
+                        "Absolutely. All image processing happens locally in your browser, and your images are never uploaded to any server."
+                }
+            ]
+        }
+    },
+    {
+        id: "image-to-text",
+        icon: FileText,
+        title: "Image to Text Converter",
+        description: "Extract editable text from images using OCR technology.",
+        category: "Utility",
+        color: "from-blue-500 to-sky-500",
+        keywords: [
+            "image to text",
+            "ocr image to text",
+            "photo to text converter",
+            "extract text from image",
+            "image ocr online"
+        ],
+        instructions: {
+            title: "Convert Image to Text Online",
+            description:
+                "Our Image to Text Converter uses Optical Character Recognition (OCR) to extract readable and editable text from images. It works directly in your browser, ensuring fast results and complete privacy.",
+            steps: [
+                {
+                    title: "Upload Image",
+                    description:
+                        "Upload or drag and drop an image containing text such as a photo, screenshot, or scanned document."
+                },
+                {
+                    title: "Process Image",
+                    description:
+                        "Click the convert button to analyze the image and extract text using OCR."
+                },
+                {
+                    title: "Review Extracted Text",
+                    description:
+                        "Preview and edit the extracted text directly in the text editor."
+                },
+                {
+                    title: "Copy or Download",
+                    description:
+                        "Copy the extracted text or download it as a text file for later use."
+                }
+            ],
+            tips: [
+                "Use clear and high-resolution images for better OCR accuracy.",
+                "Ensure proper lighting and minimal blur in photos.",
+                "Printed text is recognized more accurately than handwritten text.",
+                "All processing happens locally for maximum privacy."
+            ],
+            faqs: [
+                {
+                    question: "What is OCR?",
+                    answer:
+                        "OCR (Optical Character Recognition) is a technology that converts text within images into editable and searchable text."
+                },
+                {
+                    question: "Can this tool read handwritten text?",
+                    answer:
+                        "Basic OCR works best with printed text. Handwritten text recognition may work but accuracy can vary."
+                },
+                {
+                    question: "Is my image uploaded to a server?",
+                    answer:
+                        "No. Images are processed locally in your browser and are never uploaded to any server."
+                }
+            ]
+        }
+    }
+
 ]
 
 
