@@ -7,9 +7,10 @@ import Logo from '../Logo';
 const footerLinks = {
   product: [
     { name: 'All Tools', path: '/tools' },
-    { name: 'Image Converter', path: '/tools' },
-    { name: 'Image Compressor', path: '/tools' },
-    { name: 'Resize Image', path: '/tools' },
+    { name: 'Png to Jpeg', path: '/tools/png-to-jpg' },
+    { name: 'Jpeg to Png', path: '/tools/png-to-jpg' },
+    { name: 'Png to Webp', path: '/tools/png-to-webp' },
+    { name: 'Image Compressor', path: '/tools/image-compressor' },
   ],
   company: [
     { name: 'About Us', path: '/about' },

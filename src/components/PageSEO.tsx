@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Head from "next/head";
 
 
@@ -6,9 +7,10 @@ interface PageSEOProps {
   description: string;
   canonical?: string;
   keywords?: string;
+  children?:ReactNode
 }
 
-export function PageSEO({ title, description, canonical, keywords }: PageSEOProps) {
+export function PageSEO({ title, description, canonical, keywords,children}: PageSEOProps) {
   const fullTitle = `${title} | Quick pic convert`;
   
   return (
@@ -24,6 +26,7 @@ export function PageSEO({ title, description, canonical, keywords }: PageSEOProp
       
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
+      {children}
     </Head>
   );
 }

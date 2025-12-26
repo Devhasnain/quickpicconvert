@@ -23,7 +23,8 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-bg.png"
+          src="/hero-bg.webp"
+          title="Online image converter background for JPG PNG and WebP conversion"
           alt="Online image converter background for JPG PNG and WebP conversion"
           width={800}
           height={800}

@@ -1,6 +1,6 @@
 import { Calendar, Clock, User } from "lucide-react";
-import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { PageSEO } from "@/components/PageSEO";
 import Link from "next/link";
 
 
@@ -20,11 +20,11 @@ export default function BlogPost({ post }: { post: any }) {
 
   return (
     <>
-      {/* <PageSEO
+      <PageSEO
         title={post.title}
         description={post.excerpt}
         keywords={`${post.category}, blog, tutorial`}
-      /> */}
+      />
 
       <article className="pt-28 pb-16">
         <div className="container-custom">
@@ -128,7 +128,6 @@ export default function BlogPost({ post }: { post: any }) {
           </div>
         </div>
       </article>
-
     </>
   );
 }
