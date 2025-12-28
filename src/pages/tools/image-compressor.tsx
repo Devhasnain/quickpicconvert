@@ -207,19 +207,6 @@ export default function ImageCompressor() {
                   ) : (
                     ""
                   )}
-
-                  {/* {results?.length ? (
-              <Button
-                onClick={handleDownload}
-                variant="outline"
-                className="min-w-10"
-                size="icon"
-              >
-                <Download className="w-4 h-4" />
-              </Button>
-            ) : (
-              ""
-            )} */}
                 </div>
 
                 <div className="pt-3">

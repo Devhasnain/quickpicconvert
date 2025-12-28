@@ -66,6 +66,7 @@ const ImageCropper = () => {
         title="Image Cropper – Crop Images Online Free"
         description="Crop images online using a fast and private browser-based image cropper."
         canonical="https://quickpicconvert.com/tools/image-cropper"
+        keywords="image cropper, image cropper online, image crop online, image crop tool, image resize, image cropper free, image resizer, image resizer tool"
       />
       <input
         type="file"
