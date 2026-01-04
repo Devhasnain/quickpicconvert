@@ -1,6 +1,7 @@
-import { Users, Target, Heart, Award, Zap, Globe } from "lucide-react";
+import { Users, Target, Heart, Award, Globe } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { PageSEO } from "@/components/PageSEO";
+import Logo from "@/components/Logo";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -82,7 +83,7 @@ export default function AboutPage() {
               "@type": "Organization",
               name: "Quick Pic Convert",
               url: "https://quickpicconvert.com",
-              logo: "https://quickpicconvert.com/logo-black.png",
+              logo: "https://quickpicconvert.com/logo-lg.png",
               description:
                 "Quick Pic Convert provides fast, private, browser-based image conversion and optimization tools.",
               sameAs: [
@@ -178,7 +179,7 @@ export default function AboutPage() {
               <div className="aspect-square rounded-3xl gradient-bg p-1">
                 <div className="w-full h-full rounded-3xl bg-card flex items-center justify-center">
                   <div className="text-center p-8">
-                    <Zap className="w-20 h-20 mx-auto text-primary mb-6" />
+                    <Logo/>
                     <p className="text-2xl font-bold text-foreground">
                       Fast. Free. Private.
                     </p>

@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 name: "Quick Pic Convert",
                 logo: {
                   "@type": "ImageObject",
-                  url: "https://quickpicconvert.com/logo.png",
+                  url: "https://quickpicconvert.com/logo-lg.png",
                 },
               },
             }),
