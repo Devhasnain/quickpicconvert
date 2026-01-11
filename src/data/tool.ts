@@ -311,7 +311,7 @@ export const tools: Tool[] = [
         "icon": Crop,
         "title": "Image Cropper",
         "description": "Crop images online easily to remove unwanted areas, adjust dimensions, and create perfectly sized images for websites, social media, and designs.",
-        "category": "Image Editing",
+        "category": "Editor",
         "color": "from-purple-500 to-violet-500",
         "keywords": [
             "image cropper",
@@ -549,60 +549,60 @@ export const tools: Tool[] = [
         }
     },
 
-    // {
-    //     "id": "image-metadata-reader",
-    //     "icon": Info,
-    //     "title": "Image Metadata Reader",
-    //     "description": "View and analyze image metadata including EXIF data, camera details, resolution, and file information instantly online.",
-    //     "category": "Utility",
-    //     "color": "from-indigo-500 to-purple-500",
-    //     "keywords": [
-    //         "image metadata reader",
-    //         "exif data viewer",
-    //         "photo metadata online",
-    //         "image exif viewer",
-    //         "image information tool",
-    //         "read image metadata"
-    //     ],
-    //     "instructions": {
-    //         "title": "Read Image Metadata Online",
-    //         "description": "The Image Metadata Reader lets you inspect hidden information stored inside image files, such as EXIF data, camera model, resolution, orientation, creation date, and more. This tool is useful for photographers, developers, and SEO professionals.",
-    //         "steps": [
-    //             {
-    //                 "title": "Upload Image",
-    //                 "description": "Upload or drag and drop an image file (JPG, PNG, WebP)."
-    //             },
-    //             {
-    //                 "title": "Analyze Metadata",
-    //                 "description": "The tool instantly scans the image and extracts available metadata."
-    //             },
-    //             {
-    //                 "title": "View Details",
-    //                 "description": "Review EXIF data such as camera info, dimensions, file size, and timestamps."
-    //             }
-    //         ],
-    //         "tips": [
-    //             "JPG images usually contain the most EXIF data",
-    //             "Metadata may include camera model, ISO, and exposure",
-    //             "Some images may not contain metadata if stripped",
-    //             "All analysis happens locally for privacy"
-    //         ],
-    //         "faqs": [
-    //             {
-    //                 "question": "What is image metadata?",
-    //                 "answer": "Image metadata is hidden information stored inside image files, including camera details, resolution, date, and settings."
-    //             },
-    //             {
-    //                 "question": "Does every image contain EXIF data?",
-    //                 "answer": "No. Metadata may be missing if the image was edited, compressed, or intentionally stripped."
-    //             },
-    //             {
-    //                 "question": "Are my images uploaded to a server?",
-    //                 "answer": "No. The metadata is read locally in your browser and images never leave your device."
-    //             }
-    //         ]
-    //     }
-    // }
+    {
+        "id": "image-metadata-reader",
+        "icon": Info,
+        "title": "Image Metadata Reader",
+        "description": "View and analyze image metadata including EXIF data, camera details, resolution, and file information instantly online.",
+        "category": "Utility",
+        "color": "from-indigo-500 to-purple-500",
+        "keywords": [
+            "image metadata reader",
+            "exif data viewer",
+            "photo metadata online",
+            "image exif viewer",
+            "image information tool",
+            "read image metadata"
+        ],
+        "instructions": {
+            "title": "Read Image Metadata Online",
+            "description": "The Image Metadata Reader lets you inspect hidden information stored inside image files, such as EXIF data, camera model, resolution, orientation, creation date, and more. This tool is useful for photographers, developers, and SEO professionals.",
+            "steps": [
+                {
+                    "title": "Upload Image",
+                    "description": "Upload or drag and drop an image file (JPG, PNG, WebP)."
+                },
+                {
+                    "title": "Analyze Metadata",
+                    "description": "The tool instantly scans the image and extracts available metadata."
+                },
+                {
+                    "title": "View Details",
+                    "description": "Review EXIF data such as camera info, dimensions, file size, and timestamps."
+                }
+            ],
+            "tips": [
+                "JPG images usually contain the most EXIF data",
+                "Metadata may include camera model, ISO, and exposure",
+                "Some images may not contain metadata if stripped",
+                "All analysis happens locally for privacy"
+            ],
+            "faqs": [
+                {
+                    "question": "What is image metadata?",
+                    "answer": "Image metadata is hidden information stored inside image files, including camera details, resolution, date, and settings."
+                },
+                {
+                    "question": "Does every image contain EXIF data?",
+                    "answer": "No. Metadata may be missing if the image was edited, compressed, or intentionally stripped."
+                },
+                {
+                    "question": "Are my images uploaded to a server?",
+                    "answer": "No. The metadata is read locally in your browser and images never leave your device."
+                }
+            ]
+        }
+    }
 
 
 

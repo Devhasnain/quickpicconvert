@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ArrowDown, Check, Copy, icons, X } from "lucide-react";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { ArrowDown, Check, Copy, icons } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
 import Tesseract from "tesseract.js";
@@ -61,6 +61,13 @@ const ImageToText = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const clearState = () => {
+    setImage(null);
+    setText("");
+    setProgress(0);
+    setLoading(false);
+  }
+
   useEffect(() => {
     if (image) {
       convertImageToText();
@@ -114,10 +121,10 @@ const ImageToText = () => {
         {text && (
           <>
             <div className="h-[40vh] w-full rounded-md border border-primary/80 overflow-y-auto p-6">
-              <span>{text}</span>
+              <span>{text?.length > 0 ? text : "Reading image..."}</span>
             </div>
 
-            <div className="flex flex-row items-center justify-between gap-3">
+            <div className="flex flex-row items-center justify-between gap-2">
               <Button
                 disabled={loading}
                 onClick={openExplorer}
@@ -125,6 +132,13 @@ const ImageToText = () => {
                 size={"icon"}
               >
                 Choose different file
+              </Button>
+              <Button
+                onClick={clearState}
+                size={"icon"}
+                variant={"outline"}
+              >
+                <X />
               </Button>
               <Button
                 onClick={copyToClipboard}

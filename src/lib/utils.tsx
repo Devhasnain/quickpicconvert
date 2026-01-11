@@ -222,7 +222,11 @@ export const cropImage = async (
   return exportCanvas(canvas);
 };
 
-export const resizeImage = async (file:File, width:number, height:number) => {
+export const resizeImage = async (
+  file: File,
+  width: number,
+  height: number
+) => {
   const { img, canvas, ctx } = await loadImageToCanvas(file);
 
   canvas.width = width;
@@ -232,9 +236,106 @@ export const resizeImage = async (file:File, width:number, height:number) => {
   return exportCanvas(canvas);
 };
 
-export const applyFilters = async (file:File, filter:any) => {
+export const applyFilters = async (file: File, filter: any) => {
   const { canvas, ctx } = await loadImageToCanvas(file);
   ctx.filter = filter;
   ctx.drawImage(canvas, 0, 0);
   return exportCanvas(canvas);
 };
+
+export function normalizeMetadata(tags: any) {
+  return Object.keys(tags).map((key) => ({
+    tag: key,
+    description: tags[key].description ?? "",
+    value: Array.isArray(tags[key].value)
+      ? tags[key].value.join(", ")
+      : tags[key].value ?? "",
+  }));
+}
+
+export function exportAsHTML(tags: any, filename: string) {
+  const data = normalizeMetadata(tags);
+
+  let rows = data
+    .map(
+      (item) => `
+      <tr>
+        <td>${item.tag}</td>
+        <td>${item.description}</td>
+        <td>${item.value}</td>
+      </tr>`
+    )
+    .join("");
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Metadata</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+  </style>
+</head>
+<body>
+  <h2>Image Metadata</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tag</th>
+        <th>Description</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows}
+    </tbody>
+  </table>
+</body>
+</html>
+`;
+
+  downloadFile(html, filename, "text/html");
+}
+
+export function exportAsTXT(tags: any, filename: string) {
+  const data = normalizeMetadata(tags);
+
+  const text = data.map((item) => `${item.tag}: ${item.value}`).join("\n");
+
+  downloadFile(text, filename, "text/plain");
+}
+
+export function exportAsCSV(tags: any, filename: string) {
+  const data = normalizeMetadata(tags);
+
+  const escapeCSV = (value: any) => `"${String(value).replace(/"/g, '""')}"`;
+
+  const csv = [
+    ["Tag", "Description", "Value"].join(","),
+    ...data.map((item) =>
+      [
+        escapeCSV(item.tag),
+        escapeCSV(item.description),
+        escapeCSV(item.value),
+      ].join(",")
+    ),
+  ].join("\n");
+
+  downloadFile(csv, filename, "text/csv");
+}
+
+function downloadFile(content: any, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
