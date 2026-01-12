@@ -107,7 +107,90 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
+  /* Blog Content Styles */
+  .article {
+    @apply max-w-none mx-auto;
+  }
+
+  /* Override specific elements if needed */
+
+  /* Headings */
+  .article h1 {
+    @apply text-3xl font-bold mt-8 mb-4 leading-snug;
+  }
+  .article h2 {
+    @apply text-2xl font-semibold mt-6 mb-3;
+  }
+  .article h3 {
+    @apply text-xl font-semibold mt-5 mb-2;
+  }
+  .article h4 {
+    @apply text-lg font-medium mt-4 mb-2;
+  }
+
+  /* Paragraphs */
+  .article p {
+    @apply mb-4 leading-relaxed text-gray-700;
+  }
+
+  /* Links */
+  .article a {
+    @apply text-blue-600 hover:text-blue-800 underline;
+  }
+
+  /* Images */
+  .article img {
+    @apply max-w-full h-auto rounded-lg my-4;
+  }
+
+  /* Lists */
+  .article ul {
+    @apply list-disc list-inside mb-4;
+  }
+  .article ol {
+    @apply list-decimal list-inside mb-4;
+  }
+  .article li {
+    @apply mb-2;
+  }
+
+  /* Blockquotes */
+  .article blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4;
+  }
+
+  /* Code */
+  .article code {
+    @apply bg-gray-100 text-sm text-red-600 px-1 rounded;
+  }
+  .article pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto my-4;
+  }
+
+  /* Tables */
+  .article table {
+    @apply table-auto border-collapse border border-gray-300 my-4;
+  }
+  .article th,
+  .article td {
+    @apply border border-gray-300 px-3 py-2 text-left;
+  }
+
+  /* Horizontal Rule */
+  .article hr {
+    @apply border-t border-gray-300 my-6;
+  }
+
+  /* Strong / Bold */
+  .article strong {
+    @apply font-semibold;
+  }
+
+  /* Italic */
+  .article em {
+    @apply italic;
   }
 }
 
@@ -123,7 +206,8 @@
   .gradient-border {
     @apply relative;
     background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-                linear-gradient(135deg, hsl(var(--primary)), hsl(var(--gradient-end))) border-box;
+      linear-gradient(135deg, hsl(var(--primary)), hsl(var(--gradient-end)))
+        border-box;
     border: 2px solid transparent;
   }
 
@@ -190,11 +274,21 @@
     animation: gradientMove 4s ease infinite;
   }
 
-  .delay-100 { animation-delay: 100ms; }
-  .delay-200 { animation-delay: 200ms; }
-  .delay-300 { animation-delay: 300ms; }
-  .delay-400 { animation-delay: 400ms; }
-  .delay-500 { animation-delay: 500ms; }
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
 }
 
 @keyframes fadeUp {
@@ -209,8 +303,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
@@ -247,21 +345,36 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
 
 #root {
   max-width: 1280px;

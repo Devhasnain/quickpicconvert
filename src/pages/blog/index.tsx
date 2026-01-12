@@ -5,6 +5,15 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 
+type Post = {
+excerpt:string
+image: {url:string}
+imageAlt:string
+publishedAt:string
+slug:string
+title:string
+}
+
 const blogPosts = [
   {
     id: "webp-vs-jpeg-2024",
@@ -83,7 +92,8 @@ const categories = [
   "Technology",
 ];
 
-export default function BlogPage() {
+export default function BlogPage({posts}: {posts: any}) {
+
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
   return (
@@ -114,14 +124,14 @@ export default function BlogPage() {
             </p>
 
             {/* Search Bar */}
-            <div className="relative max-w-md mx-auto">
+            {/* <div className="relative max-w-md mx-auto">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search articles..."
                 className="w-full h-12 pl-12 pr-4 rounded-xl bg-card border border-border focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -130,7 +140,7 @@ export default function BlogPage() {
       <section className="pt-8 pb-16 bg-background">
         <div className="container-custom">
           {/* Category Filter */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+          {/* <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
             {categories.map((category) => (
               <button
                 key={category}
@@ -144,22 +154,22 @@ export default function BlogPage() {
                 {category}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {/* Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
-              <BlogCard key={post.id} post={post} index={index} />
+            {posts.map((post: Post, index:number) => (
+              <BlogCard key={index} post={post} index={index} />
             ))}
           </div>
 
           {/* Load More */}
-          <div className="text-center mt-12">
+          {/* <div className="text-center mt-12">
             <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-secondary text-secondary-foreground font-medium hover:bg-accent transition-colors">
               Load More Articles
               <ArrowRight className="w-4 h-4" />
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
     </>
@@ -167,7 +177,7 @@ export default function BlogPage() {
 }
 
 interface BlogCardProps {
-  post: (typeof blogPosts)[0];
+  post: Post;
   index: number;
 }
 
@@ -177,7 +187,7 @@ function BlogCard({ post, index }: BlogCardProps) {
   });
   const delay = (index % 3) * 100;
 
-  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+  const formattedDate = new Date(post.publishedAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -185,7 +195,7 @@ function BlogCard({ post, index }: BlogCardProps) {
 
   return (
     <Link
-      href={`/blog/${post.id}`}
+      href={`/blog/${post.slug}`}
       ref={ref}
       className={cn("group block", isVisible ? "animate-fade-up" : "opacity-0")}
       style={{ animationDelay: `${delay}ms` }}
@@ -194,17 +204,17 @@ function BlogCard({ post, index }: BlogCardProps) {
         {/* Image */}
         <div className="aspect-[16/10] overflow-hidden">
           <img
-            src={post.image}
-            alt={post.title}
+            src={`https://quickpicconvert-cms.up.railway.app${post.image.url}`}
+            alt={post.imageAlt}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
 
         {/* Content */}
         <div className="p-6">
-          <span className="inline-block px-3 py-1 rounded-full bg-accent text-xs font-medium text-accent-foreground mb-3">
+          {/* <span className="inline-block px-3 py-1 rounded-full bg-accent text-xs font-medium text-accent-foreground mb-3">
             {post.category}
-          </span>
+          </span> */}
 
           <h2 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
             {post.title}
@@ -220,13 +230,39 @@ function BlogCard({ post, index }: BlogCardProps) {
               <Calendar className="w-4 h-4" />
               {formattedDate}
             </span>
-            <span className="flex items-center gap-1">
+            {/* <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
               {post.readTime}
-            </span>
+            </span> */}
           </div>
         </div>
       </article>
     </Link>
   );
 }
+
+export const getStaticProps = async () => {
+  const graphql = JSON.stringify({
+    query:
+      'query {\r\n  posts(where: { status: { equals: "published" } }) {\r\n    title\r\n    slug\r\n    excerpt\r\n    image {\r\n      url\r\n    }\r\n    imageAlt\r\n    publishedAt\r\n  }\r\n}\r\n',
+    variables: {},
+  });
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: graphql,
+  };
+
+  try {
+    const response = await fetch(
+      "https://quickpicconvert-cms.up.railway.app/api/graphql",
+      requestOptions
+    );
+    const result = await response.text();
+    return { props: { posts:JSON.parse(result)?.data?.posts } };
+  } catch (_error) {
+    return { props: { posts:[] } };
+  }
+};
