@@ -238,6 +238,9 @@
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+  .dashedBorder {
+   @apply border border-primary/80 border-dashed
+  }
 }
 
 @layer utilities {

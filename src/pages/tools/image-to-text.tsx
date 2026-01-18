@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { ArrowDown, Check, Copy, icons, X } from "lucide-react";
+import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
+import { ArrowDown, Check, Copy, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
+import content from "@/data/content.json";
 import Tesseract from "tesseract.js";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -66,7 +68,7 @@ const ImageToText = () => {
     setText("");
     setProgress(0);
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     if (image) {
@@ -77,10 +79,10 @@ const ImageToText = () => {
   return (
     <ToolPageLayout>
       <PageSEO
-        title="Image to Text Converter – Extract Text from Images Online (OCR)"
-        description="Convert images to editable text online using OCR. Extract text from photos, screenshots, and scanned documents securely in your browser."
-        canonical="https://quickpicconvert.com/tools/image-to-text"
-        keywords="image to text, ocr image to text, extract text from image, photo to text, image ocr online"
+        title={content.imageToText.seo.title}
+        description={content.imageToText.seo.description}
+        canonical={content.imageToText.seo.canonical}
+        keywords={content.imageToText.seo.keywords}
       />
       <input
         className="hidden"
@@ -89,12 +91,14 @@ const ImageToText = () => {
         onChange={handleFileChange}
         ref={inputRef}
       />
-      <div className="bg-card rounded-2xl border border-border p-6 space-y-4">
+      {!image && <UploadImageBtn
+      onClick={openExplorer}
+      />}
+      {image && <div className="bg-card rounded-2xl border border-border p-6 space-y-4">
         <div
-          onClick={!image && !loading ? openExplorer : () => {}}
           className="w-full h-[35vh] overflow-hidden flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2"
         >
-          {image ? (
+          
             <Image
               height={100}
               width={100}
@@ -102,13 +106,6 @@ const ImageToText = () => {
               src={URL.createObjectURL(image)}
               className="w-full h-full object-contain"
             />
-          ) : (
-            <>
-              <icons.Image className="w-12 h-12 text-primary/80" />
-              <Button size="lg">Choose image</Button>
-              <span className="text-primary/80">Click to upload image</span>
-            </>
-          )}
         </div>
 
         {loading && progress && (
@@ -118,10 +115,9 @@ const ImageToText = () => {
           </div>
         )}
 
-        {text && (
-          <>
+          {image && text && <>
             <div className="h-[40vh] w-full rounded-md border border-primary/80 overflow-y-auto p-6">
-              <span>{text?.length > 0 ? text : "Reading image..."}</span>
+              <span>{!text?.length || text === "0" ? "Reading image..." :text}</span>
             </div>
 
             <div className="flex flex-row items-center justify-between gap-2">
@@ -133,11 +129,7 @@ const ImageToText = () => {
               >
                 Choose different file
               </Button>
-              <Button
-                onClick={clearState}
-                size={"icon"}
-                variant={"outline"}
-              >
+              <Button onClick={clearState} size={"icon"} variant={"outline"}>
                 <X />
               </Button>
               <Button
@@ -152,9 +144,8 @@ const ImageToText = () => {
                 )}
               </Button>
             </div>
-          </>
-        )}
-      </div>
+          </>}
+      </div>}
     </ToolPageLayout>
   );
 };

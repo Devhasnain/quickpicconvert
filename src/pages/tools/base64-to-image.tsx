@@ -2,6 +2,7 @@ import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
 import { useEffect, useState } from "react";
+import content from "@/data/content.json";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -32,18 +33,20 @@ const Base64ToImage = () => {
   };
 
   useEffect(() => {
-    if (base64) {
+    if (base64 && base64?.length > 20) {
       handleConvert();
+    }else{
+      setImgSrc("")
     }
   }, [imgSrc, base64]);
 
   return (
     <>
       <PageSEO
-        title="Base64 to Image Converter Online - Decode Base64 to PNG, JPG, WebP"
-        description="Decode Base64 encoded strings into real images online. Convert Base64 or Data URLs to PNG, JPG, or WebP instantly in your browser. Free, fast, and secure."
-        keywords="base64 to image, decode base64, base64 to png, base64 to jpg, base64 decoder, base64 image converter, online base64 to image"
-        canonical="https://quickpicconvert.com/base64-to-image"
+        title={content.base64ToImage.seo.title}
+        description={content.base64ToImage.seo.description}
+        keywords={content.base64ToImage.seo.keywords}
+        canonical={content.base64ToImage.seo.canonical}
       />
 
       <ToolPageLayout>
@@ -67,7 +70,9 @@ const Base64ToImage = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <Button className="w-full" onClick={handleDownload}>Download</Button>
+              <Button className="w-full" onClick={handleDownload}>
+                Download
+              </Button>
             </>
           )}
         </div>

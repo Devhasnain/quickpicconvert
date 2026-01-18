@@ -1,10 +1,12 @@
 import { exportAsCSV, exportAsHTML, exportAsTXT } from "@/lib/utils";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
-import { icons, X } from "lucide-react";
+import content from "@/data/content.json";
 import EXIFReader from "exifreader";
+import { X } from "lucide-react";
 import Image from "next/image";
 
 
@@ -90,15 +92,16 @@ const ImageMetadataReader = () => {
         className="hidden"
       />
       <PageSEO
-        title="Image Metadata Reader Online - View EXIF Data & Image Info"
-        description="View and analyze image metadata online, including EXIF data, camera details, resolution, and file information. Fast, secure, and browser-based image metadata viewer."
-        keywords="image metadata reader, exif viewer, photo metadata online, image info viewer, online exif reader, check image details, analyze image metadata"
-        canonical="https://quickpicconvert.com/image-metadata-reader"
+        title={content.imageMetaReader.seo.title}
+        description={content.imageMetaReader.seo.description}
+        keywords={content.imageMetaReader.seo.keywords}
+        canonical={content.imageMetaReader.seo.canonical}
       />
       <ToolPageLayout>
-        <div className="bg-card rounded-2xl border border-border p-6 space-y-5">
-          {file && (
-            <div className="w-full border rounded-md h-[40vh] flex flex-col items-center justify-center">
+        {!file && <UploadImageBtn onClick={openExplorer} />}
+        {file && (
+          <div className="bg-card rounded-2xl border border-border p-6 space-y-5">
+            <div className="w-24 dashedBorder rounded-md h-24 flex flex-col items-center justify-center">
               <Image
                 height={0}
                 width={0}
@@ -107,68 +110,60 @@ const ImageMetadataReader = () => {
                 className="object-contain w-full h-full"
               />
             </div>
-          )}
-          {!file && (
-            <div
-              onClick={openExplorer}
-              className="w-full h-[35vh] flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2"
-            >
-              <icons.Image className="w-12 h-12 text-primary/80" />
-              <Button size="lg">Choose image</Button>
-              <span className="text-primary/80">Click to upload image</span>
+
+            <div className="flex flex-row gap-2 items-center">
+              <Button onClick={openExplorer} className="w-full">
+                Choose a different image
+              </Button>
+              <Button onClick={handleResetState} size={"icon"}>
+                <X />
+              </Button>
             </div>
-          )}
 
-          {file && (
-            <>
-              <div className="flex flex-row gap-2 items-center">
-                <Button onClick={openExplorer} className="w-full">
-                  Choose a different image
+            <div className="flex flex-row items-center gap-3">
+              <span>Save this data as</span>
+              <div className="flex flex-row gap-2">
+                <Button title="TXT" onClick={downloadAsTXT}>
+                  TXT
                 </Button>
-                <Button onClick={handleResetState} size={"icon"}>
-                  <X />
+                <Button title="HTML" onClick={downloadAsHTML}>
+                  HTML
+                </Button>
+                <Button title="CSV" onClick={downloadAsCSV}>
+                  CSV
                 </Button>
               </div>
+            </div>
 
-              <div className="flex flex-row items-center gap-3">
-                <span>Save this data as</span>
-                <div className="flex flex-row gap-2">
-                  <Button title="TXT" onClick={downloadAsTXT}>TXT</Button>
-                  <Button title="HTML" onClick={downloadAsHTML}>HTML</Button>
-                  <Button title="CSV" onClick={downloadAsCSV}>CSV</Button>
-                </div>
-              </div>
-            </>
-          )}
-
-          {metadata && (
-            <table className="w-full table-auto border-collapse border border-border">
-              <thead>
-                <tr> </tr>
-              </thead>
-              <tbody>
-                {metadata ? (
-                  Object?.entries(metadata).map(([key, value]: any) => (
-                    <tr key={key} className="border-b border-border">
-                      <td className="px-4 py-2 font-medium text-left align-top border-r border-border w-1/3">
-                        {key}
-                      </td>
-                      <td className="px-4 py-2 text-left align-top">
-                        {value?.description}
+            {metadata && (
+              <table className="w-full table-auto border-collapse border border-border">
+                <thead>
+                  <tr> </tr>
+                </thead>
+                <tbody>
+                  {metadata ? (
+                    Object?.entries(metadata).map(([key, value]: any) => (
+                      <tr key={key} className="border-b border-border">
+                        <td className="px-4 py-2 font-medium text-left align-top border-r border-border w-1/3">
+                          {key}
+                        </td>
+                        <td className="px-4 py-2 text-left align-top">
+                          {value?.description}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={2} className="px-4 py-2 text-center">
+                        No metadata available
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={2} className="px-4 py-2 text-center">
-                      No metadata available
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          )}
-        </div>
+                  )}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
       </ToolPageLayout>
     </>
   );

@@ -1,16 +1,17 @@
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import ImageConverter from "@/components/tool/ImageConverter";
 import { PageSEO } from "@/components/PageSEO";
+import content from "@/data/content.json";
 
 
 const JpgToPng = () => {
   return (
     <>
       <PageSEO
-        title="JPG to PNG Converter – Convert JPG Images to PNG Online Free"
-        description="Convert JPG images to PNG format online for free. Fast, secure, and browser-based JPG to PNG converter with no uploads required."
-        canonical="https://quickpicconvert.com/tools/jpg-to-png"
-        keywords="jpg to png, convert jpg to png, jpg png converter, image format converter, online jpg to png"
+        title={content.jpgToPng.seo.title}
+        description={content.jpgToPng.seo.description}
+        canonical={content.jpgToPng.seo.canonical}
+        keywords={content.jpgToPng.seo.keywords}
       />
 
       <ToolPageLayout>

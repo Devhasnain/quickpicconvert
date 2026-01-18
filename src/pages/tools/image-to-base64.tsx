@@ -1,8 +1,10 @@
+import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { ChangeEvent, useRef, useState } from "react";
-import { Check, Copy, icons } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
+import { Check, Copy, X } from "lucide-react";
+import content from "@/data/content.json";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -56,13 +58,19 @@ const ImageToBase64 = () => {
     }
   };
 
+  const handleReset = () => {
+    setText("");
+    setFile(null);
+    setCopied(false);
+  };
+
   return (
     <>
       <PageSEO
-        title="Image to Base64 Converter – Encode Images Online"
-        description="Convert images to Base64 strings or Data URLs instantly. Perfect for developers embedding images into HTML, CSS, JSON, or APIs."
-        canonical="https://quickpicconvert.com/tools/image-to-base64"
-        keywords="image to base64, convert image to base64, base64 image encoder, image to data url"
+        title={content.imageToBase64.seo.title}
+        description={content.imageToBase64.seo.description}
+        canonical={content.imageToBase64.seo.canonical}
+        keywords={content.imageToBase64.seo.keywords}
       />
 
       <ToolPageLayout>
@@ -73,12 +81,14 @@ const ImageToBase64 = () => {
           onChange={handleFileChange}
           ref={fileInputRef}
         />
-        <div className="bg-card rounded-2xl border border-border p-6 space-y-4">
-          <div
-            onClick={!file && !loading ? openExplorer : () => {}}
-            className="w-full h-[35vh] overflow-hidden flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2"
-          >
-            {file ? (
+        {!file && <UploadImageBtn onClick={openExplorer} />}
+        {file && text && (
+          <div className="bg-card rounded-2xl border border-border p-6 space-y-4">
+            <div className="h-[40vh] w-full rounded-md border border-primary/80 overflow-y-auto p-6 text-wrap overflow-x-hidden break-words">
+              {text}
+            </div>
+
+            <div className="w-24 h-24 overflow-hidden flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2">
               <Image
                 height={100}
                 width={100}
@@ -86,41 +96,30 @@ const ImageToBase64 = () => {
                 src={URL.createObjectURL(file)}
                 className="w-full h-full object-contain"
               />
-            ) : (
-              <>
-                <icons.Image className="w-12 h-12 text-primary/80" />
-                <Button size="lg">Choose image</Button>
-                <span className="text-primary/80">Click to upload image</span>
-              </>
-            )}
+            </div>
+
+            <div className="flex flex-row items-center justify-between gap-2">
+              <Button
+                disabled={loading}
+                onClick={openExplorer}
+                className="w-full"
+                size={"icon"}
+              >
+                Choose different file
+              </Button>
+              <Button onClick={handleCopy} size={"icon"} variant={"outline"}>
+                {copied ? (
+                  <Check className="w-4 h-4" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+              </Button>
+              <Button onClick={handleReset} size={"icon"} variant={"outline"}>
+                <X />
+              </Button>
+            </div>
           </div>
-
-          {text && (
-            <>
-              <div className="h-[40vh] w-full rounded-md border border-primary/80 overflow-y-auto p-6 text-wrap overflow-x-hidden break-words">
-                {text}
-              </div>
-
-              <div className="flex flex-row items-center justify-between gap-3">
-                <Button
-                  disabled={loading}
-                  onClick={openExplorer}
-                  className="w-full"
-                  size={"icon"}
-                >
-                  Choose different file
-                </Button>
-                <Button onClick={handleCopy} size={"icon"} variant={"outline"}>
-                  {copied ? (
-                    <Check className="w-4 h-4" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
+        )}
       </ToolPageLayout>
     </>
   );

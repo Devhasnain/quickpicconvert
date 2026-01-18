@@ -1,0 +1,50 @@
+{
+  "imageToBase64": {
+    "seo": {
+      "title": "Image to Base64 Converter – Encode Images Online",
+      "description": "Convert images to Base64 strings or Data URLs instantly. Perfect for developers embedding images into HTML, CSS, JSON, or APIs.",
+      "canonical": "https://quickpicconvert.com/tools/image-to-base64",
+      "keywords": "image to base64, convert image to base64, base64 image encoder, image to data url"
+    }
+  },
+  "imageMetaReader": {
+    "seo": {
+      "title": "Image Metadata Reader Online - View EXIF Data & Image Info",
+      "description": "View and analyze image metadata online, including EXIF data, camera details, resolution, and file information. Fast, secure, and browser-based image metadata viewer.",
+      "keywords": "image metadata reader, exif viewer, photo metadata online, image info viewer, online exif reader, check image details, analyze image metadata",
+      "canonical": "https://quickpicconvert.com/image-metadata-reader"
+    }
+  },
+  "base64ToImage": {
+    "seo": {
+      "title": "Base64 to Image Converter Online - Decode Base64 to PNG, JPG, WebP",
+      "description": "Decode Base64 encoded strings into real images online. Convert Base64 or Data URLs to PNG, JPG, or WebP instantly in your browser. Free, fast, and secure.",
+      "keywords": "base64 to image, decode base64, base64 to png, base64 to jpg, base64 decoder, base64 image converter, online base64 to image",
+      "canonical": "https://quickpicconvert.com/base64-to-image"
+    }
+  },
+  "jpgToPng": {
+    "seo": {
+      "title": "JPG to PNG Converter – Convert JPG Images to PNG Online Free",
+      "description": "Convert JPG images to PNG format online for free. Fast, secure, and browser-based JPG to PNG converter with no uploads required.",
+      "canonical": "https://quickpicconvert.com/tools/jpg-to-png",
+      "keywords": "jpg to png, convert jpg to png, jpg png converter, image format converter, online jpg to png"
+    }
+  },
+  "imageCompressor": {
+    "seo": {
+      "title": "Image Compressor – Compress JPG, PNG & WEBP Images Online",
+      "description": "Compress images online without losing quality. Reduce JPG, PNG, and WEBP file sizes instantly using our fast browser-based image compressor.",
+      "canonical": "https://quickpicconvert.com/tools/image-compressor",
+      "keywords": "image compressor, compress images, reduce image size, jpg png compressor, online image optimization"
+    }
+  },
+  "imageToText": {
+    "seo": {
+      "title": "Image to Text Converter – Extract Text from Images Online (OCR)",
+      "description": "Convert images to editable text online using OCR. Extract text from photos, screenshots, and scanned documents securely in your browser.",
+      "canonical": "https://quickpicconvert.com/tools/image-to-text",
+      "keywords": "image to text, ocr image to text, extract text from image, photo to text, image ocr online"
+    }
+  }
+}
