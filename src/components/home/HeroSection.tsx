@@ -28,7 +28,6 @@ export function HeroSection() {
           alt="Online image converter background for JPG PNG and WebP conversion"
           width={800}
           height={800}
-          priority={true}
           className="w-full h-full object-cover opacity-40"
           preload={true}
         />
