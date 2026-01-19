@@ -13,7 +13,7 @@ const features = [
 ];
 
 export function HeroSection() {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref } = useScrollAnimation();
 
   return (
     <section
@@ -28,8 +28,9 @@ export function HeroSection() {
           alt="Online image converter background for JPG PNG and WebP conversion"
           width={800}
           height={800}
-          priority
+          priority={true}
           className="w-full h-full object-cover opacity-40"
+          preload={true}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
       </div>
@@ -44,18 +45,11 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.5)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.5)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]" />
 
       <div className="container-custom relative z-10">
-        <div
-          ref={ref}
-          className={cn(
-            "max-w-4xl mx-auto text-center",
-            isVisible ? "opacity-100" : "opacity-0"
-          )}
-        >
+        <div ref={ref} className={cn("max-w-4xl mx-auto text-center")}>
           {/* Badge */}
           <div
             className={cn(
-              "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-8",
-              isVisible && "animate-fade-up"
+              "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-8"
             )}
           >
             <Sparkles className="w-4 h-4 text-primary" />
@@ -67,23 +61,18 @@ export function HeroSection() {
           {/* SEO Optimized H1 */}
           <h1
             className={cn(
-              "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6",
-              isVisible && "animate-fade-up delay-100"
+              "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6"
             )}
           >
             Free Online <span className="gradient-text">Image Converter</span>
             <br />
-            <small>
-            JPG, PNG, WebP & More
-            </small>
-
+            <small>JPG, PNG, WebP & More</small>
           </h1>
 
           {/* SEO Optimized Subtitle */}
           <p
             className={cn(
-              "text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10",
-              isVisible && "animate-fade-up delay-200"
+              "text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
             )}
           >
             Quick Pic Converter lets you convert images online in seconds.
@@ -94,8 +83,7 @@ export function HeroSection() {
           {/* CTA Buttons */}
           <div
             className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-4 mb-12",
-              isVisible && "animate-fade-up delay-300"
+              "flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
             )}
           >
             <Button variant="hero" size="xl" asChild>
@@ -111,10 +99,7 @@ export function HeroSection() {
 
           {/* Feature Pills */}
           <div
-            className={cn(
-              "flex flex-wrap items-center justify-center gap-4",
-              isVisible && "animate-fade-up delay-400"
-            )}
+            className={cn("flex flex-wrap items-center justify-center gap-4")}
           >
             {features.map((feature) => (
               <div
