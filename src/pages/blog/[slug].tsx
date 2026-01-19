@@ -1,7 +1,8 @@
-import { DocumentRenderer, defaultRenderers } from '@keystone-6/document-renderer';
+import { DocumentRenderer, defaultRenderers, } from "@keystone-6/document-renderer";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
 import { Calendar } from "lucide-react";
+import Posts from "@/data/Posts.json";
 import Link from "next/link";
 
 
@@ -26,7 +27,9 @@ export default function BlogPost({ post }: { post: any }) {
         description={post.seoDescription || post.excerpt}
         keywords={post.tags?.map((tag: any) => tag.name).join(", ") || ""}
         ogTitle={post.ogTitle || post.seoTitle || post.title}
-        ogDescription={post.ogDescription || post.seoDescription || post.excerpt}
+        ogDescription={
+          post.ogDescription || post.seoDescription || post.excerpt
+        }
         canonical={`https://quickpicconvert.com/blog/${post.slug}`}
       />
 
@@ -62,7 +65,7 @@ export default function BlogPost({ post }: { post: any }) {
             {/* Featured Image */}
             <div className="aspect-video rounded-2xl overflow-hidden mb-10">
               <img
-                src={`https://quickpicconvert-cms.up.railway.app${post.image.url}`}
+                src={`https://quickpicconvert-cms.up.railway.app${post?.image?.url}`}
                 alt={post.imageAlt}
                 className="w-full h-full object-cover"
               />
@@ -74,11 +77,10 @@ export default function BlogPost({ post }: { post: any }) {
                 {post.excerpt}
               </p>
 
-              <DocumentRenderer 
-              document={post.content.document}
+              <DocumentRenderer
+                document={post?.content?.document || post?.content || []}
                 renderers={defaultRenderers}
               />
-
             </div>
 
             {/* Author Card */}
@@ -105,28 +107,29 @@ export default function BlogPost({ post }: { post: any }) {
 }
 
 export const getStaticPaths = async () => {
-  const graphql = JSON.stringify({
-    query:
-      'query {\r\n  posts(\r\n    where: {\r\n      status: { equals: "published" }\r\n    }\r\n  ) {\r\n    slug\r\n  }\r\n}\r\n',
-    variables: {},
-  });
+  // const graphql = JSON.stringify({
+  //   query:
+  //     'query {\r\n  posts(\r\n    where: {\r\n      status: { equals: "published" }\r\n    }\r\n  ) {\r\n    slug\r\n  }\r\n}\r\n',
+  //   variables: {},
+  // });
 
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: graphql,
-  };
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: graphql,
+  // };
 
   try {
-    const response = await fetch(
-      "https://quickpicconvert-cms.up.railway.app/api/graphql",
-      requestOptions
-    );
-    const result = await response.text();
+    // const response = await fetch(
+    //   "https://quickpicconvert-cms.up.railway.app/api/graphql",
+    //   requestOptions
+    // );
+    // const result = await response.text();
 
-    let posts = JSON.parse(result)?.data?.posts || [];
+    let posts = Posts;
+    // JSON.parse(result)?.data?.posts || [];
     const paths: string[] = [];
     posts.forEach((item: any) => {
       paths.push(`/blog/${item?.slug}`);
@@ -144,25 +147,27 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context: { params: { slug: string } }) => {
-  const graphql = JSON.stringify({
-  query: `query {\r\n  posts(\r\n    where: {\r\n      slug: { equals: \"${context.params.slug}\" }\r\n      status: { equals: \"published\" }\r\n    }\r\n  ) {\r\n    title\r\n    slug\r\n    excerpt\r\n    content {\r\n        document\r\n    }\r\n    image {\r\n      url\r\n    }\r\n    seoTitle\r\n    imageAlt\r\n    seoDescription\r\n    canonicalUrl\r\n    \r\n    ogTitle\r\n    ogDescription\r\n    publishedAt\r\n    noIndex\r\n    tags {\r\n        name\r\n    }\r\n  }\r\n}\r\n`,
-  variables: {}
-})
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: graphql,
-  };
+  //   const graphql = JSON.stringify({
+  //   query: `query {\r\n  posts(\r\n    where: {\r\n      slug: { equals: \"${context.params.slug}\" }\r\n      status: { equals: \"published\" }\r\n    }\r\n  ) {\r\n    title\r\n    slug\r\n    excerpt\r\n    content {\r\n        document\r\n    }\r\n    image {\r\n      url\r\n    }\r\n    seoTitle\r\n    imageAlt\r\n    seoDescription\r\n    canonicalUrl\r\n    \r\n    ogTitle\r\n    ogDescription\r\n    publishedAt\r\n    noIndex\r\n    tags {\r\n        name\r\n    }\r\n  }\r\n}\r\n`,
+  //   variables: {}
+  // })
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: graphql,
+  //   };
 
   try {
-    const response = await fetch(
-      "https://quickpicconvert-cms.up.railway.app/api/graphql",
-      requestOptions
-    );
-    const result = await response.text();
-    return { props: { post: JSON.parse(result)?.data?.posts[0] || null } };
+    // const response = await fetch(
+    //   "https://quickpicconvert-cms.up.railway.app/api/graphql",
+    //   requestOptions
+    // );
+    // const result = await response.text();
+    // return { props: { post: JSON.parse(result)?.data?.posts[0] || null } };
+    let post = Posts.find((item) => item.slug === context.params.slug);
+    return { props: { post } };
   } catch (_error) {
     return { props: { post: null } };
   }

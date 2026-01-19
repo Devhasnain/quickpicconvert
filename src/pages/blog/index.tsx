@@ -1,6 +1,7 @@
-import { Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { PageSEO } from "@/components/PageSEO";
+import { Calendar } from "lucide-react";
+import Posts from "@/data/Posts.json";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -13,75 +14,6 @@ publishedAt:string
 slug:string
 title:string
 }
-
-const blogPosts = [
-  {
-    id: "webp-vs-jpeg-2024",
-    title: "WebP vs JPEG: Which Format Should You Use in 2024?",
-    excerpt:
-      "A comprehensive comparison of WebP and JPEG formats, including performance benchmarks, browser support, and use cases.",
-    category: "Guide",
-    date: "2024-01-15",
-    readTime: "8 min read",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
-  },
-  {
-    id: "image-compression-seo",
-    title: "How Image Compression Improves Your Website SEO",
-    excerpt:
-      "Learn how optimized images can significantly boost your search engine rankings and improve user experience.",
-    category: "SEO",
-    date: "2024-01-10",
-    readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1432888622747-4eb9a8f2c5f4?w=600&h=400&fit=crop",
-  },
-  {
-    id: "batch-image-processing",
-    title: "The Ultimate Guide to Batch Image Processing",
-    excerpt:
-      "Save hours of work by learning how to process hundreds of images at once with our batch tools.",
-    category: "Tutorial",
-    date: "2024-01-05",
-    readTime: "10 min read",
-    image:
-      "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=400&fit=crop",
-  },
-  {
-    id: "png-transparency-guide",
-    title: "Understanding PNG Transparency: A Complete Guide",
-    excerpt:
-      "Everything you need to know about PNG transparency, alpha channels, and when to use transparent images.",
-    category: "Guide",
-    date: "2023-12-28",
-    readTime: "7 min read",
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
-  },
-  {
-    id: "mobile-image-optimization",
-    title: "Mobile-First Image Optimization Strategies",
-    excerpt:
-      "Optimize your images for mobile devices to improve load times and reduce data usage for your users.",
-    category: "Performance",
-    date: "2023-12-20",
-    readTime: "9 min read",
-    image:
-      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop",
-  },
-  {
-    id: "avif-future-images",
-    title: "AVIF: The Future of Image Compression",
-    excerpt:
-      "Explore the next-generation image format that offers superior compression and quality compared to WebP.",
-    category: "Technology",
-    date: "2023-12-15",
-    readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop",
-  },
-];
 
 const categories = [
   "All",
@@ -204,7 +136,7 @@ function BlogCard({ post, index }: BlogCardProps) {
         {/* Image */}
         <div className="aspect-[16/10] overflow-hidden">
           <img
-            src={`https://quickpicconvert-cms.up.railway.app${post.image.url}`}
+            src={`https://quickpicconvert-cms.up.railway.app${post?.image?.url}`}
             alt={post.imageAlt}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -242,26 +174,27 @@ function BlogCard({ post, index }: BlogCardProps) {
 }
 
 export const getStaticProps = async () => {
-  const graphql = JSON.stringify({
-    query:
-      'query {\r\n  posts(where: { status: { equals: "published" } }) {\r\n    title\r\n    slug\r\n    excerpt\r\n    image {\r\n      url\r\n    }\r\n    imageAlt\r\n    publishedAt\r\n  }\r\n}\r\n',
-    variables: {},
-  });
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: graphql,
-  };
+  // const graphql = JSON.stringify({
+  //   query:
+  //     'query {\r\n  posts(where: { status: { equals: "published" } }) {\r\n    title\r\n    slug\r\n    excerpt\r\n    image {\r\n      url\r\n    }\r\n    imageAlt\r\n    publishedAt\r\n  }\r\n}\r\n',
+  //   variables: {},
+  // });
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: graphql,
+  // };
 
   try {
-    const response = await fetch(
-      "https://quickpicconvert-cms.up.railway.app/api/graphql",
-      requestOptions
-    );
-    const result = await response.text();
-    return { props: { posts:JSON.parse(result)?.data?.posts } };
+    // const response = await fetch(
+    //   "https://quickpicconvert-cms.up.railway.app/api/graphql",
+    //   requestOptions
+    // );
+    // const result = await response.text();
+    // return { props: { posts:JSON.parse(result)?.data?.posts } };
+    return {props : {posts:Posts}}
   } catch (_error) {
     return { props: { posts:[] } };
   }
