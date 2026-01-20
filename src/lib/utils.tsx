@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import JSZip, { files } from "jszip";
+import { toast } from "sonner";
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -339,3 +340,50 @@ function downloadFile(content: any, filename: string, mimeType: string) {
 
   URL.revokeObjectURL(url);
 }
+
+export const getFileFromClipboard = (event: ClipboardEvent) => {
+  try {
+    const items = event.clipboardData?.items;
+    if (!items) return;
+
+    let returnValue: any;
+
+    for (const item of items) {
+      if (item.kind === "file") {
+        const file = item.getAsFile();
+        if (file && /\.(jpg|jpeg|png|webp)$/i.test(file.name)) {
+          returnValue = file;
+        } else {
+          throw new Error("Please select an image file.");
+        }
+      }
+
+      // if (item.kind === "string") {
+      //   item.getAsString(async (text) => {
+      //     const trimmed = text.trim();
+      //     const isValidUrl = new URL(trimmed);
+      //     if (isValidUrl) {
+      //       returnValue = await handleUrl(trimmed);
+      //     } else {
+      //       throw new Error("Please paste a valid image url.");
+      //     }
+      //   });
+      // }
+    }
+
+    return returnValue;
+  } catch (error: any) {
+    toast.error(error?.message);
+  }
+};
+
+// async function handleUrl(url: string) {
+//   const res = await fetch("/api/fetch-image", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ url }),
+//   });
+
+//   const data = await res.json();
+//   return data;
+// }

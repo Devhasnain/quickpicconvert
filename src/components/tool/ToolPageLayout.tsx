@@ -11,8 +11,16 @@ import { PageSEO } from "../PageSEO";
 
 type Props = {
   children: ReactNode;
+  containerClassName?: string;
+  mainContainerClassName?: string;
+  pageHero?: "default" | "custom";
 };
-const ToolPageLayout = ({ children }: Props) => {
+const ToolPageLayout = ({
+  children,
+  containerClassName,
+  mainContainerClassName,
+  pageHero = "default",
+}: Props) => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
   const pathname = useRouter().pathname;
@@ -26,38 +34,39 @@ const ToolPageLayout = ({ children }: Props) => {
     <>
       {tool && (
         <>
-          <PageSEO
-            title={tool ? tool.title : "Tool"}
-            description={tool ? tool.description : "Tool description"}
-            keywords={tool ? tool?.keywords?.join(", ") : "tool, generator"}
-          />
-          <section className="pt-24 pb-7 bg-hero-bg">
-            <div className="container-custom">
-              <div
-                ref={headerRef}
-                className={cn(
-                  "text-center max-w-5xl mx-auto",
-                  headerVisible ? "animate-fade-up" : "opacity-0"
-                )}
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-4">
-                  <Zap className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-accent-foreground">
-                    All Tools Available Free
-                  </span>
+          {pageHero === "default" ? (
+            <section className="pt-24 pb-7 bg-hero-bg">
+              <div className="container-custom">
+                <div
+                  ref={headerRef}
+                  className={cn(
+                    "text-center max-w-5xl mx-auto",
+                    headerVisible ? "animate-fade-up" : "opacity-0"
+                  )}
+                >
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-4">
+                    <Zap className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-accent-foreground">
+                      All Tools Available Free
+                    </span>
+                  </div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
+                    {tool.title}
+                  </h1>
+                  <p className="text-lg max-w-3xl m-auto text-muted-foreground">
+                    {tool.description}
+                  </p>
                 </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-                  {tool.title}
-                </h1>
-                <p className="text-lg max-w-3xl m-auto text-muted-foreground">
-                  {tool.description}
-                </p>
               </div>
-            </div>
-          </section>
+            </section>
+          ) : (
+            ""
+          )}
 
-          <section className="container-custom pb-8">
-            <div className="max-w-3xl mx-auto">{children}</div>
+          <section className={`container-custom pb-8 ${mainContainerClassName}`}>
+            <div className={`max-w-3xl mx-auto ${containerClassName}`}>
+              {children}
+            </div>
           </section>
 
           {tool?.instructions && (

@@ -20,6 +20,81 @@ export interface Tool {
 
 export const tools: Tool[] = [
     {
+        "id": "image-converter",
+        "icon": ArrowRightLeft,
+        "title": "Image Converter (JPG, PNG, WEBP)",
+        "description": "Convert images between JPG, PNG, and WEBP formats online. Resize images, adjust quality, maintain transparency, and optimize files for web or print — fast, free, and secure.",
+        "category": "Converter",
+        "color": "from-purple-500 to-pink-500",
+        "keywords": [
+            "image converter",
+            "jpg to png",
+            "png to jpg",
+            "jpg to webp",
+            "png to webp",
+            "webp to jpg",
+            "webp to png",
+            "convert images online",
+            "free image converter",
+            "resize images online",
+            "image quality optimizer",
+            "lossless image conversion",
+            "image format converter"
+        ],
+        "instructions": {
+            "title": "Convert Images Online (JPG, PNG, WEBP)",
+            "description": "Our all-in-one image converter lets you easily convert images between JPG, PNG, and WEBP formats while controlling quality, dimensions, and output settings. Perfect for web optimization, design assets, social media, and professional use — all processed securely in your browser.",
+            "steps": [
+                {
+                    "title": "Upload Your Image",
+                    "description": "Upload or drag and drop your image in JPG, PNG, or WEBP format."
+                },
+                {
+                    "title": "Choose Output Settings",
+                    "description": "Select the output format (JPG, PNG, or WEBP), adjust image quality, and set custom width or height if needed."
+                },
+                {
+                    "title": "Convert Image",
+                    "description": "Click convert to instantly process your image using optimized and lossless conversion."
+                },
+                {
+                    "title": "Download Converted Image",
+                    "description": "Download your converted image immediately with the selected format, size, and quality."
+                }
+            ],
+            "tips": [
+                "Use WEBP for smaller file sizes and faster website loading",
+                "Choose PNG for transparency and sharp graphics",
+                "Adjust quality to reduce file size without visible loss",
+                "Resize images to exact dimensions for web and social media",
+                "Maintain original aspect ratio to avoid image distortion"
+            ],
+            "faqs": [
+                {
+                    "question": "Which image formats are supported?",
+                    "answer": "This tool supports JPG, JPEG, PNG, and WEBP image formats for both input and output."
+                },
+                {
+                    "question": "Can I resize images during conversion?",
+                    "answer": "Yes, you can set a custom width or height, and the tool will resize the image while preserving aspect ratio."
+                },
+                {
+                    "question": "Does this tool support transparency?",
+                    "answer": "Yes, PNG and WEBP formats fully support transparency. JPG does not support transparent backgrounds."
+                },
+                {
+                    "question": "Will image quality be reduced?",
+                    "answer": "You control the quality settings. PNG uses lossless compression, while JPG and WEBP allow adjustable quality for optimization."
+                },
+                {
+                    "question": "Is this image converter free and secure?",
+                    "answer": "Yes, the converter is 100% free, runs entirely in your browser, and your images are never uploaded or stored on a server."
+                }
+            ]
+        }
+    }
+    ,
+    {
         "id": "jpg-to-png",
         "icon": ArrowRightLeft,
         "title": "JPG to PNG Converter",

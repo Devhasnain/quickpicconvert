@@ -1,6 +1,7 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { ChangeEvent, useRef, useState } from "react";
+import { getFileFromClipboard } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
 import { Check, Copy, X } from "lucide-react";
@@ -20,32 +21,39 @@ const ImageToBase64 = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      setLoading(true);
       if (!e.target.files?.length) {
         throw new Error("Unknown error! Please try again.");
       }
 
       setFile(e.target.files[0]);
 
-      const reader = new FileReader();
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
 
-      reader.readAsDataURL(e.target.files[0]);
+  const handleReadFile = async () => {
+    try {
+      if (!file) throw new Error("Please upload the image again.");
+      setLoading(true);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) setText(reader.result?.toString());
       };
       reader.onerror = (error) => {
         throw new Error("Error converting image to base64:" + error);
       };
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-      setLoading(false);
     } catch (error: any) {
-      setLoading(false);
       toast.error(error?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,6 +71,19 @@ const ImageToBase64 = () => {
     setFile(null);
     setCopied(false);
   };
+
+  useEffect(() => {
+    const handleFile = (e: ClipboardEvent) => {
+      const response = getFileFromClipboard(e);
+      setFile(response);
+    };
+    window?.addEventListener("paste", handleFile);
+    return () => window?.removeEventListener("paste", getFileFromClipboard);
+  }, []);
+
+  useEffect(() => {
+    if (file) handleReadFile();
+  }, [file]);
 
   return (
     <>

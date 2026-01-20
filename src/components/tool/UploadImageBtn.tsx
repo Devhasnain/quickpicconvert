@@ -9,11 +9,8 @@ type Props = {
 
 const UploadImageBtn = ({ onClick }: Props) => {
   return (
-    <div
-      onClick={onClick}
-      className="cursor-pointer flex flex-row items-center justify-center"
-    >
-      <div className="h-80 w-80 relative">
+    <div className="flex flex-row items-center justify-center">
+      <div className="cursor-pointer h-80 w-80 relative" onClick={onClick}>
         <Image
           alt=""
           src="/images/shape-dark-1.png"

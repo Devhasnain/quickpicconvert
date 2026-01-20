@@ -46,5 +46,13 @@
       "canonical": "https://quickpicconvert.com/tools/image-to-text",
       "keywords": "image to text, ocr image to text, extract text from image, photo to text, image ocr online"
     }
+  },
+  "imageConverter": {
+    "seo": {
+      "title": "Image Converter Online – JPG, PNG, WEBP Converter & Resizer",
+      "description": "Convert images between JPG, PNG, and WEBP formats online. Resize images, control quality, preserve transparency, and optimize images securely in your browser.",
+      "canonical": "https://quickpicconvert.com/tools/image-converter",
+      "keywords": "image converter online, jpg to png, png to jpg, jpg to webp, webp to png, resize images online, image quality optimizer, free image converter"
+    }
   }
 }
