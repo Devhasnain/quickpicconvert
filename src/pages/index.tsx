@@ -10,10 +10,10 @@ const Index = () => {
   return (
     <>
       <PageSEO
-        title="Quick Pic Converter – Fast & Free Image Converter, Compressor & Editor"
-        description="Quick Pic Converter is an all-in-one free online image converter platform. Convert JPG, PNG, WebP, compress images, resize, crop, enhance, and remove backgrounds instantly with fast, secure, browser-based tools."
+        title="Quick Pic Convert – Fast & Free Image Converter, Compressor & Editor"
+        description="Quick Pic Convert is an all-in-one free online image converter platform. Convert JPG, PNG, WebP, compress images, resize, crop, enhance, and remove backgrounds instantly with fast, secure, browser-based tools."
         keywords="image converter, jpg to png, png to jpg, webp converter, image compressor, resize images, crop images, background remover, online image tools, free image converter, free online image converter"
-        canonical="https://quickpicconverter.com/"
+        canonical="https://quickpicconvert.com/"
       />
       <HeroSection />
       <FeaturesSection />

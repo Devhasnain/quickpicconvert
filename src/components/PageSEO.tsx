@@ -43,6 +43,9 @@ export function PageSEO({
 
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
+
+      <link rel="favicon" href="/favicon.ico" type="image/x-icon" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       {children}
     </Head>
   );
