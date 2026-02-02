@@ -5,17 +5,14 @@ import { ChevronRight, Download, Sparkles, X } from "lucide-react";
 import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import HeroBackground from "@/components/tool/HeroBackground";
+import { ChangeEvent, useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
-import { ChangeEvent, useRef } from "react";
-import content from "@/data/content.json";
 import { tools } from "@/data/tool";
 import Image from "next/image";
 import { toast } from "sonner";
-import Link from "next/link";
 
 
-const ImageConverter = ({ pageData }: { pageData: string }) => {
+const ImageConverter = () => {
   const {
     previewUrl,
     loading,
@@ -30,7 +27,10 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
     outputFormat,
     resetStore,
   } = useImageConverterStore();
-  const pageContent = JSON.parse(pageData);
+  const tool = useMemo(
+    () => tools.find((item) => item.id === "image-converter"),
+    []
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   const openExplorer = () => {
@@ -60,27 +60,8 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  if (!pageContent?.id) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Post not found</h1>
-          <Button asChild>
-            <Link href="/tools">Back to Tools</Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
-      <PageSEO
-        title={content.imageConverter.seo.title}
-        description={content.imageConverter.seo.description}
-        keywords={content.imageConverter.seo.keywords}
-        canonical={content.imageConverter.seo.canonical}
-      />
       <ToolPageLayout
         containerClassName="max-w-full"
         mainContainerClassName="max-w-full lg:px-0 sm:px-0 px-0"
@@ -129,11 +110,11 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 px-4 sm:px-0 ">
-                {pageContent?.title}
+                {tool?.title}
               </h1>
 
               <p className="text-lg text-primary-foreground/80 mb-6 max-w-3xl mx-auto px-4 sm:px-0">
-                {pageContent?.description}
+                {tool?.description}
               </p>
 
               <UploadImageBtn onClick={openExplorer} />
@@ -164,11 +145,7 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
                 )}
               </div>
 
-              <Button
-                onClick={resetStore}
-                variant={"secondary"}
-                size={"icon"}
-              >
+              <Button onClick={resetStore} variant={"secondary"} size={"icon"}>
                 <X className="text-primary" />
               </Button>
               <Button
@@ -184,16 +161,6 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
       </ToolPageLayout>
     </>
   );
-};
-
-export const getStaticProps = async () => {
-  return {
-    props: {
-      pageData: JSON.stringify(
-        tools.find((item) => item.id === "image-converter") || ""
-      ),
-    },
-  };
 };
 
 export default ImageConverter;

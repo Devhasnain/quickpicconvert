@@ -3,8 +3,6 @@ import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { ArrowDown, Check, Copy, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
-import content from "@/data/content.json";
 import Tesseract from "tesseract.js";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -78,12 +76,6 @@ const ImageToText = () => {
 
   return (
     <ToolPageLayout>
-      <PageSEO
-        title={content.imageToText.seo.title}
-        description={content.imageToText.seo.description}
-        canonical={content.imageToText.seo.canonical}
-        keywords={content.imageToText.seo.keywords}
-      />
       <input
         className="hidden"
         type="file"

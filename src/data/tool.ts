@@ -1,22 +1,25 @@
-import { ArrowRightLeft, Code, Crop, FileImage, FileText, FileType, ImageMinus, Info, Key, Layers, Maximize2, Minimize2, Palette, RotateCw, Wand2 } from "lucide-react";
+import { ArrowRightLeft, Code, Crop, FileText, Info, Key, Minimize2, Palette } from "lucide-react";
 
 
 export interface Tool {
     id: string;
-    cardTitle?:string;
     title: string;
     description: string;
     icon: typeof Key;
     category: string;
-    keywords: string[];
     color: string;
-    canonical?:string;
     instructions?: {
         title: string;
         description: string;
         steps: { title: string; description: string }[];
         tips: string[];
         faqs: { question: string; answer: string }[];
+    },
+    seo: {
+        title: string;
+        description: string;
+        canonical: string;
+        keywords: string
     }
 }
 
@@ -28,21 +31,12 @@ export const tools: Tool[] = [
         "description": "Convert images between JPG, PNG, and WEBP formats online. Resize images, adjust quality, maintain transparency, and optimize files for web or print — fast, free, and secure.",
         "category": "Converter",
         "color": "from-purple-500 to-pink-500",
-        "keywords": [
-            "image converter",
-            "jpg to png",
-            "png to jpg",
-            "jpg to webp",
-            "png to webp",
-            "webp to jpg",
-            "webp to png",
-            "convert images online",
-            "free image converter",
-            "resize images online",
-            "image quality optimizer",
-            "lossless image conversion",
-            "image format converter"
-        ],
+        seo: {
+            "title": "Free Online Image Converter – Convert | Resize & Optimize Images",
+            "description": "Convert images online between JPG, PNG, and WEBP formats. Resize, compress, and optimize images instantly with our free, secure, and browser-based image converter.",
+            "canonical": "https://quickpicconvert.com/tools/image-converter",
+            "keywords": "free image converter online, convert jpg to png, convert png to jpg, convert jpg to webp, webp to png converter, resize images online, compress images, optimize image quality, online image editor"
+        },
         "instructions": {
             "title": "Convert Images Online (JPG, PNG, WEBP)",
             "description": "Our all-in-one image converter lets you easily convert images between JPG, PNG, and WEBP formats while controlling quality, dimensions, and output settings. Perfect for web optimization, design assets, social media, and professional use — all processed securely in your browser.",
@@ -94,8 +88,7 @@ export const tools: Tool[] = [
                 }
             ]
         }
-    }
-    ,
+    },
     {
         "id": "jpg-to-png",
         "icon": ArrowRightLeft,
@@ -103,16 +96,12 @@ export const tools: Tool[] = [
         "description": "Convert JPG images to PNG format online with high quality and transparency support. Fast, free, and secure JPG to PNG conversion without losing image quality.",
         "category": "Converter",
         "color": "from-blue-500 to-cyan-500",
-        "keywords": [
-            "jpg to png",
-            "convert jpg to png",
-            "jpg to png online",
-            "free jpg to png converter",
-            "png transparency",
-            "image format converter",
-            "jpeg to png",
-            "lossless image conversion"
-        ],
+        seo: {
+            "title": "JPG to PNG Converter – Convert JPG Images to PNG Online Free",
+            "description": "Convert JPG images to PNG format online for free. Fast, secure, and browser-based JPG to PNG converter with no uploads required.",
+            "canonical": "https://quickpicconvert.com/tools/jpg-to-png",
+            "keywords": "jpg to png, convert jpg to png, jpg png converter, image format converter, online jpg to png"
+        },
         "instructions": {
             "title": "Convert JPG to PNG Online for Free",
             "description": "Our JPG to PNG converter allows you to easily convert JPEG images into high-quality PNG files with lossless compression. PNG format is ideal for transparent backgrounds, logos, icons, and professional graphics. The conversion is fast, secure, and works directly in your browser.",
@@ -163,16 +152,12 @@ export const tools: Tool[] = [
         "description": "Convert PNG images to JPG format online to reduce file size while maintaining excellent image quality. Fast, free, and browser-based PNG to JPG converter.",
         "category": "Converter",
         "color": "from-orange-500 to-amber-500",
-        "keywords": [
-            "png to jpg",
-            "convert png to jpg",
-            "png to jpg online",
-            "reduce image size",
-            "jpg image converter",
-            "free png to jpg converter",
-            "optimize images for web",
-            "image compression tool"
-        ],
+        seo: {
+            title: "PNG to JPG Converter",
+            "description": "Convert PNG images to JPG format online to reduce file size while maintaining excellent image quality. Fast, free, and browser-based PNG to JPG converter.",
+            "keywords": "png to jpg, convert png to jpg, png to jpg online, reduce image size, jpg image converter, free png to jpg converter, optimize images for web, image compression tool",
+            canonical: "https://quickpicconvert.com/tools/png-to-jpg"
+        },
         "instructions": {
             "title": "Convert PNG to JPG Online for Free",
             "description": "Our PNG to JPG converter helps you convert large PNG images into smaller JPG files without noticeable quality loss. JPG format is ideal for photos, websites, and faster page loading. The conversion happens instantly and securely in your browser.",
@@ -223,15 +208,13 @@ export const tools: Tool[] = [
         "description": "Convert PNG images to WebP format online for superior compression, transparency support, and faster website performance without losing quality.",
         "category": "Converter",
         "color": "from-lime-500 to-green-500",
-        "keywords": [
-            "png to webp",
-            "convert png to webp",
-            "png to webp online",
-            "webp image converter",
-            "optimize images for web",
-            "reduce png size",
-            "modern image format"
-        ],
+        seo: {
+            "title": "PNG to WebP Converter",
+            "description": "Convert PNG images to WebP format online for superior compression, transparency support, and faster website performance without losing quality.",
+            canonical: "https://quickpicconvert.com/tools/png-to-webp",
+            "keywords": "png to webp, convert png to webp, png to webp online, webp image converter, optimize images for web, reduce png size, modern image format"
+        },
+
         "instructions": {
             "title": "Convert PNG to WebP Online",
             "description": "The PNG to WebP converter helps you transform PNG images into modern WebP format, significantly reducing file size while preserving transparency and visual quality. WebP is ideal for faster websites, improved SEO, and better user experience.",
@@ -279,15 +262,12 @@ export const tools: Tool[] = [
         "description": "Convert JPG images to WebP format online to achieve smaller file sizes, faster loading, and better image optimization for modern websites.",
         "category": "Converter",
         "color": "from-sky-500 to-blue-500",
-        "keywords": [
-            "jpg to webp",
-            "convert jpg to webp",
-            "jpg to webp online",
-            "webp image converter",
-            "image optimization",
-            "reduce jpg size",
-            "seo image optimization"
-        ],
+        "seo": {
+            "title": "Image to Base64 Converter – Encode Images Online",
+            "description": "Convert images to Base64 strings or Data URLs instantly. Perfect for developers embedding images into HTML, CSS, JSON, or APIs.",
+            "canonical": "https://quickpicconvert.com/tools/image-to-base64",
+            "keywords": "image to base64, convert image to base64, base64 image encoder, image to data url"
+        },
         "instructions": {
             "title": "Convert JPG to WebP Online",
             "description": "Our JPG to WebP converter allows you to convert JPEG images into WebP format for better compression and faster performance. WebP maintains excellent visual quality while significantly reducing file size.",
@@ -335,14 +315,12 @@ export const tools: Tool[] = [
         "description": "Compress images online to reduce file size while preserving visual quality. Perfect for SEO, faster websites, and optimized performance.",
         "category": "Optimizer",
         "color": "from-purple-500 to-violet-500",
-        "keywords": [
-            "image compressor",
-            "reduce image size",
-            "compress images online",
-            "optimize images for web",
-            "seo image optimization",
-            "image size reducer"
-        ],
+        seo: {
+            "title": "Image Compressor – Compress JPG, PNG & WEBP Images Online",
+            "description": "Compress images online without losing quality. Reduce JPG, PNG, and WEBP file sizes instantly using our fast browser-based image compressor.",
+            "canonical": "https://quickpicconvert.com/tools/image-compressor",
+            "keywords": "image compressor, compress images, reduce image size, jpg png compressor, online image optimization"
+        },
         "instructions": {
             "title": "Compress Images Online",
             "description": "The Image Compressor reduces image file sizes without noticeable quality loss. Optimized images load faster, improve user experience, and boost SEO performance. Supports JPG, PNG, and WebP formats.",
@@ -390,15 +368,14 @@ export const tools: Tool[] = [
         "description": "Crop images online easily to remove unwanted areas, adjust dimensions, and create perfectly sized images for websites, social media, and designs.",
         "category": "Editor",
         "color": "from-purple-500 to-violet-500",
-        "keywords": [
-            "image cropper",
-            "crop image online",
-            "photo crop tool",
-            "resize and crop images",
-            "online image editor",
-            "crop photos free",
-            "image editing tool"
-        ],
+        seo: {
+            "title": "Image Cropper",
+            "description": "Crop images online easily to remove unwanted areas, adjust dimensions, and create perfectly sized images for websites, social media, and designs.",
+            canonical: "https://quickpicconvert.com/tools/image-cropper",
+            "keywords":
+                "image cropper, crop image online, photo crop tool, resize and crop images, online image editor, crop photos free, image editing tool"
+        },
+
         "instructions": {
             "title": "Crop Images Online",
             "description": "Our Image Cropper lets you quickly crop images online to remove unwanted areas, adjust framing, and resize images for websites, social media, thumbnails, or personal use. All image processing is done locally in your browser to ensure privacy and speed.",
@@ -450,15 +427,12 @@ export const tools: Tool[] = [
         "description": "Extract editable and searchable text from images using advanced OCR technology. Convert photos, screenshots, and scanned documents to text online.",
         "category": "Utility",
         "color": "from-blue-500 to-sky-500",
-        "keywords": [
-            "image to text",
-            "ocr image to text",
-            "photo to text converter",
-            "extract text from image",
-            "image ocr online",
-            "convert image to text",
-            "ocr tool free"
-        ],
+        seo: {
+            "title": "Image to Text Converter – Extract Text from Images Online (OCR)",
+            "description": "Convert images to editable text online using OCR. Extract text from photos, screenshots, and scanned documents securely in your browser.",
+            "canonical": "https://quickpicconvert.com/tools/image-to-text",
+            "keywords": "image to text, ocr image to text, extract text from image, photo to text, image ocr online"
+        },
         "instructions": {
             "title": "Convert Image to Text Online",
             "description": "Our Image to Text Converter uses Optical Character Recognition (OCR) to extract readable and editable text from images. It supports screenshots, scanned documents, and photos, and works directly in your browser for fast and private text extraction.",
@@ -510,15 +484,14 @@ export const tools: Tool[] = [
         "description": "Convert images to Base64 encoded strings or Data URLs instantly. Encode PNG, JPG, JPEG, or WebP images directly in your browser without uploading files.",
         "category": "Utility",
         "color": "from-emerald-500 to-teal-500",
-        "keywords": [
-            "image to base64",
-            "convert image to base64",
-            "base64 image encoder",
-            "image to data url",
-            "base64 image online",
-            "encode image base64",
-            "base64 converter"
-        ],
+        seo: {
+            "title": "Image to Base64 Converter",
+            "description": "Convert images to Base64 encoded strings or Data URLs instantly. Encode PNG, JPG, JPEG, or WebP images directly in your browser without uploading files.",
+            "keywords":
+                "image to base64, convert image to base64, base64 image encoder, image to data url, base64 image online, encode image base64, base64 converter",
+            canonical: "https://quickpicconvert.com/tools/image-to-base64"
+        },
+
         "instructions": {
             "title": "Convert Image to Base64 Online",
             "description": "The Image to Base64 Converter encodes image files into Base64 strings or Data URLs that can be embedded directly into HTML, CSS, JSON, or API requests. This tool is especially useful for developers and designers who want to eliminate external image files. All conversions happen locally in your browser for privacy and speed.",
@@ -574,14 +547,13 @@ export const tools: Tool[] = [
         "description": "Convert Base64 encoded strings back into image files instantly. Decode Base64 to PNG, JPG, or WebP directly in your browser.",
         "category": "Utility",
         "color": "from-rose-500 to-pink-500",
-        "keywords": [
-            "base64 to image",
-            "decode base64 image",
-            "base64 to png",
-            "base64 to jpg",
-            "base64 image decoder",
-            "convert base64 to image online"
-        ],
+        seo: {
+            "title": "Base64 to Image Converter",
+            "description": "Convert Base64 encoded strings back into image files instantly. Decode Base64 to PNG, JPG, or WebP directly in your browser.",
+            "keywords": "base64 to image, decode base64 image, base64 to png, base64 to jpg, base64 image decoder, convert base64 to image online",
+            canonical: "https://quickpicconvert.com/tools/base64-to-image",
+        },
+
         "instructions": {
             "title": "Convert Base64 to Image Online",
             "description": "The Base64 to Image Converter allows you to decode Base64 strings or Data URLs back into real image files. This is useful for developers working with APIs, JSON responses, embedded images, or stored Base64 data. All decoding happens locally in your browser for maximum privacy.",
@@ -633,14 +605,13 @@ export const tools: Tool[] = [
         "description": "View and analyze image metadata including EXIF data, camera details, resolution, and file information instantly online.",
         "category": "Utility",
         "color": "from-indigo-500 to-purple-500",
-        "keywords": [
-            "image metadata reader",
-            "exif data viewer",
-            "photo metadata online",
-            "image exif viewer",
-            "image information tool",
-            "read image metadata"
-        ],
+        seo: {
+            "title": "Image Metadata Reader",
+            "description": "View and analyze image metadata including EXIF data, camera details, resolution, and file information instantly online.",
+            canonical: "https://quickpicconvert.com/tools/image-metadata-reader",
+            "keywords": "image metadata reader, exif data viewer, photo metadata online, image exif viewer, image information tool, read image metadata"
+        },
+
         "instructions": {
             "title": "Read Image Metadata Online",
             "description": "The Image Metadata Reader lets you inspect hidden information stored inside image files, such as EXIF data, camera model, resolution, orientation, creation date, and more. This tool is useful for photographers, developers, and SEO professionals.",
@@ -680,27 +651,83 @@ export const tools: Tool[] = [
             ]
         }
     },
+    {
+        id: "image-color-picker",
+        icon: Palette, // replace with your imported icon if you have one
+        title: "Image Color Picker",
+        description: "Pick any color from your images instantly! Upload an image and click on any pixel to get its exact RGB or Hex value. Perfect for designers, developers, and creators.",
+        color: "from-indigo-500 to-purple-500",
+        category: "Utilities",
+        seo: {
+            title: "Image Color Picker",
+            description: "Use Quick Pic Convert's Image Color Picker tool to instantly get RGB and Hex values from any image. Perfect for designers and developers.",
+            canonical: "https://quickpicconvert.com/tools/image-color-picker",
+            keywords: "image color picker, pick color from image, rgb color, hex color, online color picker, quick pic convert, image tools"
+        },
+
+        instructions: {
+            title: "Image Color Picker Tool",
+            description:
+                "Quick Pic Convert's Image Color Picker allows you to upload any image and select a pixel to get its color in RGB or Hex format instantly. Ideal for designers, developers, and anyone working with colors.",
+            steps: [
+                {
+                    title: "Upload Your Image",
+                    description: "Click the upload button to select your image from your computer or device."
+                },
+                {
+                    title: "Click on the Image",
+                    description: "Click anywhere on the image to pick the color of that specific pixel."
+                },
+                {
+                    title: "View Color Information",
+                    description: "The tool will display the color in RGB and Hex formats, along with a preview swatch."
+                },
+                {
+                    title: "Copy Color Code",
+                    description: "Click the copy button to copy the RGB or Hex code for use in your design, website, or project."
+                }
+            ],
+            tips: [
+                "Use the tool for precise color selection from images.",
+                "Copy Hex codes directly into your design software or CSS.",
+                "For best accuracy, use high-resolution images.",
+                "Combine with other Quick Pic Convert tools for advanced image editing."
+            ],
+            faqs: [
+                {
+                    question: "Can I pick colors from any image format?",
+                    answer: "Yes! JPG, PNG, GIF, and most common image formats are supported."
+                },
+                {
+                    question: "Is this tool free to use?",
+                    answer: "Absolutely! The Image Color Picker is completely free and works directly in your browser."
+                },
+                {
+                    question: "Can I use the copied color codes in my website?",
+                    answer: "Yes. The RGB and Hex codes can be used in CSS, design tools, or any project that requires color specification."
+                },
+                {
+                    question: "Does the image leave any trace or get uploaded to a server?",
+                    answer: "No. All processing happens locally in your browser. No images are uploaded to our servers."
+                }
+            ]
+        }
+    },
 
     {
         id: "random-password-generator",
-        canonical:"https://quickpicconvert.com/tools/random-password-generator",
-        cardTitle: "Random Password Generator – Create Strong & Secure Passwords Online",
+        icon: Key,
         title: "Random Password Generator",
         description: "Generate strong, secure, and random passwords online with custom length and character options. Free, fast, and 100% browser-based password generator.",
-        icon: Key,
         "color": "from-rose-500 to-pink-500",
         category: "Security",
-        keywords: [
-            "random password generator",
-            "password generator",
-            "strong password generator",
-            "secure password",
-            "random password generator",
-            "online password generator",
-            "create strong passwords",
-            "free password generator",
-            "password security tool"
-        ],
+        seo: {
+            title: "Random Password Generator",
+            description: "Generate strong, secure, and random passwords online with custom length and character options. Free, fast, and 100% browser-based password generator.",
+            canonical: "https://quickpicconvert.com/tools/random-password-generator",
+            keywords: "random password generator, password generator, strong password generator, secure password, random password generator, online password generator, create strong passwords, free password generator, password security tool"
+        },
+
         instructions: {
             title: "Strong Password Generator",
             description:
@@ -756,11 +783,7 @@ export const tools: Tool[] = [
                 }
             ]
         }
-    }
-
-
-
-
+    },
 
 ]
 

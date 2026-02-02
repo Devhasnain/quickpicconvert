@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
 
 import { ToolInstructions } from "./ToolInstructions";
+import { PageSEO } from "../PageSEO";
 
 
 type Props = {
@@ -31,6 +32,12 @@ const ToolPageLayout = ({
 
   return (
     <>
+      <PageSEO
+        title={tool?.seo.title || ""}
+        description={tool?.seo?.description || ""}
+        keywords={tool?.seo?.keywords}
+        canonical={tool?.seo?.canonical}
+      />
       {tool && (
         <>
           {pageHero === "default" ? (
@@ -62,7 +69,9 @@ const ToolPageLayout = ({
             ""
           )}
 
-          <section className={`container-custom pb-8 ${mainContainerClassName}`}>
+          <section
+            className={`container-custom pb-8 ${mainContainerClassName}`}
+          >
             <div className={`max-w-3xl mx-auto ${containerClassName}`}>
               {children}
             </div>

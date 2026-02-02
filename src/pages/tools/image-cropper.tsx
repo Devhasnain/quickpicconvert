@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { Download, icons, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -60,12 +59,6 @@ const ImageCropper = () => {
 
   return (
     <>
-      <PageSEO
-        title="Image Cropper – Crop Images Online Free"
-        description="Crop images online using a fast and private browser-based image cropper."
-        canonical="https://quickpicconvert.com/tools/image-cropper"
-        keywords="image cropper, image cropper online, image crop online, image crop tool, image resize, image cropper free, image resizer, image resizer tool"
-      />
       <input
         type="file"
         ref={inputRef}

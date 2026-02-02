@@ -1,8 +1,6 @@
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
 import { useEffect, useState } from "react";
-import content from "@/data/content.json";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -42,13 +40,6 @@ const Base64ToImage = () => {
 
   return (
     <>
-      <PageSEO
-        title={content.base64ToImage.seo.title}
-        description={content.base64ToImage.seo.description}
-        keywords={content.base64ToImage.seo.keywords}
-        canonical={content.base64ToImage.seo.canonical}
-      />
-
       <ToolPageLayout>
         <div className="bg-card rounded-2xl border border-border p-6 space-y-5">
           <textarea

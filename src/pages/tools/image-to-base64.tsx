@@ -3,9 +3,7 @@ import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { getFileFromClipboard } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
 import { Check, Copy, X } from "lucide-react";
-import content from "@/data/content.json";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -87,13 +85,6 @@ const ImageToBase64 = () => {
 
   return (
     <>
-      <PageSEO
-        title={content.imageToBase64.seo.title}
-        description={content.imageToBase64.seo.description}
-        canonical={content.imageToBase64.seo.canonical}
-        keywords={content.imageToBase64.seo.keywords}
-      />
-
       <ToolPageLayout>
         <input
           className="hidden"

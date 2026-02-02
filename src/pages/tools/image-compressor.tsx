@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
-import { compressImages, downloadAsZip, downloadSingleFile, getOutputFormateLabel } from "@/lib/utils";
+import { compressImages, downloadAsZip, downloadSingleFile, getOutputFormateLabel, } from "@/lib/utils";
 import { Download, MoveRight, Plus, X, icons } from "lucide-react";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import ImagePreviewCard from "@/components/tool/ImagePreviewCard";
@@ -7,10 +7,8 @@ import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import content from "@/data/content.json";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -103,13 +101,6 @@ export default function ImageCompressor() {
 
   return (
     <>
-      <PageSEO
-        title={content.imageCompressor.seo.title}
-        description={content.imageCompressor.seo.description}
-        keywords={content.imageCompressor.seo.keywords}
-        canonical={content.imageCompressor.seo.canonical}
-      />
-
       <ToolPageLayout>
         <input
           ref={inputRef}

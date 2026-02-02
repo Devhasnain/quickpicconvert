@@ -7,13 +7,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 
-const categories = [
-  "Converter",
-  "Optimizer",
-  "Editor",
-  "AI Tool",
-  "Utility",
-];
+const categories = ["Converter", "Optimizer", "Editor", "AI Tool", "Utility"];
 
 export default function ToolsPage() {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -27,10 +21,12 @@ export default function ToolsPage() {
   return (
     <>
       <PageSEO
-        title="All Tools"
-        description="Browse our complete collection of free online tools including png to jpg converter, jpg to png converter, png to webp converter, jpg to webp converter and etc."
-        keywords="online tools, image converter, file converter, png to jpg, jpg to png, png to webp"
+        title="Free Online Image & File Conversion Tools"
+        description="Explore all free online tools by Quick Pic Convert. Convert PNG to JPG, JPG to PNG, PNG to WebP, JPG to WebP, and more—fast, secure, and browser-based."
+        keywords="free online tools, image converter, file converter, png to jpg, jpg to png, png to webp, jpg to webp, online image tools"
+        canonical="https://quickpicconvert.com/tools"
       />
+
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-hero-bg">
         <div className="container-custom">
@@ -64,20 +60,20 @@ export default function ToolsPage() {
         <div className="container-custom">
           {/* Category Filter */}
           <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-             <button
-              onClick={(e)=>setActiveCategory("All")}
-                className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                  activeCategory === "All"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                All
-              </button>
+            <button
+              onClick={(e) => setActiveCategory("All")}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                activeCategory === "All"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              All
+            </button>
             {categories.map((category) => (
               <button
-              onClick={(e)=>setActiveCategory(category)}
+                onClick={(e) => setActiveCategory(category)}
                 key={category}
                 className={cn(
                   "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
@@ -138,9 +134,9 @@ function ToolCard({ tool, index }: ToolCardProps) {
         </div>
 
         {/* Content */}
-        <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+        <h2 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
           {tool.title}
-        </h3>
+        </h2>
         <p className="text-sm text-muted-foreground leading-relaxed">
           {tool.description}
         </p>

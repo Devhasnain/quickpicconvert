@@ -3,8 +3,6 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
 import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
-import content from "@/data/content.json";
 import EXIFReader from "exifreader";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -90,12 +88,6 @@ const ImageMetadataReader = () => {
   "
         onChange={handleFilesOnChange}
         className="hidden"
-      />
-      <PageSEO
-        title={content.imageMetaReader.seo.title}
-        description={content.imageMetaReader.seo.description}
-        keywords={content.imageMetaReader.seo.keywords}
-        canonical={content.imageMetaReader.seo.canonical}
       />
       <ToolPageLayout>
         {!file && <UploadImageBtn onClick={openExplorer} />}
