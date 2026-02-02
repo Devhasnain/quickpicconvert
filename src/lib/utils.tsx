@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import JSZip, { files } from "jszip";
 import { toast } from "sonner";
+import JSZip from "jszip";
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -193,6 +193,20 @@ export const loadImageToCanvas = (file: File) =>
     };
   });
 
+export const loadImageElementToCanvas = (img: HTMLImageElement) =>
+  new Promise<{
+    img: HTMLImageElement;
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+  }>((resolve) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d")!;
+    ctx.drawImage(img, 0, 0);
+    resolve({ img, canvas, ctx });
+  });
+
 export const exportCanvas = (
   canvas: HTMLCanvasElement,
   type = "image/png",
@@ -224,17 +238,30 @@ export const cropImage = async (
 };
 
 export const resizeImage = async (
-  file: File,
+  file: File | HTMLImageElement,
   width: number,
-  height: number
+  height: number,
+  imageType?:"file" | "element"
 ) => {
-  const { img, canvas, ctx } = await loadImageToCanvas(file);
+  if(imageType === "element"){
+  const { img, canvas, ctx } = await loadImageElementToCanvas(file as HTMLImageElement);
 
   canvas.width = width;
   canvas.height = height;
   ctx.drawImage(img, 0, 0, width, height);
 
   return exportCanvas(canvas);
+  }else{
+
+  const { img, canvas, ctx } = await loadImageToCanvas(file as File);
+
+  canvas.width = width;
+  canvas.height = height;
+  ctx.drawImage(img, 0, 0, width, height);
+
+  return exportCanvas(canvas);
+  }
+
 };
 
 export const applyFilters = async (file: File, filter: any) => {
@@ -387,3 +414,62 @@ export const getFileFromClipboard = (event: ClipboardEvent) => {
 //   const data = await res.json();
 //   return data;
 // }
+
+export const getOutputFormateLabel = (value: string) => {
+  switch (value) {
+    case "image/webp":
+      return "WEBP";
+    case "image/jpeg":
+      return "JPEG";
+    case "image/png":
+      return "PNG";
+    default:
+      return "WEBP";
+  }
+};
+
+export const getImageFilterLabel = (value: string) => {
+  switch (value) {
+    case "none":
+      return "No Filter";
+    case "grayscale(100%)":
+      return "Grayscale";
+    case "contrast(120%)":
+      return "Contrast";
+    case "brightness(120%)":
+      return "Brightness";
+    case "sepia(100%)":
+      return "Sepia";
+    default:
+      return "No Filter";
+  }
+};
+
+export const loadImage = (file: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.src = file;
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+  });
+};
+
+
+export const getDataUrlSize = (dataUrl: string) => {
+  const base64 = dataUrl?.split(",")[1];
+  return Math.round((base64.length * 3) / 4);
+};
+
+export const getCompressedPercent = (
+  original: number,
+  output: number
+) => {
+  return Math.round(((original - output) / original) * 100);
+};
+
+export const formatBytes = (bytes: number) => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024)
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+};

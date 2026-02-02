@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
-import { compressImages, downloadAsZip, downloadSingleFile } from "@/lib/utils";
+import { compressImages, downloadAsZip, downloadSingleFile, getOutputFormateLabel } from "@/lib/utils";
 import { Download, MoveRight, Plus, X, icons } from "lucide-react";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import ImagePreviewCard from "@/components/tool/ImagePreviewCard";
@@ -139,7 +139,7 @@ export default function ImageCompressor() {
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Output">
-                        {getSelectLabel(outputFormat)}
+                        {getOutputFormateLabel(outputFormat)}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -290,16 +290,3 @@ export default function ImageCompressor() {
     </>
   );
 }
-
-const getSelectLabel = (value: string) => {
-  switch (value) {
-    case "image/webp":
-      return "WEBP";
-    case "image/jpeg":
-      return "JPEG";
-    case "image/png":
-      return "PNG";
-    default:
-      return "WEBP";
-  }
-};

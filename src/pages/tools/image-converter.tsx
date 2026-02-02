@@ -1,27 +1,64 @@
+import { downloadSingleFile, formatBytes, getCompressedPercent, } from "@/lib/utils";
+import ImageConverterToolBar from "@/components/tool/ImageConverterToolBar";
+import { useImageConverterStore } from "@/store/ImageConverterStore";
+import { ChevronRight, Download, Sparkles, X } from "lucide-react";
 import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { ChangeEvent, useRef, useState } from "react";
+import HeroBackground from "@/components/tool/HeroBackground";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
+import { ChangeEvent, useRef } from "react";
 import content from "@/data/content.json";
-import { Tool, tools } from "@/data/tool";
-import { Sparkles } from "lucide-react";
-import Logo from "@/components/Logo";
+import { tools } from "@/data/tool";
 import Image from "next/image";
+import { toast } from "sonner";
 import Link from "next/link";
 
 
 const ImageConverter = ({ pageData }: { pageData: string }) => {
+  const {
+    previewUrl,
+    loading,
+    setOriginalImage,
+    setOriginalSize,
+    originalSize,
+    outputSize,
+    height,
+    width,
+    fileName,
+    setFileName,
+    outputFormat,
+    resetStore,
+  } = useImageConverterStore();
   const pageContent = JSON.parse(pageData);
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [file,setFile] = useState<File|null>(null)
-  
-  const handleOnChange = (e:ChangeEvent<HTMLInputElement>)=>{
-    const files = e.target.files;
-    if(files && files[0]) setFile(files[0]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    if(inputRef.current) inputRef.current.value = ""
-  }
+  const openExplorer = () => {
+    inputRef.current?.click();
+  };
+
+  const handleDownload = async () => {
+    if (!previewUrl) return;
+    try {
+      downloadSingleFile({
+        name: `${fileName}-${width}*${height}.${outputFormat?.split("/")[1]}`,
+        url: previewUrl,
+      });
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
+
+  const handleFileOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      setOriginalImage(URL.createObjectURL(files[0]));
+      setFileName(files[0].name.replace(/\.[^/.]+$/, ""));
+      setOriginalSize(files[0].size);
+    }
+
+    if (inputRef.current) inputRef.current.value = "";
+  };
 
   if (!pageContent?.id) {
     return (
@@ -35,6 +72,7 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
       </div>
     );
   }
+
   return (
     <>
       <PageSEO
@@ -49,92 +87,100 @@ const ImageConverter = ({ pageData }: { pageData: string }) => {
         pageHero="custom"
       >
         <input
-        ref={inputRef}
-        type="file"
-        multiple={false}
-        onChange={handleOnChange}
-        
+          ref={inputRef}
+          type="file"
+          multiple={false}
+          onChange={handleFileOnChange}
+          className="hidden"
+          accept="image/png,image/jpeg,image/webp"
         />
-        <div className={"relative overflow-hidden min-h-screen gradient-bg pb-4 sm:pb-0"}>
-          {/* Background Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-          
-          {/* <div className="absolute -top-48 -left-28 md:-top-44 md:-left-24 xl:-top-44 xl:-left-16"> */}
-          <Image
-            alt=""
-            src={"/images/shape-light.png"}
-            width={400}
-            height={400}
-            className="absolute -top-48 -left-28 md:-top-44 md:-left-24 xl:-top-44 xl:-left-16"
-          />
-          <Logo
-          className="absolute  xl:top-2 xl:left-10 md:top-3 md:left-5 z-9999"
-          />
-          {/* </div> */}
-
-
-          {file &&<div className="flex flex-row items-center justify-end gap-8 h-screen">
-            <div className="border w-6/12 flex flex-col items-center justify-center h-[70%] overflow-hidden">
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-            <span>asdfadf</span>
-
-
+        <HeroBackground>
+          {previewUrl && (
+            <div className="flex flex-col lg:flex-row items-center justify-end gap-8 lg:h-screen pt-16 md:pt-0">
+              <div className="w-full lg:w-6/12 flex flex-col items-center justify-center h-[70vh] lg:h-[70%] lg:overflow-hidden z-[9999] relative">
+                {loading && (
+                  <div className="absolute flex flex-col items-center justify-center backdrop-blur-sm w-full h-full">
+                    <Image
+                      alt=""
+                      src={"/logo-cropped.png"}
+                      height={100}
+                      width={100}
+                      className="animate-pulse"
+                    />
+                  </div>
+                )}
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
+              <ImageConverterToolBar openExplorer={openExplorer} />
             </div>
-          <div className="w-3/12 h-full rounded-tl-3xl rounded-bl-3xl bg-primary z-10">
+          )}
 
-          </div>
-          </div>}
+          {!previewUrl && (
+            <div className="relative z-10 text-center max-w-7xl mx-auto pt-16 sm:pt-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-4">
+                <Sparkles className="w-4 h-4 text-primary-foreground" />
+                <span className="text-sm font-medium text-primary-foreground">
+                  100% Free, No Sign-up Required
+                </span>
+              </div>
 
-          
-          
-          {!file && <div className="relative z-10 text-center max-w-7xl mx-auto pt-16 sm:pt-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-4">
-              <Sparkles className="w-4 h-4 text-primary-foreground" />
-              <span className="text-sm font-medium text-primary-foreground">
-                100% Free, No Sign-up Required
-              </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 px-4 sm:px-0 ">
+                {pageContent?.title}
+              </h1>
+
+              <p className="text-lg text-primary-foreground/80 mb-6 max-w-3xl mx-auto px-4 sm:px-0">
+                {pageContent?.description}
+              </p>
+
+              <UploadImageBtn onClick={openExplorer} />
             </div>
+          )}
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 px-4 sm:px-0 ">
-              {pageContent?.title}
-            </h1>
+          {previewUrl && (
+            <div className="absolute flex flex-row items-center gap-3 bottom-3 left-3">
+              <div className=" items-center  flex flex-row bg-white px-3 py-2 gap-3 rounded-md">
+                <span className="text-xl font-medium">
+                  {formatBytes(originalSize)}
+                </span>
+                {outputSize ? (
+                  <>
+                    <ChevronRight color="green" />
 
-            <p className="text-lg text-primary-foreground/80 mb-6 max-w-3xl mx-auto px-4 sm:px-0">
-              {pageContent?.description}
-            </p>
+                    <div className="flex flex-row items-center gap-2">
+                      <span className="text-xl font-bold">
+                        {getCompressedPercent(originalSize, outputSize)}%
+                      </span>
+                      <span className="text-xl font-medium">
+                        {formatBytes(outputSize)}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
 
-            <UploadImageBtn onClick={() => {}} />
-          </div>}
-        </div>
+              <Button
+                onClick={resetStore}
+                variant={"secondary"}
+                size={"icon"}
+              >
+                <X className="text-primary" />
+              </Button>
+              <Button
+                onClick={handleDownload}
+                variant={"secondary"}
+                size={"icon"}
+              >
+                <Download className="text-primary" />
+              </Button>
+            </div>
+          )}
+        </HeroBackground>
       </ToolPageLayout>
     </>
   );

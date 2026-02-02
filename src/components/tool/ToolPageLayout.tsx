@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
 
 import { ToolInstructions } from "./ToolInstructions";
-import { PageSEO } from "../PageSEO";
 
 
 type Props = {

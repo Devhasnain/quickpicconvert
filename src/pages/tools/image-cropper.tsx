@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
+import { applyFilters, getImageFilterLabel, resizeImage } from "@/lib/utils";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { applyFilters, resizeImage } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Download, icons, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -27,9 +27,7 @@ const ImageCropper = () => {
     if (e.target.files?.[0]) {
       setFile(e.target.files[0]);
       setResult(null);
-      if (inputRef?.current) {
-        inputRef.current.value = "";
-      }
+      if (inputRef?.current) inputRef.current.value = "";
     }
   };
 
@@ -116,7 +114,7 @@ const ImageCropper = () => {
                 onValueChange={(e) => setFilter(e)}
               >
                 <SelectTrigger>
-                  <SelectValue>{getSelectLabel(filter)}</SelectValue>
+                  <SelectValue>{getImageFilterLabel(filter)}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">No Filter</SelectItem>
@@ -170,24 +168,6 @@ const ImageCropper = () => {
               </div>
             </div>
           )}
-
-          {/* <Button onClick={handleProcess}>Process Image</Button>
-
-          {result && (
-            <div className="space-y-4">
-                <div
-                className="w-full border rounded-md h-[40vh] flex flex-col items-center justify-center"
-                >
-              <img
-                src={result}
-                alt="Preview"
-                className="w-full h-full object-contain rounded-md"
-              />
-                </div>
-
-              <Button onClick={handleDownload}>Download</Button>
-            </div>
-          )} */}
         </div>
       </ToolPageLayout>
     </>
@@ -195,20 +175,3 @@ const ImageCropper = () => {
 };
 
 export default ImageCropper;
-
-const getSelectLabel = (value: string) => {
-  switch (value) {
-    case "none":
-      return "No Filter";
-    case "grayscale(100%)":
-      return "Grayscale";
-    case "contrast(120%)":
-      return "Contrast";
-    case "brightness(120%)":
-      return "Brightness";
-    case "sepia(100%)":
-      return "Sepia";
-    default:
-      return "No Filter";
-  }
-};
