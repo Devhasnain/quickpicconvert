@@ -28,7 +28,7 @@ export function HowItWorksSection() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="section-padding bg-secondary/30">
+    <section className="section-padding bg-secondary/30" id='how-it-works'>
       <div className="container-custom">
         {/* Header */}
         <div

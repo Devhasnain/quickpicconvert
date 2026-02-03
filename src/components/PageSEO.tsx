@@ -10,6 +10,8 @@ interface PageSEOProps {
   children?: ReactNode;
   ogTitle?: string;
   ogDescription?: string;
+  ogImage?:string;
+  ogURL?:string;
 }
 
 const BRAND = "Quick Pic Convert";
@@ -38,6 +40,8 @@ export function PageSEO({
   children,
   ogTitle,
   ogDescription,
+  ogImage,
+  ogURL
 }: PageSEOProps) {
   const metaTitle = buildTitle(title);
   return (
@@ -52,9 +56,9 @@ export function PageSEO({
       <meta property="og:description" content={ogDescription || description} />
       <meta
         property="og:image"
-        content="https://quickpicconvert.com/Quick-pic-convert-og-image"
+        content={ogImage || "https://quickpicconvert.com/Quick-pic-convert-og-image"}
       />
-      <meta property="og:url" content="https://quickpicconvert.com/" />
+      <meta property="og:url" content={ogURL || "https://quickpicconvert.com/"} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Quick Pic Convert" />
 

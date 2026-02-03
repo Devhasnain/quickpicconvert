@@ -1,66 +1,12 @@
-import { Users, Target, Heart, Award, Globe } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { teamMembers } from "@/data/teamMembers";
+import { Globe, ArrowRight } from "lucide-react";
 import { PageSEO } from "@/components/PageSEO";
-import Logo from "@/components/Logo";
+import { aboutContent } from "@/data/about";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-
-const stats = [
-  { value: "10M+", label: "Images Converted" },
-  { value: "500K+", label: "Happy Users" },
-  { value: "50+", label: "Countries" },
-  { value: "99.9%", label: "Uptime" },
-];
-
-const values = [
-  {
-    icon: Users,
-    title: "User First",
-    description:
-      "Every feature we build starts with our users' needs. We listen, iterate, and improve constantly.",
-  },
-  {
-    icon: Target,
-    title: "Simplicity",
-    description:
-      "We believe powerful tools don't need to be complicated. Simple is better.",
-  },
-  {
-    icon: Heart,
-    title: "Privacy Matters",
-    description:
-      "Your images are yours. We process everything locally and never store your files.",
-  },
-  {
-    icon: Award,
-    title: "Quality Focus",
-    description:
-      "We never compromise on output quality. Your images deserve the best treatment.",
-  },
-];
-
-const team = [
-  {
-    name: "Tanveer Admed",
-    role: "Founder & CEO",
-    avatar: "TA",
-    profile: "https://www.fiverr.com/hasnainalam462",
-    image:
-      "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/2ef4fe8900ee1018b78a09b2ce3a8a3a-1740611241776/ec2db75e-6412-4a36-a666-95d118a31cc2.jpg",
-  },
-  {
-    name: "Hasnain Alam",
-    role: "Lead Developer",
-    avatar: "HA",
-    profile: "https://www.fiverr.com/hasnainalam462",
-    image:
-      "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/2ef4fe8900ee1018b78a09b2ce3a8a3a-1740611241776/ec2db75e-6412-4a36-a666-95d118a31cc2.jpg",
-  },
-  // { name: 'Michael Park', role: 'Product Designer', avatar: 'MP' },
-  // { name: 'Emily Davis', role: 'Marketing Lead', avatar: 'ED' },
-];
 
 export default function AboutPage() {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
@@ -82,7 +28,7 @@ export default function AboutPage() {
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Quick Pic Convert",
-              url: "https://quickpicconvert.com",
+              url: "https://quickpicconvert.com/about",
               logo: "https://quickpicconvert.com/logo-lg.png",
               description:
                 "Quick Pic Convert provides fast, private, browser-based image conversion and optimization tools.",
@@ -106,7 +52,7 @@ export default function AboutPage() {
             )}
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-              About <span className="gradient-text">QuickPicConvert</span>
+              About <br /><span className="gradient-text">Quick Pic Convert</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               We're on a mission to make image conversion and optimization
@@ -120,7 +66,7 @@ export default function AboutPage() {
       <section className="py-12 bg-background border-y border-border">
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {aboutContent.stats.map((stat, index) => (
               <div key={stat.label} className="text-center">
                 <div className="text-3xl sm:text-4xl font-extrabold gradient-text mb-2">
                   {stat.value}
@@ -153,8 +99,8 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  QuickPicConvert was born out of frustration. As designers and
-                  developers, we were tired of clunky, slow, and
+                  Quick Pic Convert was born out of frustration. As designers
+                  and developers, we were tired of clunky, slow, and
                   privacy-invasive image tools that required uploading files to
                   unknown servers.
                 </p>
@@ -164,7 +110,7 @@ export default function AboutPage() {
                   there's no reason it can't be.
                 </p>
                 <p>
-                  Today, QuickPicConvert serves millions of users worldwide —
+                  Today, Quick Pic Convert serves millions of users worldwide —
                   from professional photographers to casual social media users —
                   all enjoying fast, secure, and unlimited image processing.
                 </p>
@@ -176,16 +122,15 @@ export default function AboutPage() {
                 missionVisible ? "animate-slide-in-right" : "opacity-0"
               )}
             >
-              <div className="aspect-square rounded-3xl gradient-bg p-1">
-                <div className="w-full h-full rounded-3xl bg-card flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Logo/>
-                    <p className="text-2xl font-bold text-foreground">
-                      Fast. Free. Private.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <Image
+                alt="Creators and developers building fast, private, browser-based image tools at Quick Pic Convert"
+                src={
+                  "/images/quick-pic-convert-creators-building-private-image-tools.webp"
+                }
+                height={600}
+                width={600}
+                className="rounded-lg overflow-hidden"
+              />
             </div>
           </div>
         </div>
@@ -210,7 +155,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
+            {aboutContent.values.map((value, index) => (
               <ValueCard key={value.title} value={value} index={index} />
             ))}
           </div>
@@ -229,13 +174,13 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto items-center">
-            {team.map((member) => (
+          <div className="flex flex-row gap-24 max-w-4xl mx-auto items-center justify-center">
+            {teamMembers.map((member) => (
               <Link
                 target="_blank"
-                href={member.profile}
+                href={`/team/${member.slug}`}
                 key={member.name}
-                className="text-center"
+                className="text-center group"
               >
                 <div className="w-24 h-24 mx-auto rounded-full overflow-hidden gradient-bg flex items-center justify-center text-2xl font-bold text-primary-foreground mb-4">
                   {/* {member.avatar} */}
@@ -247,8 +192,13 @@ export default function AboutPage() {
                     src={member.image}
                   />
                 </div>
-                <h3 className="font-semibold text-foreground">{member.name}</h3>
+                <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {member.name}
+                </h3>
                 <p className="text-sm text-muted-foreground">{member.role}</p>
+                <span className="inline-flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity mt-2">
+                  View Profile <ArrowRight className="w-3 h-3" />
+                </span>
               </Link>
             ))}
           </div>
@@ -281,7 +231,7 @@ export default function AboutPage() {
 }
 
 interface ValueCardProps {
-  value: (typeof values)[0];
+  value: (typeof aboutContent.values)[0];
   index: number;
 }
 

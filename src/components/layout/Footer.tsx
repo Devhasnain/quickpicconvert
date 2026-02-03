@@ -1,4 +1,4 @@
-import { Zap, Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
 
 import Logo from '../Logo';
@@ -6,16 +6,15 @@ import Logo from '../Logo';
 
 const footerLinks = {
   product: [
-    { name: 'All Tools', path: '/tools' },
+    { name: 'Image Converter', path: '/tools/image-converter' },
     { name: 'Png to Jpeg', path: '/tools/png-to-jpg' },
     { name: 'Jpeg to Png', path: '/tools/png-to-jpg' },
-    { name: 'Png to Webp', path: '/tools/png-to-webp' },
+    { name: 'Image to base64', path: '/tools/image-to-base64' },
     { name: 'Image Compressor', path: '/tools/image-compressor' },
   ],
-  company: [
-    { name: 'About Us', path: '/about' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contact', path: '/about' },
+  team: [
+    { name: 'Tanveer Ahmed', path: '/team/tanveer-ahmed' },
+    { name: 'Hasnain Alam', path: '/team/hasnain-alam' },
   ],
   legal: [
     { name: 'Privacy Policy', path: '/privacy' },
@@ -74,9 +73,9 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
+            <h4 className="font-semibold text-foreground mb-4">Team</h4>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
+              {footerLinks.team.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.path}
@@ -111,7 +110,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} QuickPicConvert. All rights reserved.
+              © {new Date().getFullYear()} Quick Pic Convert. All rights reserved.
             </p>
             <p className="text-sm text-muted-foreground">
               Made with ❤️ for creators worldwide

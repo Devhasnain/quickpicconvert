@@ -12,30 +12,30 @@ const UploadImageBtn = ({ onClick }: Props) => {
     <div className="flex flex-row items-center justify-center">
       <div className="cursor-pointer h-80 w-80 relative" onClick={onClick}>
         <Image
-          alt=""
-          src="/images/shape-dark-1.png"
+          alt="quick-pic-convert-upload-file-button-shape-1"
+          src="/images/quick-pic-convert-upload-file-button-shape-dark-1.png"
           width={500}
           height={500}
           className="absolute inset-0 opacity-50 w-full h-full object-cover animate-spin-slow-reverse"
         />
 
         <Image
-          alt=""
-          src="/images/shape-dark-2.png"
+          alt="quick-pic-convert-upload-file-button-shape-2"
+          src="/images/quick-pic-convert-upload-file-button-shape-dark-2.png"
           width={500}
           height={500}
           className="absolute inset-0 opacity-50 w-full h-full object-cover animate-spin-slow"
         />
 
         <Image
-          alt=""
-          src="/images/shape-light.png"
+          alt="quick-pic-convert-upload-file-button-shape-3"
+          src="/images/quick-pic-convert-upload-file-button-shape-light.png"
           width={500}
           height={500}
           className="absolute inset-0 opacity-50 w-full h-full object-cover animate-spin-slow-reverse"
         />
         <Image
-          alt=""
+          alt="quick-pic-convert-upload-file-button-shape-4"
           src="/images/shape-dark.png"
           width={500}
           height={500}

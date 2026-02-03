@@ -86,13 +86,13 @@ export function HeroSection() {
             )}
           >
             <Button variant="hero" size="xl" asChild>
-              <Link href="/tools">
+              <Link href="/tools/image-converter">
                 Convert Images Now
                 <ArrowRight className="w-5 h-5 ml-1" />
               </Link>
             </Button>
             <Button variant="hero-outline" size="xl" asChild>
-              <Link href="/about">How It Works</Link>
+              <Link href="#how-it-works">How It Works</Link>
             </Button>
           </div>
 

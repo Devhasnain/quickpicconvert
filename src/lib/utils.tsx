@@ -1,3 +1,4 @@
+import { getTeamMemberBySlug } from "@/data/teamMembers";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
@@ -241,27 +242,27 @@ export const resizeImage = async (
   file: File | HTMLImageElement,
   width: number,
   height: number,
-  imageType?:"file" | "element"
+  imageType?: "file" | "element"
 ) => {
-  if(imageType === "element"){
-  const { img, canvas, ctx } = await loadImageElementToCanvas(file as HTMLImageElement);
+  if (imageType === "element") {
+    const { img, canvas, ctx } = await loadImageElementToCanvas(
+      file as HTMLImageElement
+    );
 
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(img, 0, 0, width, height);
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
 
-  return exportCanvas(canvas);
-  }else{
+    return exportCanvas(canvas);
+  } else {
+    const { img, canvas, ctx } = await loadImageToCanvas(file as File);
 
-  const { img, canvas, ctx } = await loadImageToCanvas(file as File);
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
 
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(img, 0, 0, width, height);
-
-  return exportCanvas(canvas);
+    return exportCanvas(canvas);
   }
-
 };
 
 export const applyFilters = async (file: File, filter: any) => {
@@ -454,22 +455,17 @@ export const loadImage = (file: string): Promise<HTMLImageElement> => {
   });
 };
 
-
 export const getDataUrlSize = (dataUrl: string) => {
   const base64 = dataUrl?.split(",")[1];
   return Math.round((base64.length * 3) / 4);
 };
 
-export const getCompressedPercent = (
-  original: number,
-  output: number
-) => {
+export const getCompressedPercent = (original: number, output: number) => {
   return Math.round(((original - output) / original) * 100);
 };
 
 export const formatBytes = (bytes: number) => {
   if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024)
-    return `${(bytes / 1024).toFixed(1)} KB`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 };
