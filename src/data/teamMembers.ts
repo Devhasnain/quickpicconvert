@@ -20,10 +20,8 @@ export interface TeamMember {
     linkedin?: string;
     twitter?: string;
     portfolio?: string;
-    fiverr?:string
+    fiverr?: string
   };
-  metaTitle: string;
-  metaDescription: string;
 }
 
 export const teamMembers: TeamMember[] = [
@@ -32,48 +30,101 @@ export const teamMembers: TeamMember[] = [
     name: 'Tanveer Ahmed',
     role: 'Founder & CEO',
     avatar: 'TA',
-    image: "/team/tanveer-ahmed.webp",
-    shortBio: 'Visionary leader with 15+ years in tech, passionate about making powerful tools accessible to everyone.',
-    fullBio: `Alex Thompson is the founder and CEO of QuickPicConvert, bringing over 15 years of experience in software development and entrepreneurship. With a background in computer science from Stanford University, Alex has worked at leading tech companies including Google and Adobe before founding QuickPicConvert.
+    image: '/team/tanveer-ahmed.webp',
 
-Alex's vision was born from a simple frustration: why should image conversion be complicated? This led to the creation of QuickPicConvert, a tool that processes images locally in the browser, ensuring speed and privacy. Under Alex's leadership, the platform has grown to serve over 500,000 users across 50+ countries.
+    shortBio:
+      'Founder of Quick Pic Convert and senior WordPress & PHP developer with 15+ years of experience building scalable web solutions.',
 
-When not building products, Alex enjoys mentoring young entrepreneurs and speaking at tech conferences about the future of web-based tools.`,
+    fullBio: `
+Tanveer Ahmed is the Founder and CEO of Quick Pic Convert, with more than 15 years of professional experience in web development. He specializes in WordPress and PHP development, helping businesses build reliable, scalable, and high-performing websites.
+
+Throughout his career, Tanveer has worked with clients across multiple industries, delivering custom WordPress solutions, backend systems, and content-driven platforms. His deep understanding of PHP and the WordPress ecosystem has enabled him to create tools that balance usability, performance, and long-term maintainability.
+
+Quick Pic Convert was founded with a clear vision: to provide fast, secure, and easy-to-use image tools that respect user privacy. Under Tanveer’s leadership, the platform continues to evolve, serving users worldwide with browser-based image processing solutions.
+
+Beyond product development, Tanveer is passionate about mentoring developers, improving web standards, and building tools that make complex technology accessible to everyone.
+  `,
+
     yearsOfExperience: 15,
-    coreExpertise: ['Product Strategy', 'Business Development', 'Team Leadership', 'Technical Architecture'],
-    skills: ['Figma', 'Jira', 'AWS', 'Google Analytics', 'Notion', 'Slack'],
+
+    coreExpertise: [
+      'WordPress Development',
+      'PHP Development',
+      'Web Architecture',
+      'Product Strategy',
+      'Business Leadership',
+      'Scalable Web Solutions'
+    ],
+
+    skills: [
+      'WordPress',
+      'PHP',
+      'MySQL',
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'REST APIs',
+      'Website Optimization'
+    ],
+
     social: {
       github: 'https://github.com',
-      linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
-      portfolio: 'https://alexthompson.dev',
+      linkedin: 'https://linkedin.com'
     },
-    metaTitle: 'Alex Thompson - Founder & CEO | QuickPicConvert Team',
-    metaDescription: 'Meet Alex Thompson, the visionary founder and CEO of QuickPicConvert. 15+ years of tech experience driving innovation in browser-based image processing.',
+
   },
   {
     slug: 'hasnain-alam',
-    name: 'Hasnain alam',
-    role: 'Lead Developer',
-    image: "/team/hasnain-alam.webp",
+    name: 'Hasnain Alam',
+    role: 'Lead MERN & Mobile Developer',
+    image: '/team/hasnain-alam.webp',
     avatar: 'HA',
-    shortBio: 'Full-stack engineer with expertise in WebAssembly and browser APIs, building blazing-fast image tools.',
-    fullBio: `Hasnain alam is the Lead Developer at Quick Pic Convert, responsible for the technical implementation of all core features. With 4 years of professional experience, Hasnain specializes in performance optimization and browser-based technologies.
 
-Before joining Quick Pic Convert, Hasnain has worked at Fiverr as a Mern Stack Developer and gained deep expertise in Mern Stack Development. This knowledge has been instrumental in making Quick Pic Convert's image processing incredibly fast.
+    shortBio:
+      'MERN Stack and React Native developer building scalable web and mobile applications with a focus on performance and clean architecture.',
 
-Hasnain is passionate about open-source development and regularly contributes to image processing libraries. He's also an active speaker at JavaScript conferences, sharing insights about pushing browsers to their limits.`,
+    fullBio: `
+Hasnain Alam is the Lead MERN & Mobile Developer at Quick Pic Convert, responsible for designing and implementing scalable web and mobile solutions across the platform. With 4 years of professional experience, Hasnain specializes in building high-performance applications using the MERN stack and React Native.
+
+At Quick Pic Convert, Hasnain leads the development of browser-based image tools, ensuring fast performance, clean architecture, and a seamless user experience across devices. His expertise in React, Next.js, Node.js, and MongoDB plays a key role in delivering secure and efficient image processing solutions.
+
+Before joining Quick Pic Convert, Hasnain worked as a MERN Stack Developer on Fiverr, where he collaborated with global clients to build full-stack web applications, REST APIs, real-time systems, and mobile apps using React Native.
+
+Hasnain is passionate about modern JavaScript ecosystems, scalable backend systems, and cross-platform app development. He continuously explores new technologies to improve performance, maintainability, and user experience.
+  `,
+
     yearsOfExperience: 4,
-    coreExpertise: ['Full-Stack Development', 'Frontend Development', 'Backend Development', 'App Development', 'Performance Optimization', 'Browser APIs'],
-    skills: ["Javascript", "React Js", "Next Js", "Node js", "Express Js", "MongoDB", "Socket.io", "React Vite", "Nest Js"],
+
+    coreExpertise: [
+      'MERN Stack Development',
+      'React & Next.js Applications',
+      'React Native Mobile Apps',
+      'Backend API Development',
+      'Real-time Applications',
+      'Performance Optimization'
+    ],
+
+    skills: [
+      'JavaScript',
+      'React.js',
+      'Next.js',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'React Native',
+      'Socket.io',
+      'NestJS',
+      'Vite'
+    ],
+
     social: {
       github: 'https://github.com/devhasnain',
       linkedin: 'https://www.linkedin.com/in/devhasnain/',
-      fiverr:"https://www.fiverr.com/users/hasnainalam462"
+      fiverr: 'https://www.fiverr.com/users/hasnainalam462'
     },
-    metaTitle: 'Sarah Chen - Lead Developer | QuickPicConvert Team',
-    metaDescription: 'Meet Sarah Chen, Lead Developer at QuickPicConvert. Expert in WebAssembly and browser APIs, building blazing-fast image processing tools.',
-  },
+
+  }
+
 ];
 
 export function getTeamMemberBySlug(slug: string): TeamMember | undefined {
