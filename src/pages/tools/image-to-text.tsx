@@ -90,7 +90,6 @@ const ImageToText = () => {
         <div
           className="w-full h-[35vh] overflow-hidden flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2"
         >
-          
             <Image
               height={100}
               width={100}

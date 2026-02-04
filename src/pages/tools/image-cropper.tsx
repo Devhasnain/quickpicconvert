@@ -1,61 +1,102 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
-import { applyFilters, getImageFilterLabel, resizeImage } from "@/lib/utils";
+import "react-image-crop/dist/ReactCrop.css";
+
+import ReactCrop, { Crop, PercentCrop, PixelCrop } from "react-image-crop";
+import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { Separator } from "@/components/ui/separator";
-import { Download, icons, Plus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { CROP_PRESETS, loadImage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { memo, useRef, useState } from "react";
+import { Download } from "lucide-react";
+import { toast } from "sonner";
 
 
 const ImageCropper = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<string | null>(null);
-  const [width, setWidth] = useState(800);
-  const [height, setHeight] = useState(600);
-  const [filter, setFilter] = useState("none");
+  const [imageElement, setImageElement] = useState<HTMLImageElement | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const [crop, setCrop] = useState<Crop>({
+    unit: "%",
+    x: 20,
+    y: 20,
+    width: 60,
+    height: 60,
+  });
+  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
+
+  const onCropChange = (_: PixelCrop, percentageCrop: PercentCrop) => {
+    setCrop(percentageCrop);
+    setCompletedCrop(percentageCrop);
+  };
 
   const openExplorer = () => {
     inputRef.current?.click();
   };
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setFile(e.target.files[0]);
-      setResult(null);
+      const imageElement = await loadImage(
+        URL.createObjectURL(e.target.files[0])
+      );
+      setImageElement(imageElement);
       if (inputRef?.current) inputRef.current.value = "";
     }
   };
 
-  const handleProcess = async () => {
-    if (!file) return;
+  const generateCanvas = () => {
+    if (!canvasRef.current || !imageElement || !completedCrop) return;
 
-    let output = await resizeImage(file, width, height);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    if (filter !== "none") {
-      output = await applyFilters(file, filter);
-    }
+    const { naturalWidth, naturalHeight } = imageElement;
 
-    setResult(output);
+    const cropWidth = Math.round((completedCrop.width / 100) * naturalWidth);
+    const cropHeight = Math.round((completedCrop.height / 100) * naturalHeight);
+    canvas.width = cropWidth;
+    canvas.height = cropHeight;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(
+      imageElement,
+      Math.round((completedCrop.x / 100) * naturalWidth),
+      Math.round((completedCrop.y / 100) * naturalHeight),
+      cropWidth,
+      cropHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
   };
 
-  const handleDownload = () => {
-    if (!result) return;
-
-    const a = document.createElement("a");
-    a.href = result;
-    a.download = "resized-image.png";
-    a.click();
-  };
-
-  useEffect(() => {
-    if (file) {
-      handleProcess();
+  const downloadImage = () => {
+    try {
+      setIsLoading(true);
+      if (!canvasRef.current || !file)
+        throw new Error("Unexpected error, Please reload the page.");
+      generateCanvas();
+      canvasRef.current.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `cropped-${file?.name.replace(/\.\w+$/, "")}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }, "image/png");
+    } catch (error: any) {
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
     }
-  }, [file, width, height, filter]);
+  };
 
   return (
     <>
@@ -67,104 +108,96 @@ const ImageCropper = () => {
         onChange={handleUpload}
       />
 
-      <ToolPageLayout>
-        <div className="bg-card rounded-2xl border border-border p-6">
-          <div className="pb-5">
-            <h3 className="text-lg font-medium">Settings</h3>
-            <Separator />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 pb-5">
-            <div className="flex flex-col gap-1">
-              <Label>Width</Label>
-              <Input
-                disabled={!file}
-                type="number"
-                max={1200}
-                value={width}
-                maxLength={4}
-                onChange={(e) => setWidth(+e.target.value)}
-                placeholder="Width"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <Label>Height</Label>
-              <Input
-                disabled={!file}
-                type="number"
-                value={height}
-                onChange={(e) => setHeight(+e.target.value)}
-                placeholder="Height"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <Label>Filter</Label>
-              <Select
-                disabled={!file}
-                value={filter}
-                onValueChange={(e) => setFilter(e)}
+      <ToolPageLayout containerClassName="max-w-4xl">
+        {!imageElement ? (
+          <UploadImageBtn onClick={openExplorer} />
+        ) : (
+          <div className="shadow-2xl border rounded-xl w-full grid grid-cols-12 overflow-hidden">
+            <div className="col-span-9">
+              <ReactCrop
+                disabled={isLoading}
+                crop={crop}
+                onChange={onCropChange}
+                onComplete={onCropChange}
               >
-                <SelectTrigger>
-                  <SelectValue>{getImageFilterLabel(filter)}</SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">No Filter</SelectItem>
-                  <SelectItem value="grayscale(100%)">Grayscale</SelectItem>
-                  <SelectItem value="contrast(120%)">Contrast</SelectItem>
-                  <SelectItem value="brightness(120%)">Brightness</SelectItem>
-                  <SelectItem value="sepia(100%)">Sepia</SelectItem>
-                </SelectContent>
-              </Select>
+                <img
+                  src={imageElement.src || ""}
+                  alt="Preview"
+                  className="max-w-full !max-h-[70vh] object-contain"
+                />
+              </ReactCrop>
             </div>
-          </div>
-
-          {!file && (
-            <div
-              onClick={openExplorer}
-              className="w-full h-[35vh] flex border border-primary/80 border-dashed mb-5 flex-col items-center justify-center rounded-md gap-2"
-            >
-              <icons.Image className="w-12 h-12 text-primary/80" />
-              <Button size="lg">Choose image</Button>
-              <span className="text-primary/80">Click to upload image</span>
-            </div>
-          )}
-
-          {result && (
-            <div className="space-y-4">
-              <div className="w-full border rounded-md h-[60vh] flex flex-col items-center justify-center">
-                <Image
-                  height={0}
-                  width={0}
-                  alt="image-preview"
-                  src={result}
-                  className="object-contain w-full h-full"
+            <div className="col-span-3 h-full p-5 flex flex-col gap-5">
+              <div className="grid grid-cols-2 gap-3">
+                <CropPresets
+                  disabled={isLoading}
+                  onSelect={(crop) => {
+                    setCompletedCrop(crop);
+                    setCrop(crop);
+                  }}
                 />
               </div>
-              <div className="flex flex-row items-center justify-between gap-3">
-                <Button
-                  onClick={handleDownload}
-                  size={"icon"}
-                  className="w-full flex flex-row items-center justify-center gap-2"
-                >
-                  Download <Download />
-                </Button>
-                <Button
-                  onClick={openExplorer}
-                  variant={"outline"}
-                  type="button"
-                  size={"icon"}
-                >
-                  <Plus />{" "}
-                </Button>
-              </div>
+              <Button disabled={isLoading} onClick={downloadImage}>
+                {isLoading ? "Downloading" : "Download"} <Download />
+              </Button>
+              <Button onClick={openExplorer} disabled={isLoading}>
+                Choose file
+              </Button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+        <canvas ref={canvasRef} style={{ display: "none" }} />
       </ToolPageLayout>
     </>
   );
 };
+
+const getBoxStyle = (ratio: number | null) => {
+  const MAX = 60; // max inner size
+
+  if (ratio && ratio >= 1) {
+    return {
+      width: `${MAX}px`,
+      height: `${MAX / ratio}px`,
+    };
+  }
+
+  return {
+    width: `${MAX * (ratio ? ratio : 0)}px`,
+    height: `${MAX}px`,
+  };
+};
+
+const CropPresets = memo(
+  ({
+    onSelect,
+    disabled,
+  }: {
+    disabled: boolean;
+    onSelect: (crop: any) => void;
+  }) => {
+    return (
+      <>
+        {CROP_PRESETS.map((preset) => (
+          <div
+            aria-disabled={disabled}
+            key={preset.id}
+            className={`border flex flex-col items-center justify-center p-2 rounded-md cursor-pointer ${
+              disabled && "cursor-not-allowed"
+            }`}
+            onClick={disabled ? () => {} : () => onSelect(preset.crop)}
+          >
+            <div
+              className="border flex flex-col items-center justify-center bg-gray-300 rounded-sm"
+              style={getBoxStyle(preset.ratio)}
+            >
+              <span className="text-sm font-semibold">{preset?.label}</span>
+            </div>
+          </div>
+        ))}
+      </>
+    );
+  }
+);
 
 export default ImageCropper;

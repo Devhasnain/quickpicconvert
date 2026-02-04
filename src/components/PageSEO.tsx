@@ -1,3 +1,5 @@
+import { getToolSchemaString } from "@/lib/generateToolSchema";
+import { Tool } from "@/data/tool";
 import { ReactNode } from "react";
 import Head from "next/head";
 
@@ -12,6 +14,7 @@ interface PageSEOProps {
   ogDescription?: string;
   ogImage?:string;
   ogURL?:string;
+  tool?:Tool
 }
 
 const BRAND = "Quick Pic Convert";
@@ -41,7 +44,8 @@ export function PageSEO({
   ogTitle,
   ogDescription,
   ogImage,
-  ogURL
+  ogURL,
+  tool
 }: PageSEOProps) {
   const metaTitle = buildTitle(title);
   return (
@@ -69,6 +73,14 @@ export function PageSEO({
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/manifest.json" />
       <link rel="robots-file" href="/robots.txt"/>
+      {tool && 
+     <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: getToolSchemaString(tool),
+          }}
+        />  
+    }
       {children}
     </Head>
   );

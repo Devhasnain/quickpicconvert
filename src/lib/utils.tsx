@@ -469,3 +469,44 @@ export const formatBytes = (bytes: number) => {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 };
+
+export const CROP_PRESETS = [
+  {
+    id: "insta_square",
+    label: "1:1",
+    ratio: 1 / 1,
+    crop: { unit: "%", x: 20, y: 20, width: 60, height: 60 },
+  },
+  {
+    id: "insta_portrait",
+    label: "4:5",
+    ratio: 4 / 5,
+    crop: { unit: "%", x: 20, y: 10, width: 60, height: 75 },
+  },
+  {
+    id: "insta_story",
+    label: "9:16",
+    ratio: 9 / 16,
+    crop: { unit: "%", x: 25, y: 5, width: 50, height: 90 },
+  },
+   {
+    id: "twitter_post",
+    label: "16:9",
+    ratio: 16 / 9,
+    crop: { unit: "%", x: 5, y: 25, width: 90, height: 50 },
+  },
+  {
+    id: "insta_landscape",
+    label: "1.91:1",
+    ratio: 1.91 / 1,
+    crop: { unit: "%", x: 5, y: 30, width: 90, height: 47 },
+  },
+  {
+    id: "fb_cover",
+    label: "2.63:1",
+    ratio: 2.63 / 1,
+    crop: { unit: "%", x: 5, y: 35, width: 90, height: 34 },
+  },
+ 
+];
+

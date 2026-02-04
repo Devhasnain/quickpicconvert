@@ -36,7 +36,7 @@ const UploadImageBtn = ({ onClick }: Props) => {
         />
         <Image
           alt="quick-pic-convert-upload-file-button-shape-4"
-          src="/images/shape-dark.png"
+          src="/images/quick-pic-convert-upload-file-button-shape-dark.png"
           width={500}
           height={500}
           className="absolute inset-0 opacity-60 w-full h-full object-cover animate-spin-slow"
