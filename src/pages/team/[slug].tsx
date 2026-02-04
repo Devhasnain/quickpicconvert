@@ -6,7 +6,6 @@ import { TeamMember, teamMembers } from "@/data/teamMembers";
 import { Button } from "@/components/ui/button";
 import { PageSEO } from "@/components/PageSEO";
 import { Badge } from "@/components/ui/badge";
-import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,19 +31,6 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
   const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation();
   const { ref: skillsRef, isVisible: skillsVisible } = useScrollAnimation();
-
-  // Update document meta for SEO
-  useEffect(() => {
-    if (member) {
-      document.title = member.metaTitle;
-      const metaDescription = document.querySelector(
-        'meta[name="description"]'
-      );
-      if (metaDescription) {
-        metaDescription.setAttribute("content", member.metaDescription);
-      }
-    }
-  }, [member]);
 
   if (!member) {
     return (
