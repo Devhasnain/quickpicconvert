@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Code, Crop, FileText, Info, Key, Minimize2, Palette } from "lucide-react";
+import { ArrowRightLeft, Code, Crop, FileImage, FileText, Info, Key, Minimize2, Palette } from "lucide-react";
 
 
 export interface Tool {
@@ -784,6 +784,188 @@ export const tools: Tool[] = [
             ]
         }
     },
+
+    {
+        id: "image-to-pdf",
+        icon: FileImage,
+        title: "Image to PDF Converter",
+        description: "Convert JPG and PNG images into a single PDF file online. Combine multiple images, control page size, orientation, and quality — fast, free, and fully browser-based.",
+        category: "PDF Tools",
+        color: "from-blue-500 to-cyan-500",
+        seo: {
+            title: "Image to PDF Converter – JPG to PDF, PNG to PDF Online Free",
+            description: "Convert images to PDF online for free. Easily convert JPG to PDF or PNG to PDF, merge multiple images into one PDF, adjust page size and orientation — secure and browser-based.",
+            canonical: "https://quickpicconvert.com/tools/image-to-pdf",
+            keywords: "image to pdf, jpg to pdf, png to pdf, convert images to pdf online, jpg to pdf free, combine images into pdf, photos to pdf, image to pdf converter online, browser based pdf converter"
+        },
+        instructions: {
+            title: "Convert Images to PDF Online",
+            description: "Quick Pic Convert’s Image to PDF tool lets you convert JPG and PNG images into high-quality PDF files instantly. Combine multiple images into a single PDF, customize layout options, and export securely — all processed directly in your browser with no uploads.",
+            steps: [
+                {
+                    title: "Upload Images",
+                    description: "Upload or drag and drop one or multiple JPG or PNG images you want to convert into a PDF."
+                },
+                {
+                    title: "Arrange & Customize",
+                    description: "Reorder images, choose page size (A4, Letter, Auto), set orientation, and adjust margins or image fit."
+                },
+                {
+                    title: "Convert to PDF",
+                    description: "Click the convert button to instantly generate a PDF file from your images using browser-based processing."
+                },
+                {
+                    title: "Download PDF",
+                    description: "Download your final PDF file immediately — no watermark, no sign-up required."
+                }
+            ],
+            tips: [
+                "Upload multiple images to merge them into a single PDF file",
+                "Use Auto page size for best image-to-page fitting",
+                "Choose A4 or Letter for printing documents",
+                "Reorder images before conversion to control page sequence",
+                "All files are processed locally for maximum privacy"
+            ],
+            faqs: [
+                {
+                    question: "Which image formats are supported?",
+                    answer: "This tool supports JPG, JPEG, and PNG image formats for converting images into PDF files."
+                },
+                {
+                    question: "Can I convert multiple images into one PDF?",
+                    answer: "Yes, you can upload multiple images and combine them into a single PDF file in your preferred order."
+                },
+                {
+                    question: "Is this Image to PDF converter free?",
+                    answer: "Yes, the tool is completely free to use with no watermarks or usage limits."
+                },
+                {
+                    question: "Are my images uploaded to a server?",
+                    answer: "No. All image-to-PDF conversions happen directly in your browser. Your files are never uploaded or stored."
+                },
+                {
+                    question: "Can I use this tool on mobile devices?",
+                    answer: "Yes, the Image to PDF converter works on desktop, tablet, and mobile browsers without installing any app."
+                }
+            ]
+        }
+    },
+
+    {
+        id: "jpg-to-pdf",
+        icon: FileImage,
+        title: "JPG to PDF Converter",
+        description: "Convert JPG images to PDF online. Merge multiple JPG files into one PDF, adjust page size, margins, and orientation — fast, free, and browser-based.",
+        category: "PDF Tools",
+        color: "from-orange-500 to-red-500",
+        seo: {
+            title: "JPG to PDF Converter – Convert JPG Images to PDF Online Free",
+            description: "Convert JPG to PDF online for free. Combine multiple JPG images into a single PDF, customize page size, margins, and orientation — secure and browser-based.",
+            canonical: "https://quickpicconvert.com/tools/jpg-to-pdf",
+            keywords: "jpg to pdf, convert jpg to pdf, jpg to pdf online, jpg to pdf free, combine jpg to pdf, photos to pdf, jpg images to pdf, browser based jpg to pdf"
+        },
+        instructions: {
+            title: "Convert JPG to PDF Online",
+            description: "Quick Pic Convert’s JPG to PDF tool allows you to convert JPG images into high-quality PDF files instantly. Merge multiple JPG photos, customize layout settings, and export PDFs securely — all processed directly in your browser.",
+            steps: [
+                {
+                    title: "Upload JPG Images",
+                    description: "Upload or drag and drop one or multiple JPG images you want to convert into a PDF."
+                },
+                {
+                    title: "Reorder & Customize",
+                    description: "Drag images to reorder pages, choose page size, orientation, and adjust margins."
+                },
+                {
+                    title: "Convert to PDF",
+                    description: "Click convert to instantly generate a PDF file from your JPG images."
+                },
+                {
+                    title: "Download PDF",
+                    description: "Download your JPG to PDF file immediately with no watermark or signup."
+                }
+            ],
+            tips: [
+                "Reorder JPG images to control PDF page sequence",
+                "Use A4 or Letter size for printing",
+                "Adjust margins for better document layout",
+                "All processing happens locally in your browser"
+            ],
+            faqs: [
+                {
+                    question: "Can I convert multiple JPG files into one PDF?",
+                    answer: "Yes, you can upload multiple JPG images and merge them into a single PDF file."
+                },
+                {
+                    question: "Is this JPG to PDF converter free?",
+                    answer: "Yes, the tool is completely free with no watermarks or limits."
+                },
+                {
+                    question: "Are my JPG files uploaded?",
+                    answer: "No, all conversions are done locally in your browser for full privacy."
+                }
+            ]
+        }
+    },
+
+    {
+        id: "png-to-pdf",
+        icon: FileImage,
+        title: "PNG to PDF Converter",
+        description: "Convert PNG images to PDF online. Merge multiple PNG files, preserve transparency, and customize page size and margins — fast, free, and secure.",
+        category: "PDF Tools",
+        color: "from-green-500 to-emerald-500",
+        seo: {
+            title: "PNG to PDF Converter – Convert PNG Images to PDF Online Free",
+            description: "Convert PNG to PDF online for free. Merge multiple PNG images into a single PDF while preserving quality and transparency — browser-based and secure.",
+            canonical: "https://quickpicconvert.com/tools/png-to-pdf",
+            keywords: "png to pdf, convert png to pdf, png to pdf online, png images to pdf, combine png to pdf, png to pdf free, browser based png to pdf"
+        },
+        instructions: {
+            title: "Convert PNG to PDF Online",
+            description: "Quick Pic Convert’s PNG to PDF tool lets you convert PNG images into PDF files while preserving clarity and layout. Combine multiple PNG images, customize page settings, and export PDFs securely — no uploads required.",
+            steps: [
+                {
+                    title: "Upload PNG Images",
+                    description: "Upload or drag and drop one or more PNG images."
+                },
+                {
+                    title: "Arrange & Customize",
+                    description: "Reorder images, set page size, orientation, and margins as needed."
+                },
+                {
+                    title: "Convert to PDF",
+                    description: "Click convert to instantly generate a PDF from your PNG images."
+                },
+                {
+                    title: "Download PDF",
+                    description: "Download your converted PDF instantly without any watermark."
+                }
+            ],
+            tips: [
+                "PNG images are ideal for graphics and screenshots",
+                "Reorder images before conversion to control page order",
+                "Use Auto page size for best image fit",
+                "All PNG to PDF conversions happen in your browser"
+            ],
+            faqs: [
+                {
+                    question: "Does PNG to PDF preserve image quality?",
+                    answer: "Yes, PNG images are converted without quality loss, preserving sharpness and details."
+                },
+                {
+                    question: "Can I merge multiple PNG files into one PDF?",
+                    answer: "Yes, multiple PNG images can be combined into a single PDF file."
+                },
+                {
+                    question: "Is this PNG to PDF converter secure?",
+                    answer: "Yes, files are processed locally and never uploaded to any server."
+                }
+            ]
+        }
+    }
+
+
 
 ]
 

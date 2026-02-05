@@ -1,10 +1,11 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
 import { compressImages, downloadAsZip, downloadSingleFile, getOutputFormateLabel, } from "@/lib/utils";
-import { Download, MoveRight, Plus, X, icons } from "lucide-react";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import ImagePreviewCard from "@/components/tool/ImagePreviewCard";
 import UploadImageBtn from "@/components/tool/UploadImageBtn";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
+import { Download, MoveRight, Plus, X } from "lucide-react";
+import HiddenFileInput from "@/components/HiddenFileInput";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -102,13 +103,11 @@ export default function ImageCompressor() {
   return (
     <>
       <ToolPageLayout>
-        <input
+        <HiddenFileInput
           ref={inputRef}
-          type="file"
-          multiple
+          multiple={true}
           accept="image/png,image/jpeg"
           onChange={handleFilesOnChange}
-          className="hidden"
         />
         {!files?.length ? <UploadImageBtn onClick={openExplorer} /> : ""}
         {files?.length ? (

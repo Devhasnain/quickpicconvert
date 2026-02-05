@@ -41,7 +41,7 @@ const ToolPageLayout = ({
       {tool && (
         <>
           {pageHero === "default" ? (
-            <section className="pt-24 pb-7 bg-hero-bg">
+            <section className="pt-20 pb-7 bg-hero-bg">
               <div className="container-custom">
                 <div
                   ref={headerRef}
@@ -50,13 +50,13 @@ const ToolPageLayout = ({
                     headerVisible ? "animate-fade-up" : "opacity-0"
                   )}
                 >
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-2">
                     <Zap className="w-4 h-4 text-primary" />
                     <span className="text-sm font-medium text-accent-foreground">
                       All Tools Available Free
                     </span>
                   </div>
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
                     {tool.title}
                   </h1>
                   <p className="text-lg max-w-3xl m-auto text-muted-foreground">

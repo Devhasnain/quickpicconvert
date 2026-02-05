@@ -1,3 +1,4 @@
+import PageHeroSectionBackground from "@/components/PageHeroSectionBackground";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { teamMembers } from "@/data/teamMembers";
 import { Globe, ArrowRight } from "lucide-react";
@@ -42,7 +43,9 @@ export default function AboutPage() {
       </PageSEO>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-hero-bg">
+        <PageHeroSectionBackground
+        className="!min-h-[70vh]"
+        >
         <div className="container-custom">
           <div
             ref={heroRef}
@@ -60,7 +63,7 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
+        </PageHeroSectionBackground>
 
       {/* Stats Section */}
       <section className="py-12 bg-background border-y border-border">

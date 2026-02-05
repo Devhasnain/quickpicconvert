@@ -2,8 +2,9 @@ import { ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
+
+import PageHeroSectionBackground from "../PageHeroSectionBackground";
 
 
 const features = [
@@ -16,33 +17,7 @@ export function HeroSection() {
   const { ref } = useScrollAnimation();
 
   return (
-    <section
-      className="relative min-h-screen flex items-center pt-20 overflow-hidden"
-      aria-label="Quick Pic Converter Hero Section"
-    >
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/hero-bg.webp"
-          title="Online image converter background for JPG PNG and WebP conversion"
-          alt="Online image converter background for JPG PNG and WebP conversion"
-          width={800}
-          height={800}
-          className="w-full h-full object-cover opacity-40"
-          preload={true}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
-      </div>
-
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-gradient-end/10 rounded-full blur-3xl animate-pulse-slow delay-300" />
-      </div>
-
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.5)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.5)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]" />
-
+    <PageHeroSectionBackground>
       <div className="container-custom relative z-10">
         <div ref={ref} className={cn("max-w-4xl mx-auto text-center")}>
           {/* Badge */}
@@ -114,9 +89,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-    </section>
+    </PageHeroSectionBackground>
   );
 }

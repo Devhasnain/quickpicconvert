@@ -1,3 +1,4 @@
+import PageHeroSectionBackground from "@/components/PageHeroSectionBackground";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { PageSEO } from "@/components/PageSEO";
 import { Sparkles } from "lucide-react";
@@ -7,7 +8,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 
-const categories = ["Converter", "Optimizer", "Editor", "AI Tool", "Utility"];
+const categories = ["Converter", "Optimizer", "Editor", "PDF Tools", "Utility"];
 
 export default function ToolsPage() {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -28,7 +29,10 @@ export default function ToolsPage() {
       />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-hero-bg">
+      {/* <section className="pt-32 pb-16 bg-hero-bg"> */}
+      <PageHeroSectionBackground
+      className="!min-h-[30vh]"
+      >
         <div className="container-custom">
           <div
             ref={headerRef}
@@ -53,7 +57,9 @@ export default function ToolsPage() {
             </p>
           </div>
         </div>
-      </section>
+      </PageHeroSectionBackground>
+
+      {/* </section> */}
 
       {/* Tools Grid */}
       <section className="pt-8 pb-16 bg-background">
@@ -61,7 +67,7 @@ export default function ToolsPage() {
           {/* Category Filter */}
           <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
             <button
-              onClick={(e) => setActiveCategory("All")}
+              onClick={() => setActiveCategory("All")}
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
                 activeCategory === "All"

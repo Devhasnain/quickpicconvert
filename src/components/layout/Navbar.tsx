@@ -43,7 +43,7 @@ export function Navbar() {
       )}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Logo/>
           {/* Desktop Navigation */}

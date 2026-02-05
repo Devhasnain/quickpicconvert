@@ -1,6 +1,6 @@
-import { getTeamMemberBySlug } from "@/data/teamMembers";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { PDFDocument } from "pdf-lib";
 import { toast } from "sonner";
 import JSZip from "jszip";
 
@@ -365,9 +365,23 @@ function downloadFile(content: any, filename: string, mimeType: string) {
   a.href = url;
   a.download = filename;
   a.click();
-
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+export function downloadBlob(blob: Blob, filename = "") {
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 
 export const getFileFromClipboard = (event: ClipboardEvent) => {
   try {
@@ -489,7 +503,7 @@ export const CROP_PRESETS = [
     ratio: 9 / 16,
     crop: { unit: "%", x: 25, y: 5, width: 50, height: 90 },
   },
-   {
+  {
     id: "twitter_post",
     label: "16:9",
     ratio: 16 / 9,
@@ -507,6 +521,68 @@ export const CROP_PRESETS = [
     ratio: 2.63 / 1,
     crop: { unit: "%", x: 5, y: 35, width: 90, height: 34 },
   },
- 
 ];
 
+function getPageSize(
+  size: "Auto" | "Letter" | "A4",
+  imageWidth: number,
+  imageHeight: number
+) {
+  if (size === "Auto") {
+    return { width: imageWidth, height: imageHeight };
+  }
+  if (size === "Letter") {
+    return { width: 612, height: 792 };
+  }
+  return { width: 595, height: 842 }; // A4
+}
+
+const mmToPt = (mm: number) => mm * 2.83465;
+
+export async function addImagesToPdf(
+  images: {
+    id: string;
+    file: File;
+    preview: string;
+  }[],
+  pageSize: "Auto" | "Letter" | "A4",
+  orientation: string,
+  margin: number
+) {
+  const pdfDoc = await PDFDocument.create();
+
+  for (const img of images) {
+    const bytes = await img.file.arrayBuffer();
+    const image =
+      img.file.type === "image/png"
+        ? await pdfDoc.embedPng(bytes)
+        : await pdfDoc.embedJpg(bytes);
+
+    let { width, height } = getPageSize(pageSize, image.width, image.height);
+
+    if (orientation === "landscape") {
+      [width, height] = [height, width];
+    }
+
+    const page = pdfDoc.addPage([width, height]);
+
+    const marginPt = mmToPt(margin);
+    const maxWidth = width - marginPt * 2;
+    const maxHeight = height - marginPt * 2;
+
+    const scale = Math.min(maxWidth / image.width, maxHeight / image.height);
+
+    const imgWidth = image.width * scale;
+    const imgHeight = image.height * scale;
+
+    page.drawImage(image, {
+      x: (width - imgWidth) / 2,
+      y: (height - imgHeight) / 2,
+      width: imgWidth,
+      height: imgHeight,
+    });
+  }
+
+  const pdfBytes = await pdfDoc.save();
+  return new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
+}
