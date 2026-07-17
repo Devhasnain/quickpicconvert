@@ -1,48 +1,63 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { memo, ReactNode, useMemo } from "react";
-import { LucideIcon, Zap } from "lucide-react";
-import { Tool, tools } from "@/data/tool";
-import { useRouter } from "next/router";
+import { memo, ReactNode } from "react";
+import { Zap } from "lucide-react";
+import { Tool } from "@/data/tool";
 import { cn } from "@/lib/utils";
 
 import { ToolInstructions } from "./ToolInstructions";
+import UploadImageBtn from "./UploadImageBtn";
+import LogoShaped from "../LogoShaped";
 import { PageSEO } from "../PageSEO";
 
 
 type Props = {
+  tool: Tool;
   children: ReactNode;
-  containerClassName?: string;
-  mainContainerClassName?: string;
-  pageHero?: "default" | "custom";
+  toolBar?: ReactNode;
+  hideTextContent?: boolean;
+  openExplorer?: () => void;
 };
 const ToolPageLayout = ({
+  tool,
   children,
-  containerClassName,
-  mainContainerClassName,
-  pageHero = "default",
+  toolBar,
+  openExplorer,
+  hideTextContent = false,
 }: Props) => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
-  const pathname = useRouter().pathname;
-
-  const tool: Tool | null = useMemo(() => {
-    const tool = tools.find((t) => pathname === `/tools/${t.id}`);
-    return tool || null;
-  }, [pathname]);
-
   return (
     <>
-      <PageSEO
-        title={tool?.seo.title || ""}
-        description={tool?.seo?.description || ""}
-        keywords={tool?.seo?.keywords}
-        canonical={tool?.seo?.canonical}
-      />
-      {tool && (
+      {/* {tool && ( */}
         <>
-          {pageHero === "default" ? (
-            <section className="pt-20 pb-7 bg-hero-bg">
-              <div className="container-custom">
+          <PageSEO
+            title={tool?.seo.title || ""}
+            description={tool?.seo?.description || ""}
+            keywords={tool?.seo?.keywords}
+            canonical={tool?.seo?.canonical}
+          />
+          <section
+            className={
+              "relative overflow-hidden min-h-screen gradient-bg pb-4 sm:pb-0"
+            }
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+
+            <div
+              style={{
+                opacity: hideTextContent ? "0%" : "100%",
+              }}
+              className="grid grid-cols-12 h-[100vh] px-5"
+            >
+              <div className="sm:col-span-2 col-span-12  pt-4">
+                <LogoShaped />
+              </div>
+              <div className="col-span-8 h-full flex flex-col justify-center">
                 <div
                   ref={headerRef}
                   className={cn(
@@ -56,39 +71,42 @@ const ToolPageLayout = ({
                       All Tools Available Free
                     </span>
                   </div>
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4">
                     {tool.title}
                   </h1>
-                  <p className="text-lg max-w-3xl m-auto text-muted-foreground">
+                  <p className="text-lg max-w-3xl m-auto text-white/90 lg:mb-4 xl:mb-8">
                     {tool.description}
                   </p>
+                  <UploadImageBtn
+                    onClick={openExplorer ? openExplorer : () => {}}
+                  />
                 </div>
               </div>
-            </section>
-          ) : (
-            ""
-          )}
-
-          <section
-            className={`container-custom pb-8 ${mainContainerClassName}`}
-          >
-            <div className={`max-w-3xl mx-auto ${containerClassName}`}>
-              {children}
+              <div className="col-span-2"></div>
             </div>
+
+            {hideTextContent && (
+              <div className="grid grid-cols-12 h-screen absolute top-0 left-0 w-full z-10">
+                <div className="col-span-3 h-full p-3">
+                  <LogoShaped />
+
+                  <div className="mt-4">{toolBar}</div>
+                </div>
+
+                <div className="col-span-9 h-full">{children}</div>
+              </div>
+            )}
           </section>
 
-          {tool?.instructions && (
-            <ToolInstructions
-              title={tool.instructions.title}
-              description={tool.instructions.description}
-              steps={tool.instructions.steps}
-              tips={tool.instructions.tips}
-              faqs={tool.instructions.faqs}
-              Icon={tool.icon as LucideIcon}
-            />
-          )}
+          <ToolInstructions
+            title={tool.instructions.title}
+            description={tool.instructions.description}
+            steps={tool.instructions.steps}
+            tips={tool.instructions.tips}
+            faqs={tool.instructions.faqs}
+          />
         </>
-      )}
+      {/* )} */}
     </>
   );
 };

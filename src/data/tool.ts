@@ -8,7 +8,7 @@ export interface Tool {
     icon: typeof Key;
     category: string;
     color: string;
-    instructions?: {
+    instructions: {
         title: string;
         description: string;
         steps: { title: string; description: string }[];

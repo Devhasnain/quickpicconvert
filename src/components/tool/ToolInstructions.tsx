@@ -7,7 +7,6 @@ type Props = {
   steps: { title: string; description: string }[];
   tips: string[];
   faqs: { question: string; answer: string }[];
-  Icon?: LucideIcon;
 };
 
 export function ToolInstructions({
@@ -16,18 +15,12 @@ export function ToolInstructions({
   steps,
   tips,
   faqs,
-  Icon,
 }: Props) {
   return (
     <div className="mt-8 space-y-8 max-w-3xl mx-auto pb-20" >
       {/* About Section */}
       <section className="bg-card rounded-2xl border border-border p-6 md:p-8">
         <div className="flex items-start gap-4">
-          {Icon && (
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <Icon className="w-6 h-6 text-primary" />
-            </div>
-          )}
           <div>
             <h2 className="text-xl font-display font-semibold mb-3">
               About {title}

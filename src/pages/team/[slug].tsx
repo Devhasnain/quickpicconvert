@@ -58,13 +58,13 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
   return (
     <>
       <PageSEO
-      title={meta.title}
-      description={meta.description}
-      canonical={meta.canonical}
-      ogTitle={meta.openGraph.title}
-      ogDescription={meta.openGraph.description}
-      ogURL={meta.openGraph.url}
-      ogImage={meta.openGraph.images}
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
+        ogTitle={meta.openGraph.title}
+        ogDescription={meta.openGraph.description}
+        ogURL={meta.openGraph.url}
+        ogImage={meta.openGraph.images}
       >
         <script
           type="application/ld+json"
@@ -147,6 +147,7 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
                     aria-label="Twitter Profile"
+                    title={`${member.name} Portfolio`}
                   >
                     <Twitter className="w-5 h-5" />
                   </Link>
@@ -156,10 +157,14 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
                     href={member.social.portfolio}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-                    aria-label="Personal Portfolio"
+                    className="gap-3 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                    aria-label={`${member.name} Personal Portfolio`}
+                    title={`${member.name} Portfolio`}
                   >
-                    <Globe className="w-5 h-5" />
+                    <Globe className="w-5 h-5"/>
+                    <span>
+                    Portfolio website
+                    </span>
                   </Link>
                 )}
               </div>

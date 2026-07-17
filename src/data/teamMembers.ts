@@ -120,7 +120,8 @@ Hasnain is passionate about modern JavaScript ecosystems, scalable backend syste
     social: {
       github: 'https://github.com/devhasnain',
       linkedin: 'https://www.linkedin.com/in/devhasnain/',
-      fiverr: 'https://www.fiverr.com/users/hasnainalam462'
+      fiverr: 'https://www.fiverr.com/users/hasnainalam462',
+      portfolio: 'https://hasnainalam.com'
     },
 
   }

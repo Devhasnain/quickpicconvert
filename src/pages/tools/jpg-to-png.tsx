@@ -1,13 +1,29 @@
+import ConverterToolBar from "@/components/tool/ConverterToolBar";
 import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import ImageConverter from "@/components/tool/ImageConverter";
+import { withToolProps } from "@/lib/withToolProps";
 
 
-const JpgToPng = () => {
+type Props = {
+  tool:string
+}
+
+const JpgToPng = ({tool}:Props) => {
   return (
-      <ToolPageLayout>
-        <ImageConverter accept="image/jpeg" output="png" title="Jpg to png" />
-      </ToolPageLayout>
+    <ToolPageLayout
+    tool={JSON.parse(tool)}
+    hideTextContent={true}
+    toolBar={
+      <ConverterToolBar/>
+    }
+    >
+      s
+      {/* <ImageConverter accept="image/jpeg" output="png" title="Jpg to png" /> */}
+    </ToolPageLayout>
   );
+};
+
+export const getStaticProps = async () => {
+  return withToolProps('jpg-to-png');
 };
 
 export default JpgToPng;

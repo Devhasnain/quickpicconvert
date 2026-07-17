@@ -5,7 +5,6 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { CTASection } from "@/components/home/CTASection";
 import { PageSEO } from "@/components/PageSEO";
 
-
 const Index = () => {
   return (
     <>
@@ -18,22 +17,25 @@ const Index = () => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Quick Pic Convert",
-              url: "https://quickpicconvert.com",
-              description:
-                "Convert images and files to various formats like PNG, JPG, and PDF. Free online file conversion with Quick Pic Convert.",
-              publisher: {
-                "@type": "Organization",
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
                 name: "Quick Pic Convert",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "https://quickpicconvert.com/logo-lg.png",
+                url: "https://quickpicconvert.com",
+                description:
+                  "Convert images and files to various formats like PNG, JPG, and PDF. Free online file conversion with Quick Pic Convert.",
+                publisher: {
+                  "@type": "Organization",
+                  name: "Quick Pic Convert",
+                  logo: {
+                    "@type": "ImageObject",
+                    url: "https://quickpicconvert.com/logo-lg.png",
+                  },
                 },
               },
-            }),
+              
+            ]),
           }}
         />
       </PageSEO>

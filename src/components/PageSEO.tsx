@@ -52,27 +52,27 @@ export function PageSEO({
     <Head>
       <title>{metaTitle}</title>
       <meta name="description" content={buildDescription(description)} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      {canonical && <link rel="canonical" href={canonical} />}
-      <meta name="apple-mobile-web-app-title" content="Quick pic convert" />
+      {keywords && <meta name="keywords" content={keywords} ></meta>}
+      {canonical && <link rel="canonical" href={canonical} ></link>}
+      <meta name="apple-mobile-web-app-title" content="Quick pic convert" ></meta>
 
-      <meta property="og:title" content={ogTitle || metaTitle} />
-      <meta property="og:description" content={ogDescription || description} />
+      <meta property="og:title" content={ogTitle || metaTitle} ></meta>
+      <meta property="og:description" content={ogDescription || description} ></meta>
       <meta
         property="og:image"
-        content={ogImage || "https://quickpicconvert.com/Quick-pic-convert-og-image"}
-      />
-      <meta property="og:url" content={ogURL || "https://quickpicconvert.com/"} />
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Quick Pic Convert" />
+        content={ogImage || "https://quickpicconvert.com/Quick-pic-convert-og-image.png"}
+      ></meta>
+      <meta property="og:url" content={ogURL || "https://quickpicconvert.com/"} ></meta>
+      <meta property="og:type" content="website" ></meta>
+      <meta property="og:site_name" content="Quick Pic Convert" ></meta>
 
-      <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={metaTitle} ></meta>
+      <meta name="twitter:description" content={description} ></meta>
 
-      <link rel="favicon" href="/favicon.ico" type="image/x-icon" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="robots-file" href="/robots.txt"/>
+      <link rel="favicon" href="/favicon.ico" type="image/x-icon" ></link>
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" ></link>
+      <link rel="manifest" href="/manifest.json" ></link>
+      <link rel="robots-file" href="/robots.txt"></link>
       {tool && 
      <script
           type="application/ld+json"
