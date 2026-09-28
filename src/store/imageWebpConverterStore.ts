@@ -1,4 +1,4 @@
-import { ImageToWebpResults } from "@/types";
+import { ImageConverterResults } from "@/types";
 import { create } from "zustand";
 
 
@@ -6,7 +6,7 @@ type SelectedFile = { file: File, id: string, output?: any }
 
 export interface ImageWebpConverterStore {
     files: SelectedFile[] | [],
-    setResults: (res: ImageToWebpResults[] | []) => void;
+    setResults: (res: ImageConverterResults[] | []) => void;
     addFiles: (v: SelectedFile[]) => void;
     removeFile: (i: string) => void;
     resetStore: () => void;
