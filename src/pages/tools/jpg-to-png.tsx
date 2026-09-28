@@ -1,29 +1,36 @@
-import ConverterToolBar from "@/components/tool/ConverterToolBar";
-import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { withToolProps } from "@/lib/withToolProps";
+import { getToolPageByPath } from "@/lib/getToolPageByPath";
+import { PageMeta, ToolPageContent } from "@/components";
+import { ToolPageProps } from "@/types";
+import { JpgToPngTool } from "@/tools";
+import { GetStaticProps } from "next";
 
 
-type Props = {
-  tool:string
-}
-
-const JpgToPng = ({tool}:Props) => {
+const JpgToPng = ({
+  toolPage,
+  breadcrumb,
+  jsonSchemas,
+}: ToolPageProps) => {
   return (
-    <ToolPageLayout
-    tool={JSON.parse(tool)}
-    hideTextContent={true}
-    toolBar={
-      <ConverterToolBar/>
-    }
-    >
-      s
-      {/* <ImageConverter accept="image/jpeg" output="png" title="Jpg to png" /> */}
-    </ToolPageLayout>
+    <>
+      <PageMeta
+        title={toolPage.postMeta.metaTitle}
+        description={toolPage.postMeta.metaDescription}
+        pathname={toolPage.slug}
+        image={toolPage?.featuredImage?.node?.sourceUrl||""}
+        ogType={"website"}
+        date=""
+        jsonSchema={jsonSchemas}
+      />
+      <JpgToPngTool />
+      <ToolPageContent
+        content={toolPage?.content || ""}
+        breadcrumb={breadcrumb}
+      />
+    </>
   );
 };
 
-export const getStaticProps = async () => {
-  return withToolProps('jpg-to-png');
-};
+export const getStaticProps: GetStaticProps = async () =>
+  await getToolPageByPath("jpg-to-png");
 
 export default JpgToPng;

@@ -8,7 +8,7 @@ type Props = {
   accept: string;
 };
 
-const HiddenFileInput = ({ ref, onChange, multiple, accept }: Props) => {
+export const HiddenFileInput = ({ ref, onChange, multiple, accept }: Props) => {
   return (
     <input
       ref={ref}
@@ -20,5 +20,3 @@ const HiddenFileInput = ({ ref, onChange, multiple, accept }: Props) => {
     />
   );
 };
-
-export default memo(HiddenFileInput);

@@ -1,43 +1,39 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { PageSEO } from "@/components/PageSEO";
-import { cn } from "@/lib/utils";
+import { Breadcrumb, Container } from "@/components";
 
 
 export default function TermsPage() {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
     <>
-      <PageSEO
-        title="Terms & Conditions – Quick Pic Convert"
-        description="Review the terms and conditions for using Quick Pic Convert’s free online image tools and services."
-        canonical="https://quickpicconvert.com/terms"
-        keywords="quick pic convert terms, image tools terms, online tool terms and conditions"
-      />
-
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-hero-bg">
-        <div className="container-custom">
-          <div
-            ref={ref}
-            className={cn(
-              "text-center max-w-3xl mx-auto",
-              isVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-              Terms of <span className="gradient-text">Service</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Last updated: January 15, 2024
-            </p>
-          </div>
-        </div>
+      <section className="bg-gray-100 py-10">
+        <Container
+          element="div"
+          className="text-center flex flex-col items-center"
+        >
+          <Breadcrumb
+            items={[
+              {
+                name: "Home",
+                href: "/",
+              },
+              {
+                name: "Terms of Services",
+                href: "/terms",
+              },
+            ]}
+          />
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
+            Terms of <span className="gradient-text">Service</span>
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Last updated: January 15, 2024
+          </p>
+        </Container>
       </section>
 
       {/* Content */}
       <section className="section-padding bg-background">
-        <div className="container-custom">
+        {/* <div className="container-custom">
           <div className="max-w-3xl mx-auto prose prose-lg">
             <div className="bg-card rounded-2xl border border-border p-8 md:p-12 space-y-8">
               <section>
@@ -156,7 +152,7 @@ export default function TermsPage() {
               </section>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
     </>
   );

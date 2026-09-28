@@ -1,164 +1,36 @@
-import { exportAsCSV, exportAsHTML, exportAsTXT } from "@/lib/utils";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import UploadImageBtn from "@/components/tool/UploadImageBtn";
-import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import { Button } from "@/components/ui/button";
-import EXIFReader from "exifreader";
-import { X } from "lucide-react";
-import Image from "next/image";
+import { getToolPageByPath } from "@/lib/getToolPageByPath";
+import { PageMeta, ToolPageContent } from "@/components";
+import { ImageMetadataReaderTool } from "@/tools";
+import { ToolPageProps } from "@/types";
+import { GetStaticProps } from "next";
 
 
-const ImageMetadataReader = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const [metadata, setMetadata] = useState<any>(null);
-
-  const openExplorer = () => {
-    inputRef.current?.click();
-  };
-
-  const handleFilesOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      setFile(e.target.files[0]);
-    }
-
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-  };
-
-  const handleReadFileMeta = async () => {
-    try {
-      if (!file) {
-        throw new Error("Please select an image.");
-      }
-      let tags = EXIFReader.load(await file.arrayBuffer());
-      setMetadata(tags);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleResetState = () => {
-    setFile(null);
-    setMetadata(null);
-  };
-
-  const downloadAsTXT = () => {
-    exportAsTXT(
-      metadata,
-      file?.name?.replace(/\.[^/.]+$/, `.txt`) || "metadata.txt"
-    );
-  };
-
-  const downloadAsCSV = () => {
-    exportAsCSV(
-      metadata,
-      file?.name?.replace(/\.[^/.]+$/, `.csv`) || "metadata.txt"
-    );
-  };
-
-  const downloadAsHTML = () => {
-    exportAsHTML(
-      metadata,
-      file?.name?.replace(/\.[^/.]+$/, `.html`) || "metadata.txt"
-    );
-  };
-
-  useEffect(() => {
-    if (file) {
-      handleReadFileMeta();
-    }
-  }, [file]);
-
+const ImageMetadataReader = ({
+  toolPage,
+  breadcrumb,
+  jsonSchemas,
+}: ToolPageProps) => {
   return (
     <>
-      <input
-        ref={inputRef}
-        type="file"
-        multiple={false}
-        accept="
-    image/jpeg,
-    image/jpg,
-    image/png,
-    image/webp,
-    image/tiff,
-    image/heic,
-    image/heif
-  "
-        onChange={handleFilesOnChange}
-        className="hidden"
+      <PageMeta
+        title={toolPage?.postMeta?.metaTitle || ""}
+        description={toolPage?.postMeta?.metaDescription||""}
+        pathname={toolPage?.slug || ""}
+        image={toolPage?.featuredImage?.node?.sourceUrl||""}
+        ogType={"website"}
+        date=""
+        jsonSchema={jsonSchemas}
       />
-      <ToolPageLayout>
-        {!file && <UploadImageBtn onClick={openExplorer} />}
-        {file && (
-          <div className="bg-card rounded-2xl border border-border p-6 space-y-5">
-            <div className="w-24 dashedBorder rounded-md h-24 flex flex-col items-center justify-center">
-              <Image
-                height={0}
-                width={0}
-                alt="image-preview"
-                src={URL.createObjectURL(file)}
-                className="object-contain w-full h-full"
-              />
-            </div>
-
-            <div className="flex flex-row gap-2 items-center">
-              <Button onClick={openExplorer} className="w-full">
-                Choose a different image
-              </Button>
-              <Button onClick={handleResetState} size={"icon"}>
-                <X />
-              </Button>
-            </div>
-
-            <div className="flex flex-row items-center gap-3">
-              <span>Save this data as</span>
-              <div className="flex flex-row gap-2">
-                <Button title="TXT" onClick={downloadAsTXT}>
-                  TXT
-                </Button>
-                <Button title="HTML" onClick={downloadAsHTML}>
-                  HTML
-                </Button>
-                <Button title="CSV" onClick={downloadAsCSV}>
-                  CSV
-                </Button>
-              </div>
-            </div>
-
-            {metadata && (
-              <table className="w-full table-auto border-collapse border border-border">
-                <thead>
-                  <tr> </tr>
-                </thead>
-                <tbody>
-                  {metadata ? (
-                    Object?.entries(metadata).map(([key, value]: any) => (
-                      <tr key={key} className="border-b border-border">
-                        <td className="px-4 py-2 font-medium text-left align-top border-r border-border w-1/3">
-                          {key}
-                        </td>
-                        <td className="px-4 py-2 text-left align-top">
-                          {value?.description}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={2} className="px-4 py-2 text-center">
-                        No metadata available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            )}
-          </div>
-        )}
-      </ToolPageLayout>
+      <ImageMetadataReaderTool />
+      <ToolPageContent
+        content={toolPage?.content || ""}
+        breadcrumb={breadcrumb}
+      />
     </>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () =>
+  await getToolPageByPath("image-metadata-reader");
 
 export default ImageMetadataReader;

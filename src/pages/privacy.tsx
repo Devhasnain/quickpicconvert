@@ -1,43 +1,39 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { PageSEO } from "@/components/PageSEO";
-import { cn } from "@/lib/utils";
+import { Breadcrumb, Container } from "@/components";
 
 
 export default function PrivacyPage() {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
     <>
-      <PageSEO
-        title="Privacy Policy – Quick Pic Convert"
-        description="Read Quick Pic Convert’s privacy policy. All image processing happens locally in your browser. We never upload or store your files."
-        canonical="https://quickpicconvert.com/privacy"
-        keywords="quick pic convert privacy, image privacy, browser image tools, no upload image tools"
-      />
-
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-hero-bg">
-        <div className="container-custom">
-          <div
-            ref={ref}
-            className={cn(
-              "text-center max-w-3xl mx-auto",
-              isVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-              Privacy <span className="gradient-text">Policy</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Last updated: January 15, 2024
-            </p>
-          </div>
-        </div>
+      <section className="py-10 bg-gray-100">
+        <Container
+          element="div"
+          className="flex flex-col items-center text-center"
+        >
+          <Breadcrumb
+            items={[
+              {
+                name: "Home",
+                href: "/",
+              },
+              {
+                name: "Privacy Policy",
+                href: "/privacy",
+              },
+            ]}
+          />
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
+            Privacy <span className="gradient-text">Policy</span>
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Last updated: January 15, 2024
+          </p>
+        </Container>
       </section>
 
       {/* Content */}
-      <section className="section-padding bg-background">
-        <div className="container-custom">
+      <Container element="section">
+        <></>
+        {/* <div className="container-custom">
           <div className="max-w-3xl mx-auto prose prose-lg">
             <div className="bg-card rounded-2xl border border-border p-8 md:p-12 space-y-8">
               <section>
@@ -146,8 +142,8 @@ export default function PrivacyPage() {
               </section>
             </div>
           </div>
-        </div>
-      </section>
+        </div> */}
+      </Container>
     </>
   );
 }

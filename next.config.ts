@@ -4,19 +4,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
+
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3001',
-      },
-      {
         protocol: 'https',
-        hostname: 'fiverr-res.cloudinary.com',
-        pathname: "/**",
-      },]
-  }
+        hostname: 'quickpic-cms.huefinds.store',
+        port: '',
+        pathname: '/wp-content/uploads/**/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

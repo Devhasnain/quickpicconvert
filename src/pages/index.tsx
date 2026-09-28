@@ -1,52 +1,39 @@
-import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { HowItWorksSection } from "@/components/home/HowItWorksSection";
-import { FeaturesSection } from "@/components/home/FeaturesSection";
-import { HeroSection } from "@/components/home/HeroSection";
-import { CTASection } from "@/components/home/CTASection";
-import { PageSEO } from "@/components/PageSEO";
+import { FaqSection, CTASection, HeroSection, FeaturesSection, HowItWorksSection, TestimonialsSection, BlogsSection, PageMeta, } from "@/components";
+import { getBlogs, getFaqs } from "@/lib/api";
 
-const Index = () => {
+
+type Props = {
+  posts: any[] | [];
+  faqs: any[] | [];
+};
+
+const Index = ({ posts, faqs }: Props) => {
   return (
     <>
-      <PageSEO
-        title="Quick Pic Convert – Free Image Converter, Compressor & Editor"
-        description="Quick Pic Convert is a fast, free online image converter and editor. Convert JPG, PNG, WebP, compress, resize, crop, enhance images, and remove backgrounds—100% browser-based."
-        keywords="image converter, free image converter, jpg to png, png to jpg, webp converter, image compressor, resize images, crop images, background remover, online image tools"
-        canonical="https://quickpicconvert.com/"
-      >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                name: "Quick Pic Convert",
-                url: "https://quickpicconvert.com",
-                description:
-                  "Convert images and files to various formats like PNG, JPG, and PDF. Free online file conversion with Quick Pic Convert.",
-                publisher: {
-                  "@type": "Organization",
-                  name: "Quick Pic Convert",
-                  logo: {
-                    "@type": "ImageObject",
-                    url: "https://quickpicconvert.com/logo-lg.png",
-                  },
-                },
-              },
-              
-            ]),
-          }}
-        />
-      </PageSEO>
-
+    <PageMeta
+    title="Free online image converter"
+    description="Free online image converter description"
+    ogType={"website"}
+    pathname=""
+    image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
+    />
       <HeroSection />
-      <FeaturesSection />
       <HowItWorksSection />
+      <FeaturesSection />
+      <BlogsSection posts={posts} />
       <TestimonialsSection />
       <CTASection />
+      <FaqSection faqs={faqs} />
     </>
   );
+};
+export const getStaticProps = async () => {
+  const blogRes = await getBlogs(3);
+  const posts = blogRes.data?.data?.posts?.nodes || [];
+
+  const faqRes = await getFaqs();
+  const faqs = faqRes.data?.data?.faqs?.nodes || [];
+  return { props: { posts, faqs } };
 };
 
 export default Index;
