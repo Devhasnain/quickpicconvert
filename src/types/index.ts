@@ -134,5 +134,5 @@ export type PageMetaProps = {
   date?:string;
   ogType:"article" | any;
   pathname?:string;
-  jsonSchema?:any[]|[]
+  jsonSchema?:any
 }

@@ -1,57 +1,36 @@
-import { Upload, Settings, Download, ArrowRight } from "lucide-react";
+import { hotItWorksSteps } from "@/data/homePageJsonSchema";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { Container } from "../Container";
 
 
-const steps = [
-  {
-    icon: Upload,
-    step: "01",
-    title: "Upload Your Image",
-    description:
-      "Drag and drop or click to select your images. We support all popular formats.",
-  },
-  {
-    icon: Settings,
-    step: "02",
-    title: "Choose Settings",
-    description:
-      "Select output format, adjust quality, resize dimensions — customize as needed.",
-  },
-  {
-    icon: Download,
-    step: "03",
-    title: "Download Result",
-    description:
-      "Get your converted image instantly. No watermarks, no limits, no sign-up.",
-  },
-];
-
 export function HowItWorksSection() {
   return (
-    <section className="py-20" id="how-it-works">
+    <section className="py-20" id="howto">
       <Container element="div">
         {/* Header */}
         <div className={"text-center mx-auto mb-16"}>
-          <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider">
+          <span className="inline-block text-sm font-semibold uppercase tracking-wider">
             Simple Process
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            How It <span className="gradient-text">Works</span>
+          <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-foreground mb-4">
+            How to <b className="text-primary">Convert Images Online</b> in 3 Easy Steps
           </h2>
           <p className="text-lg text-muted-foreground">
-            Convert your images in three simple steps. Fast, easy, and
-            completely free.
+            Converting an image takes less than a minute. Add your files, choose
+            a format like JPG, PNG, or WebP, and download the result. It works
+            on any phone, tablet, or computer.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
+          {hotItWorksSteps.map((step, i) => (
             <StepCard
+              id={i}
               key={step.step}
               step={step}
-              isLast={index === steps.length - 1}
+              isLast={i === hotItWorksSteps.length - 1}
             />
           ))}
         </div>
@@ -61,13 +40,14 @@ export function HowItWorksSection() {
 }
 
 interface StepCardProps {
-  step: (typeof steps)[0];
+  step: (typeof hotItWorksSteps)[0];
   isLast: boolean;
+  id: number;
 }
 
-function StepCard({ step, isLast }: StepCardProps) {
+function StepCard({ step, isLast, id }: StepCardProps) {
   return (
-    <div className="relative">
+    <div className="relative" id={`step-${id}`}>
       <div className={cn("relative text-center")}>
         {/* Step Number */}
         <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-8xl font-extrabold text-gray-800/10 select-none">

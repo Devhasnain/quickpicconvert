@@ -13,10 +13,10 @@ const ImageCompressor = ({
   return (
     <>
       <PageMeta
-        title={toolPage.postMeta.metaTitle}
-        description={toolPage.postMeta.metaDescription}
-        pathname={toolPage.slug}
-        image={toolPage.featuredImage.node.sourceUrl}
+        title={toolPage?.postMeta.metaTitle}
+        description={toolPage?.postMeta.metaDescription}
+        pathname={toolPage?.slug}
+        image={toolPage?.featuredImage?.node?.sourceUrl}
         ogType={"website"}
         date=""
         jsonSchema={jsonSchemas}

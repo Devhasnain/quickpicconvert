@@ -46,25 +46,27 @@ const features = [
 export function FeaturesSection() {
   return (
     <Container element="section" className="space-y-8 py-20">
-        <div className={"text-center mx-auto mb-16"}>
-          <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider">
-            Why Choose Us
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Powerful Features for{" "}
-            <span className="gradient-text">Every Need</span>
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Everything you need to convert, compress, and optimize your images
-            efficiently.
-          </p>
-        </div>
+      <div className={"text-center mx-auto mb-16"}>
+        <span className="inline-block text-sm font-semibold uppercase tracking-wider">
+          Why Us
+        </span>
+        <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-foreground mb-4">
+          Why Choose <span className="text-primary"> Quick Pic Convert </span>{" "}
+          for Image Conversion?
+        </h2>
+        <p className="text-lg text-muted-foreground">
+          Quick Pic Convert is a free image converter built for speed and privacy.
+          Your images are converted inside your browser, so they are never
+          uploaded to a server. Enjoy fast results, high quality output, and no
+          sign up or watermark.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <FeatureCard key={feature.title} feature={feature} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map((feature, index) => (
+          <FeatureCard key={feature.title} feature={feature} />
+        ))}
+      </div>
     </Container>
   );
 }
@@ -75,7 +77,9 @@ interface FeatureCardProps {
 
 function FeatureCard({ feature }: FeatureCardProps) {
   return (
-    <div className={'border border-gray-200 shadow hover:shadow-xl p-8 rounded-lg'}>
+    <div
+      className={"border border-gray-200 shadow hover:shadow-xl p-8 rounded-lg"}
+    >
       <div className="w-12 h-12 bg-primary text-white rounded-lg gradient-bg flex items-center justify-center mb-5 group-hover:shadow-glow transition-shadow duration-300">
         <feature.icon className="w-7 h-7 text-primary-foreground" />
       </div>

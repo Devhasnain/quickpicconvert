@@ -1,32 +1,9 @@
 import { Star, Quote } from "lucide-react";
+import { Reviews } from "@/data/reviews";
 import { cn } from "@/lib/utils";
 
 import { Container } from "../Container";
 
-
-const testimonials = [
-  {
-    name: "Sarah Johnson",
-    role: "Graphic Designer",
-    avatar: "SJ",
-    rating: 5,
-    text: "QuickPicConvert has become my go-to tool for image conversion. The speed and quality are unmatched. Love that it works entirely in the browser!",
-  },
-  {
-    name: "Michael Chen",
-    role: "Web Developer",
-    avatar: "MC",
-    rating: 5,
-    text: "Finally, a converter that respects privacy. No uploads to unknown servers, everything happens locally. The batch processing feature saves me hours.",
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Content Creator",
-    avatar: "ER",
-    rating: 5,
-    text: "I use this daily for my social media content. The compression quality is excellent, and my images stay crisp while being much smaller in size.",
-  },
-];
 
 export function TestimonialsSection() {
   return (
@@ -35,18 +12,18 @@ export function TestimonialsSection() {
         <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider">
           Testimonials
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+        <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-foreground mb-4">
           Loved by Creators
         </h2>
         <p className="text-lg">
-          Join thousands of satisfied users who trust QuickPicConvert for their
+          Join thousands of satisfied users who trust Quick Pic Convert for their
           image needs.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-        {testimonials.map((testimonial) => (
-          <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+        {Reviews.map((r) => (
+          <TestimonialCard key={r.name} testimonial={r} />
         ))}
       </div>
     </Container>
@@ -54,7 +31,7 @@ export function TestimonialsSection() {
 }
 
 interface TestimonialCardProps {
-  testimonial: (typeof testimonials)[0];
+  testimonial: (typeof Reviews)[0];
 }
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {

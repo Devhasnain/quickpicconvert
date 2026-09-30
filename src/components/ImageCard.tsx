@@ -30,7 +30,7 @@ export const ImageCard = memo(
     const file = useMemo(() => URL?.createObjectURL(f), [f]);
     return (
       <div className="relative group h-fit p-3 bg-white border border-gray-200 hover:border-primary rounded-lg ">
-        <div className="flex items-center gap-2 justify-end lg:hidden lg:group-hover:flex absolute top-2 right-2 z-10">
+        <div className="flex items-center gap-2 justify-end lg:flex absolute top-2 right-2 z-10">
           {downloadFile && isDownloadAble && (
             <button
               onClick={downloadFile}

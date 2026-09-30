@@ -43,7 +43,7 @@ export const queries = {
     }
   }
 }`,
-  getBlogBySlug: (slug:string) => `query GetPostBySlug{
+  getBlogBySlug: (slug: string) => `query GetPostBySlug{
   post(id:"${slug}", idType: SLUG) {
    title
     slug
@@ -64,14 +64,14 @@ export const queries = {
     }
   }
 }`,
-getToolPageSlugs:()=>`query GetToolPageSlugs{
+  getToolPageSlugs: () => `query GetToolPageSlugs{
   toolPages(first:100) {
    nodes {
       slug
     }
   }
 }`,
-getToolPageBySlug:(slug:string)=>`query GetToolPageBySlug{
+  getToolPageBySlug: (slug: string) => `query GetToolPageBySlug{
   toolPage(id: "${slug}", idType: SLUG) {
      slug
     content
@@ -94,11 +94,20 @@ getToolPageBySlug:(slug:string)=>`query GetToolPageBySlug{
     }
   }
 }`,
+  getLegalPageBySlug: (slug: string) => `query GetPageBySlug {
+  legalPage(id: "${slug}", idType: SLUG) {
+    title
+    content
+    date
+  }
+}
+`
 }
 
 export const getBlogs = async (n: number) => await baseApi.post('', { query: queries.getBlogs(n) })
 export const getBlogSlugs = async () => await baseApi.post('', { query: queries.getBlogSlugs() })
-export const getBlogBySlug = async (slug:string) => await baseApi.post('', { query: queries.getBlogBySlug(slug) })
+export const getBlogBySlug = async (slug: string) => await baseApi.post('', { query: queries.getBlogBySlug(slug) })
 export const getFaqs = async () => await baseApi.post('', { query: queries.getFaqs() })
 export const getToolPageSlugs = async () => await baseApi.post('', { query: queries.getToolPageSlugs() })
-export const getToolPageBySlug = async (slug:string) => await baseApi.post('', { query: queries.getToolPageBySlug(slug) })
+export const getToolPageBySlug = async (slug: string) => await baseApi.post('', { query: queries.getToolPageBySlug(slug) })
+export const getLegalPageBySlug = async (slug: string) => await baseApi.post("", { query: queries.getLegalPageBySlug(slug) })

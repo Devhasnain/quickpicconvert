@@ -1,4 +1,5 @@
 import { FaqSection, CTASection, HeroSection, FeaturesSection, HowItWorksSection, TestimonialsSection, BlogsSection, PageMeta, } from "@/components";
+import { homePageJsonSchema } from "@/data/homePageJsonSchema";
 import { getBlogs, getFaqs } from "@/lib/api";
 
 
@@ -8,15 +9,19 @@ type Props = {
 };
 
 const Index = ({ posts, faqs }: Props) => {
+  const jsonSchema = homePageJsonSchema({
+    faqs: faqs.map((r) => ({ q: r.title, a: r.excerpt })),
+  });
   return (
     <>
-    <PageMeta
-    title="Free online image converter"
-    description="Free online image converter description"
-    ogType={"website"}
-    pathname=""
-    image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
-    />
+      <PageMeta
+        title="Free Online Image Converter"
+        description="Free online image converter description"
+        ogType={"website"}
+        pathname=""
+        jsonSchema={jsonSchema}
+        image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
+      />
       <HeroSection />
       <HowItWorksSection />
       <FeaturesSection />

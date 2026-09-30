@@ -1,4 +1,4 @@
-import { BlogCard, Breadcrumb, Container } from "@/components";
+import { BlogCard, Breadcrumb, Container, PageMeta } from "@/components";
 import { getReadTime } from "@/lib/utils";
 import { getBlogs } from "@/lib/api";
 
@@ -6,27 +6,41 @@ import { getBlogs } from "@/lib/api";
 export default function BlogPage({ posts }: { posts: any[] | [] }) {
   return (
     <>
+      <PageMeta
+        title="Image Optimization Tips & Guides | Quick Pic Convert"
+        description="Learn how to convert, compress, and resize images the right way. Our
+            simple guides cover JPG, PNG, and WebP, and show you how to make
+            your website load faster and your photos look great."
+        pathname="about"
+        ogType={"website"}
+        image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
+      />
+
       <section className={`bg-gray-100`}>
-        <Container element="div" className={"text-center py-10 flex flex-col items-center"}>
+        <Container
+          element="div"
+          className={"text-center py-10 flex flex-col items-center"}
+        >
           <Breadcrumb
-                      items={[
-                        {
-                          name: "Home",
-                          href: "/",
-                        },
-                        {
-                          name: "Blog",
-                          href: "/blog",
-                        },
-                      ]}
-                    />
+            items={[
+              {
+                name: "Home",
+                href: "/",
+              },
+              {
+                name: "Blog",
+                href: "/blog",
+              },
+            ]}
+          />
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
             Blog
           </h1>
           <p className="text-lg text-muted-foreground">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            atque, alias voluptates voluptas reprehenderit maxime necessitatibus
-            ad nihil eveniet voluptate!
+            Learn how to convert, compress, and resize images the right way. Our
+            simple guides cover JPG, PNG, and WebP, and show you how to make
+            your website load faster and your photos look great. Read our latest
+            posts and get more from every image.
           </p>
         </Container>
       </section>

@@ -12,22 +12,24 @@ export function BlogsSection({ posts }: Props) {
   return (
     <Container element="section" className="w-10/12 mx-auto py-20">
       <div className={"text-center mb-16"}>
-        <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider">
+        <span className="inline-block text-sm font-semibold uppercase tracking-wider">
           Blogs
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-          Blogs
+        <h2 className="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-foreground mb-4">
+          Image <span className="text-primary">Tips and Guides</span> from Our Blog
         </h2>
         <p className="text-lg">
-          Join thousands of satisfied users who trust QuickPicConvert for their
-          image needs.
+          Learn how to convert, compress, and resize images the right way. Our
+          simple guides cover JPG, PNG, and WebP, and show you how to make your
+          website load faster and your photos look great. Read our latest posts
+          and get more from every image.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {posts.map((post) => (
           <BlogCard
-          key={post.slug}
+            key={post.slug}
             post={{
               ...post,
               readTime: getReadTime(post.excerpt),

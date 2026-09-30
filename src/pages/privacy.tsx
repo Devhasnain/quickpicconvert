@@ -1,13 +1,25 @@
 import { Breadcrumb, Container } from "@/components";
+import { getLegalPageBySlug } from "@/lib/api";
+import moment from "moment";
+import clsx from "clsx";
 
 
-export default function PrivacyPage() {
+type Props = {
+  page: {
+    title: string;
+    content: string;
+    date: string;
+  };
+};
+
+export default function Privacy({ page }: Props) {
   return (
     <>
-      <section className="py-10 bg-gray-100">
+      {/* Hero Section */}
+      <section className="bg-gray-100 py-10">
         <Container
           element="div"
-          className="flex flex-col items-center text-center"
+          className="text-center flex flex-col items-center"
         >
           <Breadcrumb
             items={[
@@ -21,129 +33,48 @@ export default function PrivacyPage() {
               },
             ]}
           />
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-            Privacy <span className="gradient-text">Policy</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
+            {page?.title}
           </h1>
           <p className="text-lg text-muted-foreground">
-            Last updated: January 15, 2024
+            Last updated: {moment.utc(page?.date).format("MMMM D, YYYY")}
           </p>
         </Container>
       </section>
 
-      {/* Content */}
-      <Container element="section">
-        <></>
-        {/* <div className="container-custom">
-          <div className="max-w-3xl mx-auto prose prose-lg">
-            <div className="bg-card rounded-2xl border border-border p-8 md:p-12 space-y-8">
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Introduction
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  At QuickPicConvert, we take your privacy seriously. This
-                  Privacy Policy explains how we collect, use, disclose, and
-                  safeguard your information when you visit our website and use
-                  our services.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Information We Collect
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  We collect minimal information to provide our services:
-                </p>
-                <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                  <li>Usage data (pages visited, features used)</li>
-                  <li>Device information (browser type, operating system)</li>
-                  <li>IP address (anonymized for analytics)</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Image Processing
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">
-                    Your images are processed entirely in your browser.
-                  </strong>{" "}
-                  We do not upload, store, or have access to any images you
-                  convert using our tools. All processing happens locally on
-                  your device using browser-based technology.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Cookies
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  We use essential cookies to ensure our website functions
-                  properly and analytics cookies to understand how visitors use
-                  our site. You can control cookie preferences through your
-                  browser settings.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Third-Party Services
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  We may use third-party services for analytics and advertising.
-                  These services may collect information about your browsing
-                  activity. We recommend reviewing their privacy policies.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Data Security
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  We implement appropriate technical and organizational measures
-                  to protect any data we collect. However, no method of
-                  transmission over the Internet is 100% secure.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Your Rights
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Depending on your location, you may have the right to:
-                </p>
-                <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                  <li>Access the personal data we hold about you</li>
-                  <li>Request correction of inaccurate data</li>
-                  <li>Request deletion of your data</li>
-                  <li>Opt-out of analytics tracking</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Contact Us
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  If you have any questions about this Privacy Policy, please
-                  contact us at{" "}
-                  <a
-                    href="mailto:privacy@quickpicconvert.com"
-                    className="text-primary hover:underline"
-                  >
-                    privacy@quickpicconvert.com
-                  </a>
-                </p>
-              </section>
-            </div>
-          </div>
-        </div> */}
-      </Container>
+        <Container className="py-16 lg:py-20" element="section">
+        <div
+          className={clsx(
+            "prose",
+            "text-gray-600",
+            "font-light",
+            "leading-relaxed",
+            "space-y-6",
+            "prose-headings:text-black",
+            "prose-headings:font-bold",
+            "prose-headings:tracking-tight",
+            "prose-h2:text-2xl",
+            "prose-h2:pt-4",
+            "prose-h3:text-xl",
+            "prose-p:text-sm",
+            "sm:prose-p:text-base",
+            "prose-p:leading-relaxed",
+            "prose-strong:text-black",
+            "prose-strong:font-semibold",
+            "prose-a:text-primary",
+            "prose-code:text-gray-500",
+            "prose-code:font-medium",
+          "max-w-full"
+          )}
+          dangerouslySetInnerHTML={{ __html: page?.content }}
+        />
+        </Container>
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  const blogRes = await getLegalPageBySlug("privacy");
+  const page = blogRes.data?.data?.legalPage;
+  return { props: { page } };
+};

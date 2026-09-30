@@ -30,7 +30,7 @@ export function CTASection() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-             <Link className='bg-white text-primary font-medium rounded-lg px-10 py-4' href={"/"}>
+             <Link className='bg-white text-primary font-medium rounded-lg px-10 py-4' href={"/tools/image-converter"}>
              Start Converting Now
              </Link>
                 <Link className='font-medium rounded-lg px-10 py-4 hover:bg-white hover:text-primary text-white' href="/blog">Read Our Blog</Link>

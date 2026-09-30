@@ -1,4 +1,4 @@
-import { Breadcrumb, Container } from "@/components";
+import { Breadcrumb, Container, PageMeta } from "@/components";
 import { teamMembers } from "@/data/teamMembers";
 import { Globe, ArrowRight } from "lucide-react";
 import { aboutContent } from "@/data/about";
@@ -9,6 +9,14 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <>
+      <PageMeta
+        title="Browser Based, Fast & Private Image Converter | Quick Pic Convert"
+        description="Learn about Quick Pic Convert, a free browser-based image tools platform focused on fast performance, privacy, and ease of use."
+        pathname="about"
+        ogType={"website"}
+        image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
+      />
+
       <section className={`bg-gray-100`}>
         <Container
           element="div"
