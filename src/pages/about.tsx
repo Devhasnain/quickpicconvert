@@ -10,8 +10,8 @@ export default function AboutPage() {
   return (
     <>
       <PageMeta
-        title="Browser Based, Fast & Private Image Converter | Quick Pic Convert"
-        description="Learn about Quick Pic Convert, a free browser-based image tools platform focused on fast performance, privacy, and ease of use."
+        title="Browser Based, Fast Image Converter | Quick Pic Convert"
+        description="Learn about Quick Pic Convert, a free browser-based image converter platform focused on fast performance, privacy, and ease of use."
         pathname="about"
         ogType={"website"}
         image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}

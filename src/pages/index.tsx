@@ -16,7 +16,7 @@ const Index = ({ posts, faqs }: Props) => {
     <>
       <PageMeta
         title="Free Online Image Converter"
-        description="Free online image converter description"
+        description="Convert JPG to PNG, PNG to WebP, and WebP to JPG in seconds, or compress, resize, crop, and rotate your images. No sign up and no watermark."
         ogType={"website"}
         pathname=""
         jsonSchema={jsonSchema}
