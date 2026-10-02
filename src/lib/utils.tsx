@@ -1,7 +1,7 @@
+import { CompressedResult, ImageCompressorProps, ImageToWebpProps, ImageConverterResults, ImageResizerProps, ResizedResult, ImageRotatorProps, RotatedResult, } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PDFDocument } from "pdf-lib";
-import { toast } from "sonner";
 import JSZip from "jszip";
 
 
@@ -101,78 +101,316 @@ export const convertImage = async ({
   }
 };
 
-type ImageCompressorProps = {
-  maxWidth: number;
-  outputFormat: "image/jpeg" | "image/png" | "image/webp";
-  background: string;
-  quality: number;
-  files: File[];
-};
-
 export const compressImages = async ({
-  maxWidth,
-  outputFormat,
+  maxWidth = 0,
+  maxHeight = 0,
+  outputFormat = "",
   background,
-  quality,
+  quality = 0.7,
   files,
-}: ImageCompressorProps) => {
-  try {
-    const convertedFiles: {
-      name: string;
-      url: string;
-      size: number;
-      originalSize: number;
-    }[] = [];
+}: ImageCompressorProps): Promise<CompressedResult[]> => {
+  const compressOne = async ({
+    file,
+    id,
+  }: {
+    file: File;
+    id: string;
+  }): Promise<CompressedResult | null> => {
+    let bitmap: ImageBitmap | null = null;
 
-    for (const file of files) {
-      const img = new Image();
-      const reader = new FileReader();
+    try {
+      bitmap = await createImageBitmap(file);
 
-      const imageLoaded = new Promise<void>((resolve) => {
-        reader.onload = () => {
-          img.src = reader.result as string;
-        };
+      const outFormat = outputFormat?.length ? outputFormat : file.type;
 
-        img.onload = () => {
-          const scale = Math.min(1, maxWidth / img.width);
-          const canvas = document.createElement("canvas");
+      const widthRatio = maxWidth ? maxWidth / bitmap.width : 1;
+      const heightRatio = maxHeight ? maxHeight / bitmap.height : 1;
+      const scale = Math.min(widthRatio, heightRatio, 1);
 
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
+      const targetWidth = Math.round(bitmap.width * scale);
+      const targetHeight = Math.round(bitmap.height * scale);
 
-          const ctx = canvas.getContext("2d")!;
+      // ⬇️ OffscreenCanvas instead of document.createElement("canvas")
+      const canvas = new OffscreenCanvas(targetWidth, targetHeight);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Could not get canvas context");
 
-          if (outputFormat === "image/jpeg") {
-            ctx.fillStyle = background;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-          }
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
 
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      if (
+        (outFormat === "image/jpeg" || outFormat === "image/webp") &&
+        background
+      ) {
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+      }
 
-          const pngUrl = canvas.toDataURL(outputFormat, quality);
+      ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
 
-          convertedFiles.push({
-            size: Number(((pngUrl.length * 0.75) / 1024).toFixed(1)),
-            name: file.name.replace(
-              /\.[^/.]+$/,
-              `.${outputFormat?.split("/")[1]}`
-            ),
-            url: pngUrl,
-            originalSize: Number((file.size / 1024).toFixed(2)),
-          });
-
-          resolve();
-        };
+      // ⬇️ OffscreenCanvas uses convertToBlob(), not toBlob()
+      const blob = await canvas.convertToBlob({
+        type: outFormat,
+        quality,
       });
 
-      reader.readAsDataURL(file);
-      await imageLoaded;
-    }
+      if (!blob) throw new Error(`Failed to encode ${file.name}`);
 
-    return convertedFiles;
-  } catch (error) {
-    return [];
+      const url = URL.createObjectURL(blob);
+
+      return {
+        id,
+        name: file.name.replace(/\.[^/.]+$/, `.${outFormat.split("/")[1]}`),
+        url,
+        size: formatBytes(blob.size),
+        originalSize: formatBytes(file.size),
+        width: targetWidth,
+        height: targetHeight,
+        originalHeight: bitmap.height,
+        originalWidth: bitmap.width,
+      };
+    } catch (error) {
+      console.error(`Failed to compress ${file.name}:`, error);
+      return null;
+    } finally {
+      bitmap?.close();
+    }
+  };
+  const results = await Promise.all(files.map(compressOne));
+  return results.filter((r): r is CompressedResult => r !== null);
+};
+
+export const convertImages = async ({
+  files,
+  outputFormat,
+  quality = 0.92,
+  background,
+}: ImageToWebpProps): Promise<ImageConverterResults[]> => {
+  if (!outputFormat) {
+    throw new Error("outputFormat is required for conversion");
   }
+
+  const convertOne = async ({
+    file,
+    id,
+  }: {
+    file: File;
+    id: string;
+  }): Promise<ImageConverterResults | null> => {
+    let bitmap: ImageBitmap | null = null;
+
+    try {
+      bitmap = await createImageBitmap(file);
+
+      // No resizing here — conversion keeps original dimensions
+      const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Could not get canvas context");
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+
+      // Formats without alpha support need a background fill,
+      // otherwise transparent pixels turn black
+      const needsBackground =
+        outputFormat === "image/jpeg" || outputFormat === "image/webp";
+
+      if (needsBackground && background) {
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, bitmap.width, bitmap.height);
+      }
+
+      ctx.drawImage(bitmap, 0, 0);
+
+      const blob = await canvas.convertToBlob({
+        type: outputFormat,
+        quality,
+      });
+
+      if (!blob) throw new Error(`Failed to convert ${file.name}`);
+
+      const url = URL.createObjectURL(blob);
+      const newExt = outputFormat.split("/")[1];
+
+      return {
+        id,
+        name: file.name.replace(/\.[^/.]+$/, `.${newExt}`),
+        url,
+        size: formatBytes(blob.size),
+        originalSize: formatBytes(file.size),
+        originalFormat: file.type,
+        newFormat: outputFormat,
+        width: bitmap.width,
+        height: bitmap.height,
+      };
+    } catch (error) {
+      console.error(`Failed to convert ${file.name}:`, error);
+      return null;
+    } finally {
+      bitmap?.close();
+    }
+  };
+
+  const results = await Promise.all(files.map(convertOne));
+  return results.filter((r): r is ImageConverterResults => r !== null);
+};
+
+export const cropImage = async ({
+  file,
+  crop,
+}: {
+  file: File;
+  crop: { width: number; height: number; x: number; y: number };
+}) => {
+  let bitmap: ImageBitmap | null = null;
+
+  try {
+    bitmap = await createImageBitmap(file);
+    console.log(file, crop, "file crop worker");
+    const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Could not get canvas context");
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+
+    const cropWidth = Math.round((crop.width / 100) * bitmap.width);
+    const cropHeight = Math.round((crop.height / 100) * bitmap.height);
+    canvas.width = cropWidth;
+    canvas.height = cropHeight;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(
+      bitmap,
+      Math.round((crop.x / 100) * bitmap.width),
+      Math.round((crop.y / 100) * bitmap.height),
+      cropWidth,
+      cropHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const blob = await canvas.convertToBlob();
+    const url = URL.createObjectURL(blob);
+    return url;
+  } catch (error) {}
+};
+
+export const resizeImages = async ({
+  files,
+  mode,
+  percentage,
+  width,
+  height,
+  maintainAspectRatio = true,
+  outputFormat = "",
+  quality = 0.92,
+  background,
+}: ImageResizerProps): Promise<ResizedResult[]> => {
+  const resizeOne = async ({
+    file,
+    id,
+  }: {
+    file: File;
+    id: string;
+  }): Promise<ResizedResult | null> => {
+    let bitmap: ImageBitmap | null = null;
+
+    try {
+      bitmap = await createImageBitmap(file);
+      const outFormat = outputFormat?.length ? outputFormat : file.type;
+
+      let targetWidth: number;
+      let targetHeight: number;
+
+      if (mode === "percentage") {
+        if (!percentage || percentage <= 0 || percentage > 100) {
+          throw new Error("percentage must be between 1 and 100");
+        }
+        const scale = percentage / 100;
+        targetWidth = Math.round(bitmap.width * scale);
+        targetHeight = Math.round(bitmap.height * scale);
+      } else {
+        // mode === "dimensions"
+        if (!width && !height) {
+          throw new Error(
+            "Provide at least width or height for dimensions mode"
+          );
+        }
+
+        if (maintainAspectRatio) {
+          if (width && height) {
+            // Fit within both — same "contain" logic as compressImages
+            const scale = Math.min(
+              width / bitmap.width,
+              height / bitmap.height
+            );
+            targetWidth = Math.round(bitmap.width * scale);
+            targetHeight = Math.round(bitmap.height * scale);
+          } else if (width) {
+            const scale = width / bitmap.width;
+            targetWidth = width;
+            targetHeight = Math.round(bitmap.height * scale);
+          } else {
+            const scale = height! / bitmap.height;
+            targetHeight = height!;
+            targetWidth = Math.round(bitmap.width * scale);
+          }
+        } else {
+          // Stretch to exact values, ignore original aspect ratio
+          targetWidth = width ?? bitmap.width;
+          targetHeight = height ?? bitmap.height;
+        }
+      }
+
+      // Guard against 0-sized output (e.g. percentage rounds down to 0 on tiny images)
+      targetWidth = Math.max(1, targetWidth);
+      targetHeight = Math.max(1, targetHeight);
+
+      const canvas = new OffscreenCanvas(targetWidth, targetHeight);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Could not get canvas context");
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+
+      const needsBackground =
+        outFormat === "image/jpeg" || outFormat === "image/webp";
+      if (needsBackground && background) {
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+      }
+
+      ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+
+      const blob = await canvas.convertToBlob({ type: outFormat, quality });
+      if (!blob) throw new Error(`Failed to resize ${file.name}`);
+
+      const url = URL.createObjectURL(blob);
+
+      return {
+        id,
+        name: file.name.replace(/\.[^/.]+$/, `.${outFormat.split("/")[1]}`),
+        url,
+        size: formatBytes(blob.size),
+        originalSize: formatBytes(file.size),
+        width: targetWidth,
+        height: targetHeight,
+        originalWidth: bitmap.width,
+        originalHeight: bitmap.height,
+      };
+    } catch (error) {
+      console.error(`Failed to resize ${file.name}:`, error);
+      return null;
+    } finally {
+      bitmap?.close();
+    }
+  };
+
+  const results = await Promise.all(files.map(resizeOne));
+  return results.filter((r): r is ResizedResult => r !== null);
 };
 
 export const loadImageToCanvas = (file: File) =>
@@ -214,29 +452,29 @@ export const exportCanvas = (
   quality = 0.9
 ) => canvas.toDataURL(type, quality);
 
-export const cropImage = async (
-  file: File,
-  crop: { width: number; height: number; x: number; y: number }
-) => {
-  const { img, canvas, ctx } = await loadImageToCanvas(file);
+// export const cropImage = async (
+//   file: File,
+//   crop: { width: number; height: number; x: number; y: number }
+// ) => {
+//   const { img, canvas, ctx } = await loadImageToCanvas(file);
 
-  canvas.width = crop.width;
-  canvas.height = crop.height;
+//   canvas.width = crop.width;
+//   canvas.height = crop.height;
 
-  ctx.drawImage(
-    img,
-    crop.x,
-    crop.y,
-    crop.width,
-    crop.height,
-    0,
-    0,
-    crop.width,
-    crop.height
-  );
+//   ctx.drawImage(
+//     img,
+//     crop.x,
+//     crop.y,
+//     crop.width,
+//     crop.height,
+//     0,
+//     0,
+//     crop.width,
+//     crop.height
+//   );
 
-  return exportCanvas(canvas);
-};
+//   return exportCanvas(canvas);
+// };
 
 export const resizeImage = async (
   file: File | HTMLImageElement,
@@ -364,6 +602,7 @@ function downloadFile(content: any, filename: string, mimeType: string) {
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
+  document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
@@ -381,7 +620,6 @@ export function downloadBlob(blob: Blob, filename = "") {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
 
 export const getFileFromClipboard = (event: ClipboardEvent) => {
   try {
@@ -414,9 +652,7 @@ export const getFileFromClipboard = (event: ClipboardEvent) => {
     }
 
     return returnValue;
-  } catch (error: any) {
-    toast.error(error?.message);
-  }
+  } catch (error: any) {}
 };
 
 // async function handleUrl(url: string) {
@@ -585,4 +821,158 @@ export async function addImagesToPdf(
 
   const pdfBytes = await pdfDoc.save();
   return new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
+}
+
+export async function getImageDimensions(
+  file: File
+): Promise<{ width: number; height: number }> {
+  const bitmap = await createImageBitmap(file);
+  const dimensions = { width: bitmap.width, height: bitmap.height };
+  bitmap.close();
+  return dimensions;
+}
+
+export const rotateImages = async ({
+  files,
+  degrees,
+  quality = 0.92,
+  background,
+}: ImageRotatorProps): Promise<RotatedResult[]> => {
+  // Normalize to 0-359 for consistent math
+  const normalizedDegrees = ((degrees % 360) + 360) % 360;
+  const radians = (normalizedDegrees * Math.PI) / 180;
+
+  const rotateOne = async ({
+    file,
+    id,
+  }: {
+    file: File;
+    id: string;
+  }): Promise<RotatedResult | null> => {
+    let bitmap: ImageBitmap | null = null;
+
+    try {
+      bitmap = await createImageBitmap(file);
+      const outFormat = file.type;
+
+      const { width: originalWidth, height: originalHeight } = bitmap;
+
+      // Calculate the bounding box needed to fit the rotated image.
+      // For 90/270, this simply swaps width/height.
+      // For arbitrary angles, we need trig to find the new bounding box.
+      const sin = Math.abs(Math.sin(radians));
+      const cos = Math.abs(Math.cos(radians));
+      const targetWidth = Math.round(
+        originalWidth * cos + originalHeight * sin
+      );
+      const targetHeight = Math.round(
+        originalWidth * sin + originalHeight * cos
+      );
+
+      const canvas = new OffscreenCanvas(targetWidth, targetHeight);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Could not get canvas context");
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+
+      // Fill background first — rotations at angles other than 0/90/180/270
+      // expose corners that need a fill (otherwise transparent/black)
+      const needsBackground =
+        outFormat === "image/jpeg" || outFormat === "image/webp";
+      if (needsBackground && background) {
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+      }
+
+      // Move origin to canvas center, rotate, then draw image centered on that origin
+      ctx.translate(targetWidth / 2, targetHeight / 2);
+      ctx.rotate(radians);
+      ctx.drawImage(bitmap, -originalWidth / 2, -originalHeight / 2);
+
+      const blob = await canvas.convertToBlob({ type: outFormat, quality });
+      if (!blob) throw new Error(`Failed to rotate ${file.name}`);
+
+      const url = URL.createObjectURL(blob);
+
+      return {
+        id,
+        name: file.name.replace(/\.[^/.]+$/, `.${outFormat.split("/")[1]}`),
+        url,
+        size: formatBytes(blob.size),
+        originalSize: formatBytes(file.size),
+        width: targetWidth,
+        height: targetHeight,
+        originalWidth,
+        originalHeight,
+        degrees: normalizedDegrees,
+      };
+    } catch (error) {
+      console.error(`Failed to rotate ${file.name}:`, error);
+      return null;
+    } finally {
+      bitmap?.close();
+    }
+  };
+
+  const results = await Promise.all(files.map(rotateOne));
+  return results.filter((r): r is RotatedResult => r !== null);
+};
+
+export async function downloadUrlsAsZip(
+  files: { url: string; name: string }[]
+) {
+  const zip = new JSZip();
+
+  await Promise.all(
+    files.map(async (file) => {
+      const response = await fetch(file.url);
+      const blob = await response.blob();
+      zip.file(file.name, blob);
+    })
+  );
+
+  const zipBlob = await zip.generateAsync({ type: "blob" });
+
+  return zipBlob;
+
+  // // Trigger download
+  // const zipUrl = URL.createObjectURL(zipBlob);
+  // const link = document.createElement('a');
+  // link.href = zipUrl;
+  // link.download = 'compressed-images.zip';
+  // document.body.appendChild(link);
+  // link.click();
+  // document.body.removeChild(link);
+  // URL.revokeObjectURL(zipUrl);
+}
+
+export const downloadFileFromUrl = (url: string, filename: string) => {
+  if (!url || !filename) return;
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+
+export function stripHtml(html:string) {
+  return html.replace(/<[^>]*>?/gm, '').trim();
+}
+
+export function getReadTime(htmlContent: string, wordsPerMinute: number = 200): string {
+  const plainText = htmlContent.replace(/<[^>]*>?/gm, ' ').trim();
+
+  const wordCount = plainText.split(/\s+/).filter(Boolean).length;
+
+  const totalSeconds = Math.ceil((wordCount / wordsPerMinute) * 60);
+
+  if (totalSeconds < 60) {
+    return `${totalSeconds} sec read`;
+  }
+
+  const minutes = Math.ceil(totalSeconds / 60);
+  return `${minutes} min read`;
 }

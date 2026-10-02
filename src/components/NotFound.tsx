@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-import { Button } from "./ui/button";
+import { Button } from "./Button";
 
 
 const NotFound = () => {
@@ -13,7 +13,7 @@ const NotFound = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Post not found</h1>
-        <Button className="cursor-pointer" onClick={handleOnClick} asChild>
+        <Button className="cursor-pointer" onClick={handleOnClick}>
           Back
         </Button>
       </div>

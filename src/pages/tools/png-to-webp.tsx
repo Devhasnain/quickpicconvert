@@ -1,13 +1,32 @@
-import ToolPageLayout from "@/components/tool/ToolPageLayout";
-import ImageConverter from "@/components/tool/ImageConverter";
+import { getToolPageByPath } from "@/lib/getToolPageByPath";
+import { PageMeta, ToolPageContent } from "@/components";
+import { ToolPageProps } from "@/types";
+import { PngToWebpTool } from "@/tools";
+import { GetStaticProps } from "next";
 
 
-const PngToWebp = () => {
+const PngToWebp = ({ toolPage, breadcrumb, jsonSchemas }: ToolPageProps) => {
   return (
-      <ToolPageLayout>
-        <ImageConverter accept="image/png" output="webp" title="Png to Webp" />
-      </ToolPageLayout>
+    <>
+      <PageMeta
+        title={toolPage.postMeta.metaTitle}
+        description={toolPage.postMeta.metaDescription}
+        pathname={toolPage.slug}
+        image={toolPage?.featuredImage?.node?.sourceUrl || ""}
+        ogType={"website"}
+        date=""
+        jsonSchema={jsonSchemas}
+      />
+      <PngToWebpTool />
+      <ToolPageContent
+        content={toolPage?.content || ""}
+        breadcrumb={breadcrumb}
+      />
+    </>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () =>
+  await getToolPageByPath("png-to-webp");
 
 export default PngToWebp;

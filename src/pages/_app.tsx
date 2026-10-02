@@ -1,10 +1,9 @@
 import "@/styles/globals.css";
 
 import { GoogleTagManager } from "@next/third-parties/google";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Layout } from "@/components/layout/Layout";
+import { Toaster } from "react-hot-toast";
 import type { AppProps } from "next/app";
-import { Toaster } from "sonner";
+import { Layout } from "@/layout";
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -12,7 +11,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} />
       <Toaster />
-      <Sonner />
       <Layout>
         <Component {...pageProps} />
       </Layout>

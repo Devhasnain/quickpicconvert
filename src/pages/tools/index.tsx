@@ -1,157 +1,62 @@
-import PageHeroSectionBackground from "@/components/PageHeroSectionBackground";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { PageSEO } from "@/components/PageSEO";
-import { Sparkles } from "lucide-react";
-import { tools } from "@/data/tool";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Breadcrumb, Container, PageMeta } from "@/components";
+import { toolCards } from "@/data";
 import Link from "next/link";
 
 
-const categories = ["Converter", "Optimizer", "Editor", "PDF Tools", "Utility"];
-
 export default function ToolsPage() {
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
-
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredTools = tools.filter((tool) => {
-    return activeCategory === "All" || tool.category === activeCategory;
-  });
 
   return (
     <>
-      <PageSEO
-        title="Free Online Image & File Conversion Tools"
-        description="Explore all free online tools by Quick Pic Convert. Convert PNG to JPG, JPG to PNG, PNG to WebP, JPG to WebP, and more—fast, secure, and browser-based."
-        keywords="free online tools, image converter, file converter, png to jpg, jpg to png, png to webp, jpg to webp, online image tools"
-        canonical="https://quickpicconvert.com/tools"
-      />
-
-      {/* Hero Section */}
-      {/* <section className="pt-32 pb-16 bg-hero-bg"> */}
-      <PageHeroSectionBackground
-      className="!min-h-[30vh]"
-      >
-        <div className="container-custom">
-          <div
-            ref={headerRef}
-            className={cn(
-              "text-center max-w-3xl mx-auto",
-              headerVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-6">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-accent-foreground">
-                All Tools Available Free
-              </span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6">
-              Powerful Image <span className="gradient-text">Tools</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Everything you need to convert, compress, resize, and edit your
-              images. All tools work directly in your browser for maximum
-              privacy and speed.
-            </p>
-          </div>
-        </div>
-      </PageHeroSectionBackground>
-
-      {/* </section> */}
-
-      {/* Tools Grid */}
-      <section className="pt-8 pb-16 bg-background">
-        <div className="container-custom">
-          {/* Category Filter */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-            <button
-              onClick={() => setActiveCategory("All")}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                activeCategory === "All"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
-              )}
-            >
-              All
-            </button>
-            {categories.map((category) => (
-              <button
-                onClick={(e) => setActiveCategory(category)}
-                key={category}
-                className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                  activeCategory === category
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* Tools Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTools?.map((tool, index) => (
-              <ToolCard key={tool.id} tool={tool} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
-
-interface ToolCardProps {
-  tool: (typeof tools)[0];
-  index: number;
-}
-
-function ToolCard({ tool, index }: ToolCardProps) {
-  const { ref, isVisible } = useScrollAnimation<HTMLAnchorElement>({
-    threshold: 0.1,
-  });
-  const delay = (index % 4) * 100;
-
-  return (
-    <Link
-      href={`/tools/${tool.id}`}
-      ref={ref}
-      className={cn("group block", isVisible ? "animate-fade-up" : "opacity-0")}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div className="tool-card h-full">
-        {/* Category Badge */}
-        <span className="inline-block px-3 py-1 rounded-full bg-secondary text-xs font-medium text-muted-foreground mb-4">
-          {tool.category}
-        </span>
-
-        {/* Icon */}
-        <div
-          className={cn(
-            "w-14 h-14 rounded-2xl flex items-center justify-center mb-4 bg-gradient-to-br transition-all duration-300 group-hover:shadow-lg group-hover:scale-105",
-            tool.color
-          )}
+     <PageMeta
+            title="Free Image Converter Tools, Covers JPG, PNG, and WEP"
+            description="Image converter tools that works right in your browser. Convert JPG to PNG, PNG to WebP, and WebP to JPG in seconds."
+            pathname="about"
+            ogType={"website"}
+            image={`${process.env.NEXT_PUBLIC_SITE_URL}/Quick-pic-convert-og-image.webp`}
+          />
+      <section className={`bg-gray-100`}>
+        <Container
+          element="div"
+          className={"text-center py-10 flex flex-col items-center"}
         >
-          <tool.icon className="w-7 h-7 text-white" />
-        </div>
+          <Breadcrumb
+            items={[
+              {
+                name: "Home",
+                href: "/",
+              },
+              {
+                name: "Tools",
+                href: "/tools",
+              },
+            ]}
+          />
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-4">
+            Free Image Converter Tools
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Everything you need to convert, compress, resize, and edit your
+            images. All tools work directly in your browser for maximum privacy
+            and speed.
+          </p>
+        </Container>
+      </section>
 
-        {/* Content */}
-        <h2 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-          {tool.title}
-        </h2>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {tool.description}
-        </p>
-
-        {/* Hover Arrow */}
-        <div className="mt-4 flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-          Use Tool →
+      <Container element="section" className="py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {toolCards.map((t, i) => (
+            <Link key={i} href={t.slug} title={t.title}>
+              <div className="min-h-50 p-5 bg-white rounded-lg space-y-3 hover:shadow-lg border border-gray-200">
+                <div className="h-12 w-12 rounded-lg flex flex-col items-center justify-center bg-primary text-white">
+                  {t.icon}
+                </div>
+                <h3 className="text-lg font-medium">{t.title}</h3>
+                <p className="text-sm">{t.excerpt}</p>
+              </div>
+            </Link>
+          ))}
         </div>
-      </div>
-    </Link>
+      </Container>
+    </>
   );
 }

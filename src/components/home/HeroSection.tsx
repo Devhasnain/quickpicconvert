@@ -1,94 +1,66 @@
-import { ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { toolCards, toolCategories } from "@/data";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 
-import PageHeroSectionBackground from "../PageHeroSectionBackground";
+import { Container } from "../Container";
 
-
-const features = [
-  { icon: Zap, text: "Lightning Fast" },
-  { icon: Shield, text: "100% Secure" },
-  { icon: Sparkles, text: "Free Forever" },
-];
 
 export function HeroSection() {
-  const { ref } = useScrollAnimation();
-
+  const [activeCat, setActiveCat] = useState("All");
+  const filteredTools = useMemo(() => {
+    if (activeCat === "All") return toolCards;
+    return toolCards.filter((item) => item.category === activeCat);
+  }, [activeCat]);
   return (
-    <PageHeroSectionBackground>
-      <div className="container-custom relative z-10">
-        <div ref={ref} className={cn("max-w-4xl mx-auto text-center")}>
-          {/* Badge */}
-          <div
-            className={cn(
-              "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 mb-8"
-            )}
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-accent-foreground">
-              100% browser-based image converter — no uploads required
-            </span>
-          </div>
+    <section className="bg-gray-100">
+      <Container element="div" className={"space-y-8 py-10"}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-center">
+          Free Online Image Converter for JPG, PNG, and WebP
+        </h1>
 
-          {/* SEO Optimized H1 */}
-          <h1
-            className={cn(
-              "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6"
-            )}
-          >
-            Free Online <span className="gradient-text">Image Converter</span>
-            <br />
-            <small>JPG, PNG, WebP & More</small>
-          </h1>
+        <p className="text-lg sm:text-xl text-muted-foreground w-full sm:w-10/12 mx-auto text-center">
+          Quick Pic Convert is a free image converter that works right in your
+          browser. Convert JPG to PNG, PNG to WebP, and WebP to JPG in seconds,
+          or compress, resize, crop, and rotate your images. No sign up and no
+          watermark.
+        </p>
 
-          {/* SEO Optimized Subtitle */}
-          <p
-            className={cn(
-              "text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
-            )}
-          >
-            Quick Pic Converter lets you convert images online in seconds.
-            Convert JPG to PNG, PNG to JPG, WebP, compress images, resize, crop,
-            and enhance — all for free with complete privacy.
-          </p>
+        <p className="text-center">
+          Your files never leave your device, so every conversion is fast and
+          private. Choose a tool below to get started.
+        </p>
 
-          {/* CTA Buttons */}
-          <div
-            className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-            )}
-          >
-            <Button variant="hero" size="xl" asChild>
-              <Link href="/tools/image-converter">
-                Convert Images Now
-                <ArrowRight className="w-5 h-5 ml-1" />
-              </Link>
-            </Button>
-            <Button variant="hero-outline" size="xl" asChild>
-              <Link href="#how-it-works">How It Works</Link>
-            </Button>
-          </div>
-
-          {/* Feature Pills */}
-          <div
-            className={cn("flex flex-wrap items-center justify-center gap-4")}
-          >
-            {features.map((feature) => (
-              <div
-                key={feature.text}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border shadow-soft"
+        <ul className="flex flex-row flex-wrap items-center justify-center gap-2">
+          {toolCategories.map((c, i) => (
+            <li key={i}>
+              <button
+                className={`cursor-pointer py-1.5 px-5 border rounded-full text-center ${
+                  activeCat === c
+                    ? "bg-primary text-white border-primary"
+                    : "bg-white border-gray-200"
+                } `}
+                onClick={() => setActiveCat(c)}
               >
-                <feature.icon className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">
-                  {feature.text}
-                </span>
+                {c}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredTools.map((t, i) => (
+            <Link key={i} href={t.slug} title={t.title}>
+              <div className="min-h-50 p-5 bg-white rounded-lg space-y-3 hover:shadow-lg border border-gray-200">
+                <div className="h-12 w-12 rounded-lg flex flex-col items-center justify-center bg-primary text-white">
+                  {t.icon}
+                </div>
+                <h3 className="text-lg font-medium">{t.title}</h3>
+                <p className="text-sm">{t.excerpt}</p>
               </div>
-            ))}
-          </div>
+            </Link>
+          ))}
         </div>
-      </div>
-    </PageHeroSectionBackground>
+      </Container>
+    </section>
   );
 }

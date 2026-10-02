@@ -1,12 +1,6 @@
 import { Github, Linkedin, Twitter, Globe, ArrowLeft, Briefcase, Calendar, Code2, Facebook, } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 import { TeamMember, teamMembers } from "@/data/teamMembers";
-import { Button } from "@/components/ui/button";
-import { PageSEO } from "@/components/PageSEO";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { Breadcrumb, Button, Container } from "@/components";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,10 +22,6 @@ type Props = {
 };
 
 export default function TeamMemberPage({ member, meta, schema }: Props) {
-  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
-  const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation();
-  const { ref: skillsRef, isVisible: skillsVisible } = useScrollAnimation();
-
   if (!member) {
     return (
       <>
@@ -43,12 +33,12 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
             <p className="text-muted-foreground mb-6">
               The team member you're looking for doesn't exist.
             </p>
-            <Button asChild>
-              <Link href="/about">
+            <Link href="/about">
+              <Button>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to About
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
       </>
@@ -57,36 +47,22 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
 
   return (
     <>
-      <PageSEO
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
-        ogTitle={meta.openGraph.title}
-        ogDescription={meta.openGraph.description}
-        ogURL={meta.openGraph.url}
-        ogImage={meta.openGraph.images}
-      >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema),
-          }}
-        />
-      </PageSEO>
-      {/* Hero Section */}
-      <section className="pt-28 pb-12 bg-hero-bg">
+      <Container element="section" className="py-10">
         <div className="container-custom">
-          <PageBreadcrumbs
-            items={[{ label: "About", href: "/about" }, { label: member.name }]}
+          <Breadcrumb
+            items={[
+              {
+                name: "Home",
+                href: "/",
+              },
+              {
+                name: "Hasnain alam",
+                href: "/team/hasnain-alam",
+              },
+            ]}
           />
 
-          <div
-            ref={heroRef}
-            className={cn(
-              "flex flex-col md:flex-row items-center gap-8",
-              heroVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
+          <div className={"flex flex-col md:flex-row items-center gap-8"}>
             {/* Avatar */}
             <div className="w-40 overflow-hidden h-40 md:w-48 md:h-48 rounded-full gradient-bg flex items-center justify-center text-5xl md:text-6xl font-bold text-primary-foreground shadow-glow shrink-0">
               {/* {member.avatar} */}
@@ -101,11 +77,11 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
               <p className="text-xl text-primary font-semibold mb-4">
                 {member.role}
               </p>
-              <p className="text-muted-foreground max-w-2xl leading-relaxed">
-                {member.shortBio}
-              </p>
+              <div
+                className="max-w-2xl renderhtml"
+                dangerouslySetInnerHTML={{ __html: member.shortBio }}
+              />
 
-              {/* Social Links */}
               <div className="flex items-center gap-3 mt-6 justify-center md:justify-start">
                 {member.social.fiverr && (
                   <Link
@@ -159,112 +135,84 @@ export default function TeamMemberPage({ member, meta, schema }: Props) {
                     rel="noopener noreferrer"
                     className="gap-3 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
                     aria-label={`${member.name} Personal Portfolio`}
-                    title={`${member.name} Portfolio`}
+                    title={`${member.name} Mern Stack Developer Portfolio Website`}
                   >
-                    <Globe className="w-5 h-5"/>
-                    <span>
-                    Portfolio website
-                    </span>
+                    <Globe className="w-5 h-5" />
                   </Link>
                 )}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </Container>
 
       {/* About Section */}
-      <section className=" py-16 bg-background">
+      <Container element="section" className="py-12">
         <div className="container-custom">
-          <div
-            ref={aboutRef}
-            className={cn(
-              "grid lg:grid-cols-3 gap-8",
-              aboutVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
+          <div className={" space-y-12"}>
             {/* Main Bio */}
-            <div className="lg:col-span-2">
+            <div className=" w-full md:w-8/12">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Briefcase className="w-6 h-6 text-primary" />
                 About {member.name.split(" ")[0]}
               </h2>
-              <div className="prose prose-lg text-muted-foreground max-w-none">
-                {member.fullBio.split("\n\n").map((paragraph, index) => (
-                  <p key={index} className="mb-4 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+               <div
+                className="max-w-2xl renderhtml"
+                dangerouslySetInnerHTML={{ __html: member.fullBio }}
+              />
             </div>
 
             {/* Sidebar Stats */}
-            <div className="space-y-6">
-              <Card className="border-border">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    Experience
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold gradient-text">
-                    {member.yearsOfExperience}+ years
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    in the industry
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="w-full md:w-6/12 space-y-6">
+              <div className="border border-gray-200 rounded-lg p-5">
+                <h3 className="text-lg font-medium flex items-center gap-2 pb-3">
+                  <Calendar className="w-5 h-5 text-primary" />
+                  Experience
+                </h3>
+                <div className="text-3xl font-bold gradient-text">
+                  {member.yearsOfExperience}+ years
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">
+                  in the industry
+                </p>
+              </div>
 
-              <Card className="border-border">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">Core Expertise</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {member.coreExpertise.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="secondary"
-                        className="font-medium"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="border border-gray-200 p-5 rounded-lg">
+                <h3 className="text-lg font-medium pb-3">Core Expertise</h3>
+                <div className="flex flex-wrap gap-2">
+                  {member.coreExpertise.map((skill) => (
+                    <div
+                      key={skill}
+                      className="px-5 py-3 rounded-full font-medium bg-white border border-gray-200 hover:border-primary/50 transition-colors"
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </Container>
 
       {/* Skills Section */}
-      <section className=" py-16 bg-secondary/30">
-        <div className="container-custom">
-          <div
-            ref={skillsRef}
-            className={cn(skillsVisible ? "animate-fade-up" : "opacity-0")}
-          >
-            <h2 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-2">
-              <Code2 className="w-6 h-6 text-primary" />
-              Skills
-            </h2>
+      <Container element="section" className=" py-12">
+        <h2 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-2">
+          <Code2 className="w-6 h-6 text-primary" />
+          Skills
+        </h2>
 
-            <div className="flex flex-wrap gap-3">
-              {member.skills.map((tool) => (
-                <div
-                  key={tool}
-                  className="px-5 py-3 rounded-full font-medium bg-accent transition-colors"
-                >
-                  {tool}
-                </div>
-              ))}
+        <div className="flex flex-wrap gap-3">
+          {member.skills.map((tool) => (
+            <div
+              key={tool}
+              className="px-5 py-3 rounded-full font-medium bg-white border border-gray-200 hover:border-primary/50 transition-colors"
+            >
+              {tool}
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </Container>
     </>
   );
 }
