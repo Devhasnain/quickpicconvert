@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const baseApi = axios.create({
-  baseURL: "https://quickpic-cms.huefinds.store/graphql",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
   }
@@ -73,7 +73,7 @@ export const queries = {
 }`,
   getToolPageBySlug: (slug: string) => `query GetToolPageBySlug{
   toolPage(id: "${slug}", idType: SLUG) {
-     slug
+    slug
     content
     featuredImage {
       node {
@@ -88,9 +88,6 @@ export const queries = {
     }
     toolPageJsonSchema{
       faqs
-      howToTitle
-      howToDescription
-      howTo
     }
   }
 }`,

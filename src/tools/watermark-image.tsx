@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback, ChangeEvent, useMemo, } from "react";
 import { Stage, Layer, Image as KonvaImage, Transformer } from "react-konva";
-import { Container, HiddenFileInput } from "@/components";
+import { HiddenFileInput, SelectImageButton } from "@/components";
 import { useImageWatermarkStore } from "@/store";
 import { Plus, Settings, X } from "lucide-react";
 import { WatermarkItem } from "@/types";
@@ -569,17 +569,7 @@ export function ImageWatermarkerTool() {
             </div>
           </div>
         ) : (
-          <Container
-            element="div"
-            className="py-10 md:py-20 flex flex-col items-center justify-center"
-          >
-            <button
-              onClick={openBgFileExplorer}
-              className="cursor-pointer inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-primary text-xl text-white font-semibold hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
-            >
-              Select Image
-            </button>
-          </Container>
+          <SelectImageButton onClick={openBgFileExplorer} />
         )}
       </section>
     </>

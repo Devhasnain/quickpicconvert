@@ -1,4 +1,4 @@
-import { Container, HiddenFileInput, ImageCard, ToolSettingsSidbar, } from "@/components";
+import { HiddenFileInput, ImageCard, SelectImageButton, ToolSettingsSidbar, } from "@/components";
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useImageWebpConverterStore } from "@/store";
 import { ImageConverterResults } from "@/types";
@@ -167,17 +167,7 @@ export const ImageToWebpTool = () => {
             />
           </div>
         ) : (
-          <Container
-            element="div"
-            className="py-10 md:py-20 flex flex-col items-center justify-center"
-          >
-            <button
-              onClick={openExplorer}
-              className="cursor-pointer inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-primary text-xl text-white font-semibold hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
-            >
-              Select Image
-            </button>
-          </Container>
+          <SelectImageButton onClick={openExplorer}/>
         )}
       </section>
     </>

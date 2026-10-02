@@ -35,58 +35,62 @@ function parseSchema(raw: string, options: { questionLabel: string, answerLabel:
 
     return faqs;
 }
+const siteUrl = "https://quickpicconvert.com";
 
-export const getToolPageByPath = async (slug: string): Promise<{ props: { toolPage?: any, breadcrumb: BreadCrumb[], jsonSchemas: any[] | [] }, notFound?: boolean, revalidate?: number, }> => {
+
+export const getToolPageByPath = async (slug: string): Promise<{ props: { toolPage?: any, breadcrumb: BreadCrumb[], jsonSchemas: any }, notFound?: boolean, revalidate?: number, }> => {
     try {
 
         const res = await getToolPageBySlug(slug);
         const toolPage = res.data?.data?.toolPage;
         const toolPageJsonSchema = toolPage.toolPageJsonSchema;
         const toolCard = toolObject.find((item) => item.slug === slug)
+        const breadcrumb = [
+            {
+                name: "Home",
+                href: "/"
+            },
+            {
+                name: "Tools",
+                href: "/tools"
+            },
+            {
+                name: toolCard?.title || "",
+                href: `/tools/${toolCard?.slug}`
+            },
+        ]
 
         return {
             props: {
                 toolPage,
-                jsonSchemas: [
-                    {
-                        "@context": "https://schema.org",
-                        "@type": "FAQ",
-                        mainEntity: parseSchema(toolPageJsonSchema.faqs, { questionLabel: "Q", answerLabel: "A" }).map((faq) => ({
-                            "@type": "Question",
-                            name: faq.question,
-                            acceptedAnswer: {
-                                "@type": "Answer",
-                                text: faq.answer,
-                            },
-                        })),
-                    },
-                    {
-                        "@context": "https://schema.org",
-                        "@type": "HowTo",
-                        name: toolPageJsonSchema.howToTitle,
-                        description: toolPageJsonSchema.howToDescription,
-                        step: parseSchema(toolPageJsonSchema.howTo, { questionLabel: "Q", answerLabel: "A" }).map((step, index) => ({
-                            "@type": "HowToStep",
-                            position: index + 1,
-                            name: step.question,
-                            text: step.answer,
-                        })),
-                    }
-                ],
-                breadcrumb: [
-                    {
-                        name: "Home",
-                        href: "/"
-                    },
-                    {
-                        name: "Tools",
-                        href: "/tools"
-                    },
-                    {
-                        name: toolCard?.title || "",
-                        href: `/tools/${toolCard?.slug}`
-                    },
-                ]
+                jsonSchemas: {
+                    "@context": "https://schema.org",
+                    "@graph": [
+                        {
+
+                            "@type": "BreadcrumbList",
+                            itemListElement: breadcrumb.map((item, index) => ({
+                                "@type": "ListItem",
+                                position: index + 1,
+                                name: item.name,
+                                item: `${siteUrl}${item.href}`,
+                            })),
+                        },
+                        {
+                            "@type": "FAQ",
+                            "@id": `https://quickpicconvert.com/tools/${slug}/#faqs`,
+                            mainEntity: parseSchema(toolPageJsonSchema.faqs, { questionLabel: "Q", answerLabel: "A" }).map((faq) => ({
+                                "@type": "Question",
+                                name: faq.question,
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: faq.answer,
+                                },
+                            })),
+                        },
+                    ]
+                },
+                breadcrumb
             },
             revalidate: 300,
         };

@@ -119,7 +119,7 @@ export type ToolPageProps = {
     }
   }
   breadcrumb:BreadCrumb[],
-  jsonSchemas:any[]|[]
+  jsonSchemas:any
 }
 
 export type BreadCrumb = {

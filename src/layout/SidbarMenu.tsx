@@ -27,7 +27,7 @@ export const SidbarMenu = ({ openSidebar, setOpenSidebar }: Props) => {
         </button>
       </div>
 
-      <h3 className="text-lg font-bold">Image Converter Tools</h3>
+      <h3 className="text-lg font-semibold">Image Converter Tools</h3>
 
       <nav>
         <ul className="flex flex-col gap-2">
@@ -35,7 +35,7 @@ export const SidbarMenu = ({ openSidebar, setOpenSidebar }: Props) => {
             <li key={i}>
               <Link
                 href={t.slug}
-                className={`hover:text-primary leading-relaxed font-medium`}
+                className={`hover:text-primary font-medium text-sm`}
               >
                 {t.title}
               </Link>

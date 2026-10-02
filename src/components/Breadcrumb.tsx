@@ -8,7 +8,9 @@ type BreadcrumbItem = {
   href: string;
 };
 
-export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
+export function Breadcrumb({ items, defineSchema = true  }: { items: BreadcrumbItem[],
+  defineSchema?:boolean
+ }) {
   const siteUrl = "https://quickpicconvert.com";
 
   const jsonLd = {
@@ -24,10 +26,10 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
 
   return (
     <>
-      <Script
+      {defineSchema && <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      />}
 
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-gray-500">

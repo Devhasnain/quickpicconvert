@@ -14,7 +14,7 @@ export const ToolPageContent = ({
 }) => {
   return (
     <Container className="py-10" element="div">
-      <Breadcrumb items={breadcrumb} />
+      <Breadcrumb items={breadcrumb} defineSchema={false} />
 
       <div
         className={clsx(
