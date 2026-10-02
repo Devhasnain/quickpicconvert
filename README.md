@@ -101,7 +101,7 @@ Have a question or a suggestion? Reach out through the [contact page](https://qu
 
 ## License
 
-Add your license here, for example MIT.
+[MIT License](https://github.com/Devhasnain/quickpicconvert/tree/master?tab=MIT-1-ov-file)
 
 ---
 
