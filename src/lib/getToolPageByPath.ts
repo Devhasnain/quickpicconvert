@@ -42,6 +42,7 @@ export const getToolPageByPath = async (slug: string): Promise<{ props: { toolPa
     try {
 
         const toolPage = await getToolPageBySlug(slug);
+        console.log(toolPage)
         const toolPageJsonSchema = toolPage.toolPageJsonSchema;
         const toolCard = toolObject.find((item) => item.slug === slug)
         const breadcrumb = [
