@@ -33,11 +33,9 @@ const Index = ({ posts, faqs }: Props) => {
   );
 };
 export const getStaticProps = async () => {
-  const blogRes = await getBlogs(3);
-  const posts = blogRes.data?.data?.posts?.nodes || [];
+  const posts = await getBlogs(3);
+  const faqs = await getFaqs();
 
-  const faqRes = await getFaqs();
-  const faqs = faqRes.data?.data?.faqs?.nodes || [];
   return { props: { posts, faqs } };
 };
 

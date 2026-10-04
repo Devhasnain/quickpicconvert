@@ -41,8 +41,7 @@ const siteUrl = "https://quickpicconvert.com";
 export const getToolPageByPath = async (slug: string): Promise<{ props: { toolPage?: any, breadcrumb: BreadCrumb[], jsonSchemas: any }, notFound?: boolean, revalidate?: number, }> => {
     try {
 
-        const res = await getToolPageBySlug(slug);
-        const toolPage = res.data?.data?.toolPage;
+        const toolPage = await getToolPageBySlug(slug);
         const toolPageJsonSchema = toolPage.toolPageJsonSchema;
         const toolCard = toolObject.find((item) => item.slug === slug)
         const breadcrumb = [

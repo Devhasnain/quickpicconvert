@@ -74,7 +74,6 @@ export default function Privacy({ page }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const blogRes = await getLegalPageBySlug("privacy");
-  const page = blogRes.data?.data?.legalPage;
+  const page = await getLegalPageBySlug("privacy");
   return { props: { page } };
 };
