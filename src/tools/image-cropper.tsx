@@ -113,6 +113,7 @@ export const ImageCropperTool = () => {
 
             <ToolSettingsSidbar
               title="Image Cropper"
+              convertBtnText="Crop Image"
               open={openSettings}
               onAddImages={openExplorer}
               onClearAll={resetStore}

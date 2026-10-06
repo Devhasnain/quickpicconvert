@@ -21,7 +21,7 @@ export const FaqSection = ({ faqs }: Props) => {
           we will help.
         </p>
       </div>
-      <div className="w-8/12 mx-auto mt-16 space-y-3">
+      <div className="w-full md:w-8/12 mx-auto mt-16 space-y-3">
         {faqs?.map((item, i) => (
           <Accordion
             key={i}

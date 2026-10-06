@@ -173,6 +173,7 @@ export const ImageCompressorTool = () => {
             <ToolSettingsSidbar
               open={openSettings}
               title="Image Compressor"
+              convertBtnText="Compress Images"
               isConverting={isCompressing}
               isDownloading={isDownloading}
               canClearAll={files.length > 1}
