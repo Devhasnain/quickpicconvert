@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { wpFetch } from "./wp";
+
 
 export const baseApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -64,13 +66,6 @@ export const queries = {
     }
   }
 }`,
-  getToolPageSlugs: () => `query GetToolPageSlugs{
-  toolPages(first:100) {
-   nodes {
-      slug
-    }
-  }
-}`,
   getToolPageBySlug: (slug: string) => `query GetToolPageBySlug{
   toolPage(id: "${slug}", idType: SLUG) {
     slug
@@ -101,10 +96,52 @@ export const queries = {
 `
 }
 
-export const getBlogs = async (n: number) => await baseApi.post('', { query: queries.getBlogs(n) })
-export const getBlogSlugs = async () => await baseApi.post('', { query: queries.getBlogSlugs() })
-export const getBlogBySlug = async (slug: string) => await baseApi.post('', { query: queries.getBlogBySlug(slug) })
-export const getFaqs = async () => await baseApi.post('', { query: queries.getFaqs() })
-export const getToolPageSlugs = async () => await baseApi.post('', { query: queries.getToolPageSlugs() })
-export const getToolPageBySlug = async (slug: string) => await baseApi.post('', { query: queries.getToolPageBySlug(slug) })
-export const getLegalPageBySlug = async (slug: string) => await baseApi.post("", { query: queries.getLegalPageBySlug(slug) })
+export const getBlogs = async (n: number): Promise<any[] | []> => {
+  try {
+    const data: any = await wpFetch(queries.getBlogs(n));
+    return data?.posts?.nodes || []
+  } catch (error) {
+    return []
+  }
+}
+export const getBlogSlugs = async ():Promise<{slug:string}[] | []> =>{
+  try {
+    const data: any = await wpFetch(queries.getBlogSlugs());
+    return data?.posts?.nodes || []
+  } catch (error) {
+    return []
+  }
+} 
+export const getBlogBySlug = async (slug: string) =>{
+  try {
+    const data: any = await wpFetch(queries.getBlogBySlug(slug));
+    return data?.post || null
+  } catch (error) {
+    return null
+  }
+} 
+
+export const getFaqs = async (): Promise<any[] | []> => {
+  try {
+    const data: any = await wpFetch(queries.getFaqs());
+    return data?.faqs?.nodes || []
+  } catch (error) {
+    return []
+  }
+}
+export const getToolPageBySlug = async (slug: string) => {
+  try {
+    const data: any = await wpFetch(queries.getToolPageBySlug(slug));
+    return data?.toolPage || null
+  } catch (error) {
+    return null
+  }
+}
+export const getLegalPageBySlug = async (slug: string) => {
+  try {
+    const data: any = await wpFetch(queries.getLegalPageBySlug(slug));
+    return data?.legalPage || null
+  } catch (error) {
+    return null
+  }
+} 

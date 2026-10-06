@@ -67,7 +67,6 @@ export default function BlogPage({ posts }: { posts: any[] | [] }) {
 }
 
 export const getStaticProps = async () => {
-  const blogRes = await getBlogs(10);
-  const posts = blogRes.data?.data?.posts?.nodes || [];
+  const posts = await getBlogs(10);
   return { props: { posts } };
 };

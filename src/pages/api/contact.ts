@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com", // cPanel se confirm karein
       port: 465,
-      secure: true, // 465 ke liye true, 587 ke liye false
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -26,9 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     await transporter.sendMail({
-      from: `"${name}" <${process.env.SMTP_USER}>`, // sender wahi email hona chahiye jo authenticate ho raha hai
-      replyTo: email, // taake reply user ko jaye
-      to: "hasnainalam1166@gmail.com",
+      from: `"${name}" <${process.env.SMTP_USER}>`, 
+      replyTo: email,
+      to: process.env.SMTP_USER,
       subject: `New message from ${name}`,
       text: message,
       html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Subject:</strong> ${title}</p><p>${message}</p>`,

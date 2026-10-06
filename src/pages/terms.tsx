@@ -74,7 +74,6 @@ export default function TermsPage({ page }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const blogRes = await getLegalPageBySlug("terms");
-  const page = blogRes.data?.data?.legalPage;
+  const page = await getLegalPageBySlug("terms");
   return { props: { page } };
 };
